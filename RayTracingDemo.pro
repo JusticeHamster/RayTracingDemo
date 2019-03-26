@@ -28,7 +28,8 @@ SOURCES += \
 
 HEADERS += \
         main/mainwindow.h \
-        opengl/openglwidget.h
+        opengl/openglwidget.h \
+        opengl/opengl_header.h
 
 FORMS += \
         main/mainwindow.ui
