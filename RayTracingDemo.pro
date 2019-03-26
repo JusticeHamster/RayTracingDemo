@@ -13,7 +13,9 @@ TEMPLATE = app
 
 # OPENGL
 QT   += opengl
-LIBS += -lOpengl32 -lGlu32
+win32 {
+    LIBS += -lOpengl32 -lGlu32
+}
 
 # disables all the APIs deprecated before Qt 6.0.0
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000
