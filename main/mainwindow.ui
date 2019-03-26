@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="OpenglWidget" name="openGLWidget" native="true">
+   <widget class="OpenGLWidget" name="openGLWidget" native="true">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -32,7 +32,7 @@
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
-   <class>OpenglWidget</class>
+   <class>OpenGLWidget</class>
    <extends>QWidget</extends>
    <header>opengl/openglwidget.h</header>
    <container>1</container>
