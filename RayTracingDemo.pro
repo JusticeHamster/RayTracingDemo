@@ -11,11 +11,23 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET   = RayTracingDemo
 TEMPLATE = app
 
+# Environment
+macx {
+    QMAKE_CC     = /usr/bin/clang
+    QMAKE_CXX    = /usr/bin/clang++
+
+    INCLUDEPATH += /usr/local/include
+    LIBS        += -L/usr/local/lib
+}
+
 # OPENGL
 QT   += opengl
 win32 {
     LIBS += -lOpengl32 -lGlu32
 }
+
+# Assimp
+LIBS += -lassimp # default in /usr/local/include & lib
 
 # disables all the APIs deprecated before Qt 6.0.0
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000
@@ -32,7 +44,13 @@ SOURCES += \
 HEADERS += \
     main/mainwindow.h \
     opengl/openglwidget.h \
-    opengl/opengl_header.h \
+    opengl/opengl_header.h
+
+FORMS += \
+    main/mainwindow.ui
+
+# glm
+HEADERS += \
     glm/detail/_features.hpp \
     glm/detail/_fixes.hpp \
     glm/detail/_noise.hpp \
@@ -406,6 +424,3 @@ HEADERS += \
     glm/vec3.hpp \
     glm/vec4.hpp \
     glm/vector_relational.hpp
-
-FORMS += \
-    main/mainwindow.ui
