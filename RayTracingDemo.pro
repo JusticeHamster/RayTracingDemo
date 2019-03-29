@@ -12,6 +12,9 @@ TARGET   = RayTracingDemo
 TEMPLATE = app
 
 # Environment
+win32 {
+    LIBS        += -L.\lib
+}
 macx {
     QMAKE_CC     = /usr/bin/clang
     QMAKE_CXX    = /usr/bin/clang++
