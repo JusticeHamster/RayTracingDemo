@@ -39,15 +39,17 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000
 CONFIG += c++17
 
 SOURCES += \
+    base/vertex.cpp \
     main/main.cpp \
     main/mainwindow.cpp \
     opengl/openglwidget.cpp \
     glm/detail/glm.cpp
 
 HEADERS += \
-    main/mainwindow.h \
-    opengl/openglwidget.h \
-    opengl/opengl_header.h
+    base/vertex.hpp \
+    main/mainwindow.hpp \
+    opengl/opengl_header.hpp \
+    opengl/openglwidget.hpp
 
 FORMS += \
     main/mainwindow.ui
