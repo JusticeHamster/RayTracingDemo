@@ -39,6 +39,8 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000
 CONFIG += c++17
 
 SOURCES += \
+    base/mesh.cpp \
+    base/texture.cpp \
     base/vertex.cpp \
     main/main.cpp \
     main/mainwindow.cpp \
@@ -46,6 +48,8 @@ SOURCES += \
     glm/detail/glm.cpp
 
 HEADERS += \
+    base/mesh.hpp \
+    base/texture.hpp \
     base/vertex.hpp \
     main/mainwindow.hpp \
     opengl/opengl_header.hpp \
