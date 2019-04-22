@@ -39,20 +39,20 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000
 CONFIG += c++17
 
 SOURCES += \
-    base/mesh.cpp \
-    base/shader.cpp \
-    base/texture.cpp \
-    base/vertex.cpp \
+    opengl/mesh.cpp \
+    opengl/shader.cpp \
+    opengl/texture.cpp \
+    opengl/vertex.cpp \
     main/main.cpp \
     main/mainwindow.cpp \
     opengl/openglwidget.cpp \
     glm/detail/glm.cpp
 
 HEADERS += \
-    base/mesh.hpp \
-    base/shader.hpp \
-    base/texture.hpp \
-    base/vertex.hpp \
+    opengl/mesh.hpp \
+    opengl/shader.hpp \
+    opengl/texture.hpp \
+    opengl/vertex.hpp \
     main/mainwindow.hpp \
     opengl/opengl_header.hpp \
     opengl/openglwidget.h
@@ -435,3 +435,7 @@ HEADERS += \
     glm/vec3.hpp \
     glm/vec4.hpp \
     glm/vector_relational.hpp
+
+DISTFILES += \
+    resources/opengl/test.frag \
+    resources/opengl/test.vert

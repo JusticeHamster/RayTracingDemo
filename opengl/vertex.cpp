@@ -6,7 +6,7 @@ vertex::vertex() {
     ;
 }
 
-vertex::vertex(vec3 position, vec3 normal = vec3(), vec2 textureCoords = vec2()):
+vertex::vertex(vec3 position, vec3 normal, vec2 textureCoords):
     position(position), normal(normal), textureCoords(textureCoords) {
     ;
 }

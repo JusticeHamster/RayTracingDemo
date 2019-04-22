@@ -1,10 +1,18 @@
 #include "mesh.hpp"
 
-#include "opengl/opengl_header.hpp"
+#include "opengl_header.hpp"
 
 #include <qopenglextrafunctions.h>
 
 using namespace std;
+
+template<class T> inline long size(std::vector<T> v) {
+    return static_cast<long>(sizeof(v) * v.size());
+}
+
+template<class T> inline void *ptr(std::vector<T> v) {
+    return &v[0];
+}
 
 mesh::mesh(vector<vertex> vertices, vector<unsigned> indices, vector<texture> textures):
     vertices(vertices), indices(indices), textures(textures) {

@@ -5,9 +5,9 @@
 
 using namespace std;
 
-shader::shader(string vertexPath, string fragmentPath):
-    vertexPath(vertexPath), fragmentPath(fragmentPath) {
-    ;
+shader::shader(string vertexPath, string fragmentPath, string geometryPath):
+    vertexPath(vertexPath), fragmentPath(fragmentPath), geometryPath(geometryPath) {
+    cout << glGetString(GL_VERSION) << endl;
 }
 
 bool shader::loaded() const {
@@ -18,11 +18,34 @@ void shader::reload() {
     init = false;
 }
 
+bool shader::checkErrors(unsigned shader, string type) {
+    int success;
+    char log[LOG_SIZE];
+    if (type == "program") {
+        glGetProgramiv(shader, GL_LINK_STATUS, &success);
+        if (!success) {
+            glGetProgramInfoLog(shader, LOG_SIZE, nullptr, log);
+            cout << log << endl;
+            return false;
+        }
+    } else {
+        glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
+        if (!success) {
+            glGetShaderInfoLog(shader, LOG_SIZE, nullptr, log);
+            cout << log << endl;
+            return false;
+        }
+    }
+    return true;
+}
+
 bool shader::load() {
     ifstream vShaderFile;
     ifstream fShaderFile;
+    ifstream gShaderFile;
     vShaderFile.exceptions(ifstream::failbit | ifstream::badbit);
     fShaderFile.exceptions(ifstream::failbit | ifstream::badbit);
+    gShaderFile.exceptions(ifstream::failbit | ifstream::badbit);
     try {
         vShaderFile.open(vertexPath);
         fShaderFile.open(fragmentPath);
@@ -33,6 +56,13 @@ bool shader::load() {
         fShaderFile.close();
         vertexCode = vShaderStream.str();
         fragmentCode =  fShaderStream.str();
+        if (geometryPath != "") {
+            gShaderFile.open(geometryPath);
+            stringstream gShaderStream;
+            gShaderStream << gShaderFile.rdbuf();
+            gShaderFile.close();
+            geometryCode = gShaderStream.str();
+        }
     } catch (ifstream::failure f) {
         cout << f.what() << endl;
         return false;
@@ -40,31 +70,31 @@ bool shader::load() {
 
     const char *vShaderCode = vertexCode.c_str();
     const char *fShaderCode = fragmentCode.c_str();
+    const char *gShaderCode = geometryCode.c_str();
 
-    unsigned vertex, fragment;
-    int success;
-    char log[512];
+    unsigned vertex, fragment, geometry;
 
     vertex = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertex, 1, &vShaderCode, nullptr);
     glCompileShader(vertex);
-
-    glGetShaderiv(vertex, GL_COMPILE_STATUS, &success);
-    if (!success) {
-        glGetShaderInfoLog(vertex, 512, nullptr, log);
-        cout << log << endl;
+    if (!checkErrors(vertex, "vertex")) {
         return false;
     }
 
     fragment = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragment, 1, &fShaderCode, nullptr);
     glCompileShader(fragment);
-
-    glGetShaderiv(fragment, GL_COMPILE_STATUS, &success);
-    if (!success) {
-        glGetShaderInfoLog(fragment, 512, nullptr, log);
-        cout << log << endl;
+    if (!checkErrors(fragment, "fragment")) {
         return false;
+    }
+
+    if (geometryPath != "") {
+        geometry = glCreateShader(GL_GEOMETRY_SHADER_EXT);
+        glShaderSource(geometry, 1, &gShaderCode, nullptr);
+        glCompileShader(geometry);
+        if (!checkErrors(geometry, "geometry")) {
+            return false;
+        }
     }
 
     ID = glCreateProgram();
@@ -72,10 +102,7 @@ bool shader::load() {
     glAttachShader(ID, fragment);
     glLinkProgram(ID);
 
-    glGetProgramiv(ID, GL_LINK_STATUS, &success);
-    if (!success) {
-        glGetProgramInfoLog(ID, 512, nullptr, log);
-        cout << log << endl;
+    if (!checkErrors(ID, "program")) {
         return false;
     }
 
