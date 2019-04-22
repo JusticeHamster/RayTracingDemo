@@ -1,6 +1,6 @@
 
 # settings
-*.user
+*.user*
 
 # macos
 .DS_Store
