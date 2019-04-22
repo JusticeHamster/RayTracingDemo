@@ -40,6 +40,7 @@ CONFIG += c++17
 
 SOURCES += \
     base/mesh.cpp \
+    base/shader.cpp \
     base/texture.cpp \
     base/vertex.cpp \
     main/main.cpp \
@@ -49,11 +50,12 @@ SOURCES += \
 
 HEADERS += \
     base/mesh.hpp \
+    base/shader.hpp \
     base/texture.hpp \
     base/vertex.hpp \
     main/mainwindow.hpp \
     opengl/opengl_header.hpp \
-    opengl/openglwidget.hpp
+    opengl/openglwidget.h
 
 FORMS += \
     main/mainwindow.ui
