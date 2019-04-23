@@ -7,7 +7,7 @@ using namespace std;
 
 shader::shader(string vertexPath, string fragmentPath, string geometryPath):
     vertexPath(vertexPath), fragmentPath(fragmentPath), geometryPath(geometryPath) {
-    cout << glGetString(GL_VERSION) << endl;
+    ;
 }
 
 bool shader::loaded() const {

@@ -6,9 +6,10 @@
 class texture
 {
 public:
-    texture(unsigned int id, std::string type);
+    texture(unsigned int id, std::string type, std::string path);
     unsigned int id;
     std::string type;
+    std::string path;
 };
 
 #endif // TEXTURE_HPP

@@ -1,15 +1,12 @@
 #include "openglwidget.h"
 #include "opengl_header.hpp"
 
-float vertices[] = {
-    // positions         // colors
-     0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,  // bottom right
-    -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,  // bottom left
-     0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f   // top
-};
+#include <iostream>
+
+using namespace std;
 
 OpenGLWidget::OpenGLWidget(QWidget *parent) : QGLWidget(parent) {
-    shaders.push_back(shader("", ""));
+    ;
 }
 
 void OpenGLWidget::initializeGL() {

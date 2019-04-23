@@ -19,27 +19,33 @@ mesh::mesh(vector<vertex> vertices, vector<unsigned> indices, vector<texture> te
     setup();
 }
 
+#include <map>
+
 void mesh::draw(shader s) {
-    unsigned diffuseNr = 1;
-    unsigned specularNr = 1;
+    map<string, int> mesh_type = {
+        {"texture_diffuse" , 1},
+        {"texture_specular", 1},
+        {"texture_normal"  , 1},
+        {"texture_height"  , 1},
+    };
     for (unsigned i = 0; i < textures.size(); i++) {
         glActiveTexture(GL_TEXTURE0 + i); // 0, 1, 2内存连续
-        string number;
         string name = textures[i].type;
-        if (name == "texture_diffuse") {
-            number = to_string(diffuseNr++);
-        } else if (name == "texture_specular") {
-            number = to_string(specularNr++);
-        }
-        s.set("material." + name + number, static_cast<float>(i));
+        auto type = mesh_type.find(name);
+        if (type == mesh_type.end()) continue;
+        string number = to_string(type->second++);
+        s.set(name + number, static_cast<int>(i));
         glBindTexture(GL_TEXTURE_2D, textures[i].id);
     }
-    glActiveTexture(GL_TEXTURE0);
 
     glBindVertexArray(VAO);
     glDrawElements(GL_TRIANGLES, static_cast<int>(indices.size()), GL_UNSIGNED_INT, nullptr);
     glBindVertexArray(0);
+
+    glActiveTexture(GL_TEXTURE0);
 }
+
+#define offset(E) reinterpret_cast<void *>(offsetof(vertex, E))
 
 void mesh::setup() {
     glGenVertexArrays(1, &VAO);
@@ -54,11 +60,21 @@ void mesh::setup() {
 
     // Vertex
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), reinterpret_cast<void *>(offsetof(vertex, position)));
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), offset(position));
     // Normal
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), reinterpret_cast<void *>(offsetof(vertex, normal)));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), offset(normal));
     // Texture
     glEnableVertexAttribArray(2);
-    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(vertex), reinterpret_cast<void *>(offsetof(vertex, textureCoords)));
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(vertex), offset(textureCoords));
+    // Tangent
+    glEnableVertexAttribArray(3);
+    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), offset(tangent));
+    // BiTangent
+    glEnableVertexAttribArray(4);
+    glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE, sizeof(vertex), offset(bitangent));
+
+    glBindVertexArray(0);
 }
+
+#undef offset
