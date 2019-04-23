@@ -135,14 +135,11 @@ unsigned model::load(string path, const string &directory, bool gamma) {
 
     if (data) {
         GLenum format;
-        if (nrComponents == 1) {
-            format = GL_RED;
-        } else if (nrComponents == 3) {
-            format = GL_RGB;
-        } else if (nrComponents == 4) {
-            format = GL_RGBA;
-        } else {
-            format = GL_NONE;
+        switch (nrComponents) {
+        case 1: format = GL_RED; break;
+        case 2: format = GL_RGB; break;
+        case 4: format = GL_RGBA; break;
+        default: format = GL_NONE;
         }
 
         glBindTexture(GL_TEXTURE_2D, textureID);

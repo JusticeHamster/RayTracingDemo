@@ -41,6 +41,7 @@ CONFIG += c++17
 SOURCES += \
     opengl/mesh.cpp \
     opengl/model.cpp \
+    opengl/scene.cpp \
     opengl/shader.cpp \
     opengl/texture.cpp \
     opengl/vertex.cpp \
@@ -48,18 +49,21 @@ SOURCES += \
     main/main.cpp \
     main/mainwindow.cpp \
     glm/detail/glm.cpp \
-    stb/stb_image.cpp
+    stb/stb_image.cpp \
+    tools/loader.cpp
 
 HEADERS += \
     opengl/mesh.hpp \
     opengl/model.hpp \
+    opengl/scene.hpp \
     opengl/shader.hpp \
     opengl/texture.hpp \
     opengl/vertex.hpp \
     opengl/opengl_header.hpp \
     opengl/openglwidget.h \
     main/mainwindow.hpp \
-    stb/stb_image.h
+    stb/stb_image.h \
+    tools/loader.hpp
 
 FORMS += \
     main/mainwindow.ui
