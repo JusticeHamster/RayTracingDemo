@@ -4,3 +4,6 @@
 
 # macos
 .DS_Store
+
+# UML graph
+*.mdj
