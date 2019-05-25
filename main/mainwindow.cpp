@@ -12,3 +12,11 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::on_pushButton_clicked()
+{
+    ui->openGLWidget->x += 1;
+    ui->openGLWidget->y += 1;
+    ui->openGLWidget->z += 1;
+    ui->openGLWidget->buttonclick();
+}
