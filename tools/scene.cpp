@@ -3,6 +3,7 @@
 #include "object/sphere.hpp"
 #include "object/cube.hpp"
 #include "object/tetrahedron.hpp"
+#include "object/line.hpp"
 
 scene::scene(string name): name(name)
 {
@@ -17,6 +18,7 @@ scene::scene(string name): name(name)
 
     models.push_back(model({
         std::make_shared<tetrahedron>(),
+        std::make_shared<line>(glm::vec3(), glm::vec3(3, 3, 3)),
     }, glm::vec3(0, -2, 0), glm::vec3(), false, glm::vec3()));
 }
 

@@ -1,6 +1,6 @@
 #include "ray.hpp"
 
-ray::ray()
+ray::ray(glm::vec3 start, glm::vec3 end): line(start, end)
 {
 
 }

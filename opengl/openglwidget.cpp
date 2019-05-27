@@ -10,7 +10,7 @@ OpenGLWidget::OpenGLWidget(QWidget *parent) : QGLWidget(parent) {
 }
 
 void OpenGLWidget::initializeGL() {
-    glClearColor(0.0, 0.0, 0.0, 0.0);
+    glClearColor(1.0, 1.0, 1.0, 0.0);
     // 着色方式选择
     glShadeModel(GL_SMOOTH);
     glClearDepth(1.0);
