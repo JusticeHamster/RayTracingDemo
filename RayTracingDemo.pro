@@ -20,7 +20,7 @@ macx {
     QMAKE_CXX    = /usr/bin/clang++
 
     INCLUDEPATH += /usr/local/include
-    LIBS        += -L/usr/local/lib
+    LIBS        += -L/usr/local/lib -framework opengl -framework glut
 }
 
 # OPENGL
@@ -34,6 +34,7 @@ LIBS += -lassimp # default in /usr/local/include & lib
 
 # disables all the APIs deprecated before Qt 6.0.0
 DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000
+
 
 # c++ version
 CONFIG += c++17
@@ -465,3 +466,6 @@ HEADERS += \
 DISTFILES += \
     resources/opengl/test.frag \
     resources/opengl/test.vert
+
+mac: LIBS += -framework GLUT
+else:unix|win32: LIBS += -lGLUT
