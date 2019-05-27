@@ -14,6 +14,7 @@ line::~line()
 
 void line::draw(glm::vec3 pos, glm::vec3 di) const
 {
+    glColor3f(0, 0, 0);
     glBegin(GL_LINES);
     glVertex3f(start.x + pos.x, start.y + pos.y, start.z + pos.z);
     glVertex3f(end.x + pos.x, end.y + pos.y, end.z + pos.z);

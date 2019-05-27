@@ -14,12 +14,12 @@ scene::scene(string name): name(name)
 
     models.push_back(model({
         std::make_shared<cube>(),
-    }, glm::vec3(0, 2, 0), glm::vec3(), false, glm::vec3()));
+    }, glm::vec3(0, 3, 0), glm::vec3(), false, glm::vec3()));
 
     models.push_back(model({
         std::make_shared<tetrahedron>(),
-        std::make_shared<line>(glm::vec3(), glm::vec3(3, 3, 3)),
-    }, glm::vec3(0, -2, 0), glm::vec3(), false, glm::vec3()));
+        std::make_shared<line>(glm::vec3(), glm::vec3(3, 3, -3)),
+    }, glm::vec3(0, -3, 0), glm::vec3(), false, glm::vec3()));
 }
 
 void scene::draw()
