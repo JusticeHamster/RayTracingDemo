@@ -14,9 +14,9 @@ class ray_distribution
 {
 private:
     vec3 point;
-    // double probability(vec3 direction);
 public:
-    virtual vector<ray> random(int num) = 0;
+    virtual vector<ray> random(int num) const = 0;
+    virtual ~ray_distribution();
 };
 
 #endif // RAY_DISTRIBUTION_HPP

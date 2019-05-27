@@ -14,8 +14,9 @@ private:
     double weight;
     unsigned time;
 public:
-    const static unsigned max_scattering_time = 5;
+    const static unsigned max_scattering_time = 5; // 改为从loader读取配置文件
     ray();
+    virtual ~ray();
 };
 
 #endif // RAY_HPP

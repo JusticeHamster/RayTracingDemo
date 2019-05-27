@@ -12,6 +12,7 @@ private:
     vec3 start, end, normal;
 public:
     line();
+    virtual ~line();
 };
 
 #endif // LINE_HPP

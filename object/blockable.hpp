@@ -7,8 +7,10 @@ class ray;
 
 class blockable
 {
+protected:
+    virtual ~blockable() {}
 public:
-    virtual intersection intersect(ray &in) = 0;
+    virtual intersection intersect(ray &in) const = 0;
 };
 
 #endif // BLOCKABLE_HPP

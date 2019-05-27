@@ -3,7 +3,7 @@
 
 #include "glm/glm.hpp"
 
-using namespace glm;
+#include <memory>
 
 class ray_distribution;
 
@@ -11,11 +11,14 @@ class intersection
 {
 private:
     bool is_intersect;
-    ray_distribution &out;
-    vec3 point;
-    vec3 stop_energy;
+    std::shared_ptr<ray_distribution> out;
+    glm::vec3 point;
+    glm::vec3 stop_energy;
 public:
-    intersection(bool is_intersect, ray_distribution &out, vec3 point, vec3 stop_energy);
+    intersection(
+        bool is_intersect, std::shared_ptr<ray_distribution> out,
+        glm::vec3 point, glm::vec3 stop_energy
+    );
 };
 
 #endif // INTERSECTION_HPP

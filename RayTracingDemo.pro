@@ -40,13 +40,16 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000
 CONFIG += c++17
 
 SOURCES += \
+    object/cube.cpp \
     object/diffuse_distribution.cpp \
     object/intersection.cpp \
     object/line.cpp \
     object/mirror_distribution.cpp \
+    object/model.cpp \
     object/ray.cpp \
     object/ray_distribution.cpp \
     object/sphere.cpp \
+    object/tetrahedron.cpp \
     opengl/openglwidget.cpp \
     tools/camera.cpp \
     tools/image.cpp \
@@ -62,15 +65,18 @@ SOURCES += \
 
 HEADERS += \
     object/blockable.hpp \
+    object/cube.hpp \
     object/diffuse_distribution.hpp \
     object/drawable.hpp \
     object/intersection.hpp \
     object/line.hpp \
     object/mirror_distribution.hpp \
+    object/model.hpp \
     object/ray.hpp \
     object/ray_distribution.hpp \
     object/shape.hpp \
     object/sphere.hpp \
+    object/tetrahedron.hpp \
     object/transformable.hpp \
     opengl/opengl_header.hpp \
     opengl/openglwidget.h \

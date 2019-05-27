@@ -4,3 +4,8 @@ line::line()
 {
 
 }
+
+line::~line()
+{
+
+}

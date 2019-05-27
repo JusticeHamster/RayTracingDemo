@@ -4,16 +4,22 @@
 #include "shape.hpp"
 #include "glm/glm.hpp"
 
-using namespace glm;
-
 class sphere: public shape
 {
 private:
-    vec3 center;
-    double radius;
+    glm::vec3 center;
+    float radius;
+    int m, n;
 public:
-    sphere();
-    vec3 normal(double u, double v);
+    constexpr static double PI = 3.141592653589793238463;
+    sphere(glm::vec3 center, float radius, int m, int n);
+    virtual ~sphere();
+    glm::vec3 normal(float u, float v);
+    virtual void draw(glm::vec3 pos, glm::vec3 di) const;
+    virtual void rotate();
+    virtual void move();
+    virtual void scale();
+    virtual intersection intersect(ray &in) const;
 };
 
 #endif // SPHERE_HPP
