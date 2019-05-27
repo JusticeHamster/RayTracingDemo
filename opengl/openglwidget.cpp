@@ -35,9 +35,6 @@ void OpenGLWidget::paintGL() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // 清除缓冲区
     glLoadIdentity(); // 恢复初始坐标系
 
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-
+    glMatrixMode(GL_MODELVIEW); // 设置投影矩阵
     ldr.get_scene("base").draw();
 }
