@@ -8,7 +8,7 @@ class diffuse_distribution: public ray_distribution
 public:
     virtual ~diffuse_distribution();
     diffuse_distribution();
-    vector<ray> random(int num) const;
+    std::vector<ray> random(int num) const;
 };
 
 #endif // DIFFUSE_DISTRIBUTION_HPP

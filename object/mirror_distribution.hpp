@@ -8,7 +8,7 @@ class mirror_distribution: public ray_distribution
 public:
     virtual ~mirror_distribution();
     mirror_distribution();
-    vector<ray> random(int num) const;
+    std::vector<ray> random(int num) const;
 };
 
 #endif // MIRROR_DISTRIBUTION_HPP

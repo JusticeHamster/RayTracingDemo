@@ -10,7 +10,7 @@ mirror_distribution::mirror_distribution()
 
 }
 
-vector<ray> mirror_distribution::random(int num) const
+std::vector<ray> mirror_distribution::random(int num) const
 {
     return {};
 }

@@ -7,15 +7,12 @@
 
 #include "glm/glm.hpp"
 
-using namespace std;
-using namespace glm;
-
 class ray_distribution
 {
 private:
-    vec3 point;
+    glm::vec3 point;
 public:
-    virtual vector<ray> random(int num) const = 0;
+    virtual std::vector<ray> random(int num) const = 0;
     virtual ~ray_distribution();
 };
 

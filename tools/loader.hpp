@@ -11,12 +11,12 @@ class loader
 {
 private:
     loader();
-    optional<scene> scn;
+    std::optional<scene> scn;
 
     QMutex lock;
 public:
     static loader instance;
-    scene &get_scene(string name);
+    scene &get_scene(std::string name);
 };
 
 #endif // LOADER_HPP

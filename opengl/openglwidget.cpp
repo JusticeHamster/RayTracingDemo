@@ -4,8 +4,6 @@
 #include <QDebug>
 #include <iostream>
 
-using namespace std;
-
 OpenGLWidget::OpenGLWidget(QWidget *parent) : QGLWidget(parent) {
 }
 

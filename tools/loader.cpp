@@ -2,8 +2,6 @@
 
 #include "scene.hpp"
 
-using namespace std;
-
 loader loader::instance;
 
 loader::loader()
@@ -11,7 +9,7 @@ loader::loader()
     ;
 }
 
-scene &loader::get_scene(string name)
+scene &loader::get_scene(std::string name)
 {
     QMutexLocker locker(&lock);
     if (scn)

@@ -8,8 +8,6 @@
 #include "tools/scene.hpp"
 #include "tools/camera.hpp"
 
-using namespace std;
-
 class renderer
 {
 private:
@@ -18,7 +16,6 @@ private:
     QMutex render_lock;
 
     void __render(scene &scn);
-    void __render();
 
     image result;
 public:

@@ -10,7 +10,7 @@ diffuse_distribution::diffuse_distribution()
 
 }
 
-vector<ray> diffuse_distribution::random(int num) const
+std::vector<ray> diffuse_distribution::random(int num) const
 {
     return {};
 }

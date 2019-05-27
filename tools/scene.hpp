@@ -6,16 +6,14 @@
 
 #include "object/model.hpp"
 
-using namespace std;
-
 class scene
 {
 private:
-    string name;
-    vector<model> models;
-    vector<model> lights;
+    std::string name;
+    std::vector<model> models;
+    std::vector<model> lights;
 public:
-    scene(string name);
+    scene(std::string name);
     void draw();
 };
 

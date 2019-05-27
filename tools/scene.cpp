@@ -5,7 +5,7 @@
 #include "object/tetrahedron.hpp"
 #include "object/line.hpp"
 
-scene::scene(string name): name(name)
+scene::scene(std::string name): name(name)
 {
     // 随便放一个场景
     models.push_back(model({
