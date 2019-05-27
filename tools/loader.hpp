@@ -2,6 +2,9 @@
 #define LOADER_HPP
 
 #include <string>
+#include <optional>
+
+#include "scene.hpp"
 
 class loader
 {
@@ -9,7 +12,7 @@ private:
     loader();
 public:
     static loader instance;
-    std::string get(std::string name);
+    scene get_scene(string name);
 };
 
 #endif // LOADER_HPP

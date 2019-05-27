@@ -24,7 +24,7 @@ macx {
 }
 
 # OPENGL
-QT   += opengl
+QT   += opengl concurrent
 win32 {
     LIBS += -lOpengl32 -lGlu32
 }
@@ -39,31 +39,49 @@ DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000
 CONFIG += c++17
 
 SOURCES += \
-    opengl/mesh.cpp \
-    opengl/model.cpp \
-    opengl/scene.cpp \
-    opengl/shader.cpp \
-    opengl/texture.cpp \
-    opengl/vertex.cpp \
+    object/diffuse_distribution.cpp \
+    object/intersection.cpp \
+    object/line.cpp \
+    object/mirror_distribution.cpp \
+    object/ray.cpp \
+    object/ray_distribution.cpp \
+    object/sphere.cpp \
     opengl/openglwidget.cpp \
+    tools/camera.cpp \
+    tools/image.cpp \
+    tools/pinhole_camera.cpp \
+    tools/scene.cpp \
+    tools/loader.cpp \
     main/main.cpp \
     main/mainwindow.cpp \
+    main/renderer.cpp \
     glm/detail/glm.cpp \
     stb/stb_image.cpp \
-    tools/loader.cpp
+    tools/thin_lens_camera.cpp
 
 HEADERS += \
-    opengl/mesh.hpp \
-    opengl/model.hpp \
-    opengl/scene.hpp \
-    opengl/shader.hpp \
-    opengl/texture.hpp \
-    opengl/vertex.hpp \
+    object/blockable.hpp \
+    object/diffuse_distribution.hpp \
+    object/drawable.hpp \
+    object/intersection.hpp \
+    object/line.hpp \
+    object/mirror_distribution.hpp \
+    object/ray.hpp \
+    object/ray_distribution.hpp \
+    object/shape.hpp \
+    object/sphere.hpp \
+    object/transformable.hpp \
     opengl/opengl_header.hpp \
     opengl/openglwidget.h \
+    tools/camera.hpp \
+    tools/image.hpp \
+    tools/pinhole_camera.hpp \
+    tools/scene.hpp \
+    tools/loader.hpp \
+    main/renderer.hpp \
     main/mainwindow.hpp \
     stb/stb_image.h \
-    tools/loader.hpp
+    tools/thin_lens_camera.hpp
 
 FORMS += \
     main/mainwindow.ui

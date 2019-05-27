@@ -3,6 +3,9 @@
 
 #include <QMainWindow>
 
+#include "renderer.hpp"
+#include "tools/loader.hpp"
+
 namespace Ui {
 class MainWindow;
 }
@@ -15,8 +18,13 @@ public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_start_clicked();
+
 private:
     Ui::MainWindow *ui;
+    renderer r;
+    loader &ldr = loader::instance;
 };
 
 #endif // MAINWINDOW_H
