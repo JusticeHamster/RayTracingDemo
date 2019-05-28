@@ -7,3 +7,6 @@
 
 # UML graph
 *.mdj
+
+# vscode
+*.vscode
