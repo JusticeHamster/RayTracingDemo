@@ -7,7 +7,8 @@
 
 class shape: public transformable, public blockable, public drawable
 {
-
+public:
+    virtual ~shape() {}
 };
 
 #endif // SHAPE_HPP

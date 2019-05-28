@@ -7,9 +7,8 @@ class ray;
 
 class blockable
 {
-protected:
-    virtual ~blockable() {}
 public:
+    virtual ~blockable() {}
     virtual intersection intersect(ray &in) const = 0;
 };
 

@@ -3,31 +3,28 @@
 
 class rotatable
 {
-protected:
-    virtual ~rotatable() {}
 public:
+    virtual ~rotatable() {}
     virtual void rotate() = 0;
 };
 
 class movable
 {
-protected:
-    virtual ~movable() {}
 public:
+    virtual ~movable() {}
     virtual void move() = 0;
 };
 
 class scalable
 {
-protected:
-    virtual ~scalable() {}
 public:
+    virtual ~scalable() {}
     virtual void scale() = 0;
 };
 
 class transformable: public rotatable, public movable, public scalable
 {
-protected:
+public:
     virtual ~transformable() {}
 };
 
