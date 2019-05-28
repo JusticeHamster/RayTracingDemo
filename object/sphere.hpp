@@ -12,7 +12,6 @@ private:
     float radius;
     int m, n;
 public:
-    constexpr static double PI = 3.141592653589793238463;
     sphere(glm::vec3 center, float radius, int m, int n);
     virtual ~sphere();
     glm::vec3 normal(float u, float v);

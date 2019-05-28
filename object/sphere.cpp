@@ -28,8 +28,8 @@ void sphere::draw(glm::vec3 pos, glm::vec3 di) const
     float xx = pos.x + center.x;
     float yy = pos.y + center.y;
     float zz = pos.z + center.z;
-    float step_z = static_cast<float>(PI) / m;
-    float step_xy = 2 * static_cast<float>(PI) / n;
+    float step_z = PI / m;
+    float step_xy = 2 * PI / n;
     float x[4], y[4], z[4];
 
     float angle_z = 0.0;
@@ -86,5 +86,5 @@ void sphere::scale()
 
 intersection sphere::intersect(ray &in) const
 {
-    return intersection(false, nullptr, glm::vec3(), glm::vec3());
+    return intersection(-1, nullptr, glm::vec3(), glm::vec3());
 }

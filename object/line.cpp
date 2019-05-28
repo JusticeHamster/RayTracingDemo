@@ -55,8 +55,9 @@ inline std::optional<float> __t(float left, float right) {
 intersection line::intersect(ray &in) const
 {
     if (in.is_end()) {
-        return intersection(false, nullptr, glm::vec3(), glm::vec3());
+        return intersection(-1, nullptr, glm::vec3(), glm::vec3());
     }
+    /* not implemented
     auto right = start - in.start;
     auto left = right + in.end - end;
     auto t1 = __t(left.x, right.x);
@@ -64,11 +65,14 @@ intersection line::intersect(ray &in) const
     auto t3 = __t(left.z, right.z);
     if (t1 == t2 && t2 == t3) {
         if (!t1)
-            return intersection(false, nullptr, glm::vec3(), glm::vec3());
+            return intersection(-1, nullptr, glm::vec3(), glm::vec3());
         float t = *t1;
         if (t < 0 || t > 1)
-            return intersection(false, nullptr, glm::vec3(), glm::vec3());
-        return intersection(true, nullptr, start + t * right, glm::vec3());
+            return intersection(-1, nullptr, glm::vec3(), glm::vec3());
+        auto light = glm::vec3();
+        // calculate the light
+        return intersection(t, nullptr, start + t * right, light / (2 * PI));
     }
-    return intersection(false, nullptr, glm::vec3(), glm::vec3());
+    */
+    return intersection(-1, nullptr, glm::vec3(), glm::vec3());
 }

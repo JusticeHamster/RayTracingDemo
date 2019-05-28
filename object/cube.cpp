@@ -75,5 +75,5 @@ void cube::scale()
 
 intersection cube::intersect(ray &in) const
 {
-    return intersection(false, nullptr, glm::vec3(), glm::vec3());
+    return intersection(-1, nullptr, glm::vec3(), glm::vec3());
 }

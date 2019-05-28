@@ -8,6 +8,7 @@
 class shape: public transformable, public blockable, public drawable
 {
 public:
+    constexpr static float PI = 3.141592653589793238463f;
     virtual ~shape() {}
 };
 
