@@ -38,7 +38,37 @@ void line::scale()
 
 }
 
+#include <optional>
+#include <cstdlib>
+
+inline bool is_equal(float x, float y)
+{
+  constexpr float epsilon = 1e-5f;
+  return std::abs(x - y) <= epsilon * std::abs(x);
+}
+
+inline std::optional<float> __t(float left, float right) {
+    return is_equal(left, 0) ? std::nullopt : std::optional<float>(right / left);
+}
+
+// (1 - t) * s + t * e { 0 <= t <= 1 }
 intersection line::intersect(ray &in) const
 {
+    if (in.is_end()) {
+        return intersection(false, nullptr, glm::vec3(), glm::vec3());
+    }
+    auto right = start - in.start;
+    auto left = right + in.end - end;
+    auto t1 = __t(left.x, right.x);
+    auto t2 = __t(left.y, right.y);
+    auto t3 = __t(left.z, right.z);
+    if (t1 == t2 && t2 == t3) {
+        if (!t1)
+            return intersection(false, nullptr, glm::vec3(), glm::vec3());
+        float t = *t1;
+        if (t < 0 || t > 1)
+            return intersection(false, nullptr, glm::vec3(), glm::vec3());
+        return intersection(true, nullptr, start + t * right, glm::vec3());
+    }
     return intersection(false, nullptr, glm::vec3(), glm::vec3());
 }

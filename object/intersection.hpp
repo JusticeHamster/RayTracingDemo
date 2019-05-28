@@ -19,6 +19,7 @@ public:
         bool is_intersect, std::shared_ptr<ray_distribution> out,
         glm::vec3 point, glm::vec3 stop_energy
     );
+    bool operator()() const;
 };
 
 #endif // INTERSECTION_HPP

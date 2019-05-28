@@ -8,3 +8,8 @@ intersection::intersection(bool is_intersect,
 {
     ;
 }
+
+bool intersection::operator()() const
+{
+    return is_intersect;
+}
