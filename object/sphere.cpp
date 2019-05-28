@@ -1,6 +1,5 @@
 #include "sphere.hpp"
 #include "ray.hpp"
-#include "intersection.hpp"
 
 #include <optional>
 #include <cstdlib>
@@ -84,7 +83,7 @@ void sphere::scale()
 
 }
 
-intersection sphere::intersect(ray &in) const
+float sphere::intersect(ray &in) const
 {
-    return intersection(-1, nullptr, glm::vec3(), glm::vec3());
+    return -1;
 }

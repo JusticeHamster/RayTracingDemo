@@ -1,9 +1,9 @@
 #include "intersection.hpp"
 
-intersection::intersection(float t,
+intersection::intersection(bool stop,
     std::shared_ptr<ray_distribution> out,
     glm::vec3 point, glm::vec3 stop_energy
-): t(t), out(out), point(point),
+): stop(stop), out(out), point(point),
     stop_energy(stop_energy)
 {
     ;
@@ -11,5 +11,5 @@ intersection::intersection(float t,
 
 bool intersection::operator()() const
 {
-    return t > 0;
+    return stop;
 }

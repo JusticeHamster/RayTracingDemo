@@ -27,7 +27,7 @@ public:
     void rotate();
     void move();
     void scale();
-    intersection intersect(ray &in) const;
+    float intersect(ray &in) const;
 };
 
 #endif // MODEL_HPP

@@ -1,6 +1,5 @@
 #include "line.hpp"
 #include "ray.hpp"
-#include "intersection.hpp"
 
 #include "opengl/opengl_header.hpp"
 
@@ -52,12 +51,11 @@ inline std::optional<float> __t(float left, float right) {
 }
 
 // (1 - t) * s + t * e { 0 <= t <= 1 }
-intersection line::intersect(ray &in) const
+float line::intersect(ray &in) const
 {
     if (in.is_end()) {
-        return intersection(-1, nullptr, glm::vec3(), glm::vec3());
+        return -1;
     }
-    /* not implemented
     auto right = start - in.start;
     auto left = right + in.end - end;
     auto t1 = __t(left.x, right.x);
@@ -65,14 +63,11 @@ intersection line::intersect(ray &in) const
     auto t3 = __t(left.z, right.z);
     if (t1 == t2 && t2 == t3) {
         if (!t1)
-            return intersection(-1, nullptr, glm::vec3(), glm::vec3());
+            return -1;
         float t = *t1;
         if (t < 0 || t > 1)
-            return intersection(-1, nullptr, glm::vec3(), glm::vec3());
-        auto light = glm::vec3();
-        // calculate the light
-        return intersection(t, nullptr, start + t * right, light / (2 * PI));
+            return -1;
+        return t;
     }
-    */
-    return intersection(-1, nullptr, glm::vec3(), glm::vec3());
+    return -1;
 }

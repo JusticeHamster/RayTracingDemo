@@ -19,7 +19,7 @@ public:
     virtual void rotate();
     virtual void move();
     virtual void scale();
-    virtual intersection intersect(ray &in) const;
+    virtual float intersect(ray &in) const;
 };
 
 #endif // SPHERE_HPP
