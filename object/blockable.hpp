@@ -1,9 +1,8 @@
 #ifndef BLOCKABLE_HPP
 #define BLOCKABLE_HPP
 
-#include "intersection.hpp"
-
 class ray;
+class intersection;
 
 class blockable
 {

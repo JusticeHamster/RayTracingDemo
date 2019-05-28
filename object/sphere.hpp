@@ -1,8 +1,9 @@
 #ifndef SPHERE_HPP
 #define SPHERE_HPP
 
-#include "shape.hpp"
 #include "glm/glm.hpp"
+
+#include "shape.hpp"
 
 class sphere: public shape
 {

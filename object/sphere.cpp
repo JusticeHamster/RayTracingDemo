@@ -1,4 +1,6 @@
 #include "sphere.hpp"
+#include "ray.hpp"
+#include "intersection.hpp"
 
 #include <optional>
 #include <cstdlib>

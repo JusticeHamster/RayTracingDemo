@@ -1,4 +1,7 @@
 #include "model.hpp"
+#include "shape.hpp"
+#include "ray.hpp"
+#include "intersection.hpp"
 
 #include <optional>
 

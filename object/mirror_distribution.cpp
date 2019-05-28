@@ -1,4 +1,5 @@
 #include "mirror_distribution.hpp"
+#include "ray.hpp"
 
 mirror_distribution::~mirror_distribution()
 {

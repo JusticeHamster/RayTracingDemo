@@ -3,9 +3,9 @@
 
 #include <vector>
 
-#include "ray.hpp"
-
 #include "glm/glm.hpp"
+
+class ray;
 
 class ray_distribution
 {

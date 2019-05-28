@@ -1,4 +1,6 @@
 #include "cube.hpp"
+#include "ray.hpp"
+#include "intersection.hpp"
 
 #include "opengl/opengl_header.hpp"
 

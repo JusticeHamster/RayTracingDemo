@@ -6,10 +6,11 @@
 
 #include "glm/glm.hpp"
 
-#include "shape.hpp"
 #include "drawable.hpp"
 #include "blockable.hpp"
 #include "transformable.hpp"
+
+class shape;
 
 class model: public drawable, public blockable, public transformable
 {

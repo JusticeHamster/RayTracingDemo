@@ -1,4 +1,5 @@
 #include "diffuse_distribution.hpp"
+#include "ray.hpp"
 
 diffuse_distribution::~diffuse_distribution()
 {
