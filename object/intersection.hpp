@@ -10,13 +10,13 @@ class ray_distribution;
 class intersection
 {
 private:
-    bool is_intersect;
+    bool stop;
     std::shared_ptr<ray_distribution> out;
     glm::vec3 point;
     glm::vec3 stop_energy;
 public:
     intersection(
-        bool is_intersect, std::shared_ptr<ray_distribution> out,
+        bool stop, std::shared_ptr<ray_distribution> out,
         glm::vec3 point, glm::vec3 stop_energy
     );
     bool operator()() const;

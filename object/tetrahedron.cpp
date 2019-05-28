@@ -1,6 +1,5 @@
 #include "tetrahedron.hpp"
 #include "ray.hpp"
-#include "intersection.hpp"
 
 #include "opengl/opengl_header.hpp"
 
@@ -81,7 +80,7 @@ void tetrahedron::scale()
 
 }
 
-intersection tetrahedron::intersect(ray &in) const
+float tetrahedron::intersect(ray &in) const
 {
-    return intersection(false, nullptr, glm::vec3(), glm::vec3());
+    return -1;
 }

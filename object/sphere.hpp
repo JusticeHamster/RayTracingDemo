@@ -12,7 +12,6 @@ private:
     float radius;
     int m, n;
 public:
-    constexpr static double PI = 3.141592653589793238463;
     sphere(glm::vec3 center, float radius, int m, int n);
     virtual ~sphere();
     glm::vec3 normal(float u, float v);
@@ -20,7 +19,7 @@ public:
     virtual void rotate();
     virtual void move();
     virtual void scale();
-    virtual intersection intersect(ray &in) const;
+    virtual float intersect(ray &in) const;
 };
 
 #endif // SPHERE_HPP

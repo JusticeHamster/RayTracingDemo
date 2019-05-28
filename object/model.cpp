@@ -1,7 +1,6 @@
 #include "model.hpp"
 #include "shape.hpp"
 #include "ray.hpp"
-#include "intersection.hpp"
 
 #include <optional>
 
@@ -39,7 +38,7 @@ void model::scale()
 
 }
 
-intersection model::intersect(ray &in) const
+float model::intersect(ray &in) const
 {
-    return intersection(false, nullptr, glm::vec3(), glm::vec3());
+    return -1;
 }
