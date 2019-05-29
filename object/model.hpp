@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <memory>
+#include <tuple>
+#include <optional>
 
 #include "glm/glm.hpp"
 
@@ -24,13 +26,14 @@ private:
     bool illuminated;
     glm::vec3 light;
 public:
+    using intersect_result = std::tuple<float, std::optional<std::reference_wrapper<shape> > >;
     model(std::vector<std::shared_ptr<shape> > shapes, glm::vec3 position, glm::vec3 direction, bool illuminated, glm::vec3 light);
     virtual ~model();
     void draw(glm::vec3 pos, glm::vec3 di) const;
     void rotate();
     void move();
     void scale();
-    float intersect(ray &in) const;
+    intersect_result intersect(ray &in) const;
     intersection BRDF(ray &in) const;
 };
 

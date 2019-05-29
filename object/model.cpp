@@ -4,8 +4,6 @@
 #include "intersection.hpp"
 #include "tools/loader.hpp"
 
-#include <optional>
-
 model::model(std::vector<std::shared_ptr<shape> > shapes, glm::vec3 position,
     glm::vec3 direction, bool illuminated, glm::vec3 light): ldr(loader::instance),
     position(position), direction(direction), illuminated(illuminated), light(light)
@@ -40,17 +38,20 @@ void model::scale()
 
 }
 
-float model::intersect(ray &in) const
+model::intersect_result model::intersect(ray &in) const
 {
+    std::optional<std::reference_wrapper<shape> > intersect_shape;
     std::optional<float> min;
     for (const auto &s : shapes) {
         float t = s->intersect(in);
-        if (t > 0 && (!min || t < *min))
+        if (t > 0 && (!min || t < *min)) {
             min = t;
+            intersect_shape = *s;
+        }
     }
     if (min)
-        return *min;
-    return -1;
+        return {*min, intersect_shape};
+    return {-1, std::nullopt};
 }
 
 intersection model::BRDF(ray &in) const
