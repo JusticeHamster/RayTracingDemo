@@ -1,6 +1,6 @@
 #include "loader.hpp"
 
-#include "scene.hpp"
+#include "not_running_exception.hpp"
 
 loader loader::instance;
 
@@ -16,5 +16,13 @@ scene &loader::get_scene(std::string name)
         return *scn;
     // 加载场景
     scn = scene(name);
+    return *scn;
+}
+
+scene &loader::get_running_scene()
+{
+    if (!scn) {
+        throw not_running_exception("scene not loaded now.");
+    }
     return *scn;
 }

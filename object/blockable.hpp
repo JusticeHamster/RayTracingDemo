@@ -6,7 +6,7 @@ class ray;
 class blockable
 {
 public:
-    virtual ~blockable() {}
+    virtual ~blockable();
     virtual float intersect(ray &in) const = 0;
 };
 

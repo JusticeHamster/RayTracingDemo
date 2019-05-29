@@ -59,7 +59,12 @@ SOURCES += \
     main/renderer.cpp \
     glm/detail/glm.cpp \
     stb/stb_image.cpp \
-    tools/thin_lens_camera.cpp
+    tools/thin_lens_camera.cpp \
+    tools/not_running_exception.cpp \
+    object/blockable.cpp \
+    object/drawable.cpp \
+    object/shape.cpp \
+    object/transformable.cpp
 
 HEADERS += \
     object/blockable.hpp \
@@ -86,7 +91,8 @@ HEADERS += \
     main/renderer.hpp \
     main/mainwindow.hpp \
     stb/stb_image.h \
-    tools/thin_lens_camera.hpp
+    tools/thin_lens_camera.hpp \
+    tools/not_running_exception.hpp
 
 FORMS += \
     main/mainwindow.ui

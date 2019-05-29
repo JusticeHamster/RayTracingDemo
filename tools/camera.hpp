@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "object/ray.hpp"
+class ray;
 
 class camera
 {
@@ -11,6 +11,7 @@ protected:
     unsigned width, height;
     camera(unsigned width, unsigned height);
 public:
+    virtual ~camera();
     virtual std::vector<ray> ray_generation() = 0;
 };
 

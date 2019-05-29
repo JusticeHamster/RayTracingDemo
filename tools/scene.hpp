@@ -4,7 +4,10 @@
 #include <string>
 #include <vector>
 
-#include "object/model.hpp"
+#include "glm/glm.hpp"
+
+class model;
+class line;
 
 class scene
 {
@@ -15,6 +18,7 @@ private:
 public:
     scene(std::string name);
     void draw();
+    glm::vec3 power(line norm) const;
 };
 
 #endif // SCENE_HPP

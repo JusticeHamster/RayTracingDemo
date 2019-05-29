@@ -4,6 +4,7 @@
 #include "object/cube.hpp"
 #include "object/tetrahedron.hpp"
 #include "object/line.hpp"
+#include "object/model.hpp"
 
 scene::scene(std::string name): name(name)
 {
@@ -27,4 +28,9 @@ void scene::draw()
     for (const model &m : models) {
         m.draw(glm::vec3(), glm::vec3());
     }
+}
+
+glm::vec3 scene::power(line norm) const
+{
+    return {};
 }

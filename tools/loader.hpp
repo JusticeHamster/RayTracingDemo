@@ -17,6 +17,7 @@ private:
 public:
     static loader instance;
     scene &get_scene(std::string name);
+    scene &get_running_scene();
 };
 
 #endif // LOADER_HPP

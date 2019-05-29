@@ -6,7 +6,7 @@
 class drawable
 {
 public:
-    virtual ~drawable() {}
+    virtual ~drawable();
     virtual void draw(glm::vec3 pos, glm::vec3 di) const = 0;
 };
 

@@ -1,6 +1,7 @@
 #include "model.hpp"
 #include "shape.hpp"
 #include "ray.hpp"
+#include "intersection.hpp"
 
 #include <optional>
 
@@ -40,5 +41,18 @@ void model::scale()
 
 float model::intersect(ray &in) const
 {
+    std::optional<float> min;
+    for (const auto &s : shapes) {
+        float t = s->intersect(in);
+        if (t > 0 && (!min || t < *min))
+            min = t;
+    }
+    if (min)
+        return *min;
     return -1;
+}
+
+intersection model::BRDF(ray &in) const
+{
+
 }

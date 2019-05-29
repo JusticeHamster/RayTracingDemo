@@ -5,7 +5,6 @@
 #include <cstdlib>
 
 #include "glm/glm.hpp"
-
 #include "opengl/opengl_header.hpp"
 
 sphere::sphere(glm::vec3 center, float radius, int m, int n):
@@ -87,8 +86,7 @@ void sphere::scale()
 
 float sphere::intersect(ray &in) const
 {
-    glm::vec3 v1(3, 7, 8); // 方向向量
-    v1 = glm::normalize(v1); // 单位化
+    glm::vec3 v1 = glm::normalize(glm::vec3(3, 7, 8)); // 单位化方向向量
     glm::vec3 v2(7-1, 4-2, 5-3); // 空间点方向向量
     float dst = glm::length(glm::cross(v1, v2));
     return -1;

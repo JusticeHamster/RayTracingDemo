@@ -10,9 +10,12 @@
 #include "blockable.hpp"
 #include "transformable.hpp"
 
-class shape;
+#include "tools/loader.hpp"
 
-class model: public drawable, public blockable, public transformable
+class shape;
+class intersection;
+
+class model: public drawable, public transformable
 {
 private:
     std::vector<std::shared_ptr<shape> > shapes;
@@ -28,6 +31,7 @@ public:
     void move();
     void scale();
     float intersect(ray &in) const;
+    intersection BRDF(ray &in) const;
 };
 
 #endif // MODEL_HPP
