@@ -4,9 +4,10 @@
 #include <optional>
 #include <cstdlib>
 
+#include "glm/glm.hpp"
+
 #include "opengl/opengl_header.hpp"
-#include <Eigen/Dense>
-#include <QtDebug>
+
 sphere::sphere(glm::vec3 center, float radius, int m, int n):
     center(center), radius(radius), m(m), n(n)
 {
@@ -86,10 +87,9 @@ void sphere::scale()
 
 float sphere::intersect(ray &in) const
 {
-    Eigen::Vector4d vec1(3,7,8,0);//方向向量
-    vec1.normalize() ;//单位化
-    Eigen::Vector4d vec2(7-1,4-2,5-3, 0);// 空间点方向向量
-    double dst = vec1.cross3(vec2).squaredNorm() ;
-    double d=sqrt(dst);
+    glm::vec3 v1(3, 7, 8); // 方向向量
+    v1 = glm::normalize(v1); // 单位化
+    glm::vec3 v2(7-1, 4-2, 5-3); // 空间点方向向量
+    float dst = glm::length(glm::cross(v1, v2));
     return -1;
 }

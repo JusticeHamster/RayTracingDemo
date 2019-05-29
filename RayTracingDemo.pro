@@ -20,8 +20,6 @@ macx {
     QMAKE_CXX    = /usr/bin/clang++
 
     INCLUDEPATH += /usr/local/include
-    # EIGEN(Please enter at the terminal: brew install Eigen)
-    INCLUDEPATH += /usr/local/Cellar/eigen/3.3.7/include/eigen3
     LIBS        += -L/usr/local/lib
 }
 
