@@ -3,7 +3,7 @@
 
 #include <vector>
 
-class ray;
+#include "object/ray.hpp"
 
 class camera
 {

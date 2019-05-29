@@ -10,14 +10,14 @@
 #include "blockable.hpp"
 #include "transformable.hpp"
 
-#include "tools/loader.hpp"
-
 class shape;
 class intersection;
+class loader;
 
 class model: public drawable, public transformable
 {
 private:
+    const loader &ldr;
     std::vector<std::shared_ptr<shape> > shapes;
     glm::vec3 position;
     glm::vec3 direction;

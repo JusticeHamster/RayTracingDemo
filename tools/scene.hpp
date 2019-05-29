@@ -6,7 +6,8 @@
 
 #include "glm/glm.hpp"
 
-class model;
+#include "object/model.hpp"
+
 class line;
 
 class scene

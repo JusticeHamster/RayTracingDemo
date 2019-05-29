@@ -2,11 +2,12 @@
 #include "shape.hpp"
 #include "ray.hpp"
 #include "intersection.hpp"
+#include "tools/loader.hpp"
 
 #include <optional>
 
 model::model(std::vector<std::shared_ptr<shape> > shapes, glm::vec3 position,
-    glm::vec3 direction, bool illuminated, glm::vec3 light):
+    glm::vec3 direction, bool illuminated, glm::vec3 light): ldr(loader::instance),
     position(position), direction(direction), illuminated(illuminated), light(light)
 {
     shapes.swap(this->shapes);
