@@ -19,6 +19,5 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_start_clicked()
 {
-    scene scn = ldr.get_scene("base");
-    r.render(scn);
+    r.render(ldr.get_scene("base"));
 }

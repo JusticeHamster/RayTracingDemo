@@ -37,6 +37,7 @@ public:
     void rotate();
     void move();
     void scale();
+    bool is_light() const;
     intersect_result intersect(ray &in) const;
     intersection BRDF(ray &in, intersect_result ir) const;
 };

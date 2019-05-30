@@ -5,6 +5,8 @@
 
 #include "object/ray.hpp"
 
+class model;
+
 class camera
 {
 protected:
@@ -13,6 +15,7 @@ protected:
 public:
     virtual ~camera();
     virtual std::vector<ray> ray_generation() = 0;
+    model object(glm::vec3 position, glm::vec3 direction) const;
 };
 
 #endif // CAMERA_HPP

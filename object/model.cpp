@@ -40,12 +40,17 @@ void model::scale()
 
 }
 
+bool model::is_light() const
+{
+    return illuminated;
+}
+
 model::intersect_result model::intersect(ray &in) const
 {
     std::optional<std::reference_wrapper<const shape> > intersect_shape;
     std::optional<float> min;
     for (const auto &s : shapes) {
-        float t = s->intersect(in);
+        float t = s->ray_intersect(in);
         if (t > 0 && (!min || t < *min)) {
             min = t;
             intersect_shape = *s;

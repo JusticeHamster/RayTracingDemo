@@ -20,6 +20,8 @@ public:
     scene(std::string name);
     void draw();
     glm::vec3 power(line norm) const;
+    void push(model m);
+    int object_count() const;
 };
 
 #endif // SCENE_HPP

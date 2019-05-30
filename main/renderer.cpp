@@ -18,6 +18,9 @@ void renderer::__render(scene &scn)
     if (!render_lock.try_lock()) {
         return;
     }
+    // add camera object
+    glm::vec3 position(2, 2, 2);
+    scn.push(cmr.object(position, -position));
     //
     render_lock.unlock();
 }
