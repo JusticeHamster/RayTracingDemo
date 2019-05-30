@@ -18,9 +18,9 @@ sphere::~sphere()
 
 }
 
-glm::vec3 sphere::normal(float u, float v)
+glm::vec3 sphere::normal(glm::vec3 point) const
 {
-    return glm::vec3(u, v, 0);
+    return glm::normalize(point - center);
 }
 
 void sphere::draw(glm::vec3 pos, glm::vec3 di) const

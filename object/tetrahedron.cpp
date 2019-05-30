@@ -13,6 +13,11 @@ tetrahedron::~tetrahedron()
 
 }
 
+glm::vec3 tetrahedron::normal(glm::vec3 point) const
+{
+    return point;
+}
+
 void tetrahedron::draw(glm::vec3 pos, glm::vec3 di) const
 {
     glBegin(GL_QUADS);

@@ -13,6 +13,11 @@ cube::~cube()
 
 }
 
+glm::vec3 cube::normal(glm::vec3 point) const
+{
+    return point;
+}
+
 void cube::draw(glm::vec3 pos, glm::vec3 di) const
 {
     glBegin(GL_QUAD_STRIP);         //填充凸多边形

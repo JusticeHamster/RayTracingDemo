@@ -26,7 +26,7 @@ private:
     bool illuminated;
     glm::vec3 light;
 public:
-    using intersect_result = std::tuple<float, std::optional<std::reference_wrapper<shape> > >;
+    using intersect_result = std::tuple<std::optional<std::reference_wrapper<const shape> >, float>;
     model(std::vector<std::shared_ptr<shape> > shapes, glm::vec3 position, glm::vec3 direction, bool illuminated, glm::vec3 light);
     virtual ~model();
     void draw(glm::vec3 pos, glm::vec3 di) const;
@@ -34,7 +34,7 @@ public:
     void move();
     void scale();
     intersect_result intersect(ray &in) const;
-    intersection BRDF(ray &in) const;
+    intersection BRDF(ray &in, intersect_result ir) const;
 };
 
 #endif // MODEL_HPP

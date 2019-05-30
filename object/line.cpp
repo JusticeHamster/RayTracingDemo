@@ -13,6 +13,11 @@ line::~line()
 
 }
 
+glm::vec3 line::normal(glm::vec3 point) const
+{
+    return point;
+}
+
 void line::draw(glm::vec3 pos, glm::vec3 di) const
 {
     glColor3f(0, 0, 0);
@@ -70,4 +75,9 @@ float line::intersect(ray &in) const
         return t;
     }
     return -1;
+}
+
+glm::vec3 line::point(float t)
+{
+    return start + t * (end - start);
 }

@@ -40,7 +40,7 @@ void model::scale()
 
 model::intersect_result model::intersect(ray &in) const
 {
-    std::optional<std::reference_wrapper<shape> > intersect_shape;
+    std::optional<std::reference_wrapper<const shape> > intersect_shape;
     std::optional<float> min;
     for (const auto &s : shapes) {
         float t = s->intersect(in);
@@ -49,12 +49,20 @@ model::intersect_result model::intersect(ray &in) const
             intersect_shape = *s;
         }
     }
-    if (min)
-        return {*min, intersect_shape};
-    return {-1, std::nullopt};
+    return {intersect_shape, min ? *min : 0};
 }
 
-intersection model::BRDF(ray &in) const
+intersection model::BRDF(ray &in, intersect_result ir) const
 {
-
+    auto [optional_shape_reference, t] = ir;
+    if (!optional_shape_reference)
+        return intersection(true, nullptr, glm::vec3(), glm::vec3());
+    const shape &s = optional_shape_reference->get();
+    glm::vec3 norm = s.normal(in.point(t));
+    if (in.is_end()) {
+        // 计算光照
+        return intersection(true, nullptr, glm::vec3(), glm::vec3());
+    } else {
+        ;
+    }
 }
