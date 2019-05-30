@@ -3,7 +3,16 @@
 
 #include "opengl/opengl_header.hpp"
 
-line::line(glm::vec3 start, glm::vec3 end): start(start), end(end)
+line::line(glm::vec3 start, glm::vec3 direction, bool is_ray): is_ray(is_ray), start(start)
+{
+    if (is_ray) {
+        end = glm::normalize(direction);
+    } else {
+        end = direction;
+    }
+}
+
+line::line(glm::vec3 start, glm::vec3 end): line(start, end, false)
 {
 
 }
@@ -79,5 +88,7 @@ float line::intersect(ray &in) const
 
 glm::vec3 line::point(float t)
 {
+    if (is_ray)
+        return start + t * end;
     return start + t * (end - start);
 }

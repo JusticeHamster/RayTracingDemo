@@ -7,8 +7,10 @@
 class line: public shape
 {
 private:
+    bool is_ray;
     glm::vec3 start, end;
 public:
+    line(glm::vec3 start, glm::vec3 direction, bool is_ray);
     line(glm::vec3 start, glm::vec3 end);
     virtual ~line();
     virtual glm::vec3 normal(glm::vec3 point) const;

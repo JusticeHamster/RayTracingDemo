@@ -27,6 +27,10 @@ private:
     glm::vec3 light;
 public:
     using intersect_result = std::tuple<std::optional<std::reference_wrapper<const shape> >, float>;
+    enum Distribution {
+        diffuse, mirror
+    };
+
     model(std::vector<std::shared_ptr<shape> > shapes, glm::vec3 position, glm::vec3 direction, bool illuminated, glm::vec3 light);
     virtual ~model();
     void draw(glm::vec3 pos, glm::vec3 di) const;
