@@ -7,15 +7,12 @@
 #include "glm/glm.hpp"
 #include "opengl/opengl_header.hpp"
 
-sphere::sphere(glm::vec3 center, float radius, int m, int n):
-    center(center), radius(radius), m(m), n(n)
+sphere::sphere(glm::vec3 center, float radius, int m, int n) : center(center), radius(radius), m(m), n(n)
 {
-
 }
 
 sphere::~sphere()
 {
-
 }
 
 glm::vec3 sphere::normal(glm::vec3 point) const
@@ -36,11 +33,11 @@ void sphere::draw(glm::vec3 pos, glm::vec3 di) const
     float angle_xy = 0.0;
     int i = 0, j = 0;
     glBegin(GL_QUADS);
-    for(i = 0; i < m; i++)
+    for (i = 0; i < m; i++)
     {
         angle_z = i * step_z;
 
-        for(j = 0; j < n; j++)
+        for (j = 0; j < n; j++)
         {
             angle_xy = j * step_xy;
 
@@ -59,7 +56,7 @@ void sphere::draw(glm::vec3 pos, glm::vec3 di) const
             x[3] = radius * sin(angle_z) * cos(angle_xy + step_xy);
             y[3] = radius * sin(angle_z) * sin(angle_xy + step_xy);
             z[3] = radius * cos(angle_z);
-            for(int k = 0; k < 4; k++)
+            for (int k = 0; k < 4; k++)
             {
                 glColor3f(sin(angle_z), cos(angle_z), tan(angle_z));
                 glVertex3f(xx + x[k], yy + y[k], zz + z[k]);
@@ -71,23 +68,32 @@ void sphere::draw(glm::vec3 pos, glm::vec3 di) const
 
 void sphere::rotate()
 {
-
 }
 
 void sphere::move()
 {
-
 }
 
 void sphere::scale()
 {
-
 }
 
 float sphere::intersect(ray &in) const
 {
-    glm::vec3 v1 = glm::normalize(glm::vec3(3, 7, 8)); // 单位化方向向量
-    glm::vec3 v2(7-1, 4-2, 5-3); // 空间点方向向量
-    float dst = glm::length(glm::cross(v1, v2));
-    return -1;
+    glm::vec3 dect = glm::normalize(in.direction());
+    auto t = dect * dect;
+    auto a = t.x + t.y + t.z;
+    t = (in.start_point() - center) * in.direction();
+    auto b = 2 * (t.x + t.y + t.z);
+    t = in.start_point() - center;
+    t *= t;
+    auto c = t.x + t.y + t.z - radius * radius;
+    auto delt = b * b - 4 * a * c;
+    if (delt < 0)
+        return -1;
+    else
+    {
+        auto t = glm::max(-b / 2 / a + glm::sqrt(delt), -b / 2 / a - glm::sqrt(delt));
+        return t >= 0 ? t : -1;
+    }
 }
