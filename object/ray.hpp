@@ -17,6 +17,7 @@ public:
     ray(glm::vec3 start, glm::vec3 direction, glm::vec3 rgb, glm::vec2 image_position, double weight, unsigned time);
     virtual ~ray();
     bool is_end() const;
+    glm::vec3 direction() const;
     void intersect_one_time();
 };
 

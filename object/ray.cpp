@@ -17,6 +17,11 @@ bool ray::is_end() const
     return time >= max_scattering_time;
 }
 
+glm::vec3 ray::direction() const
+{
+    return end_point_or_direction();
+}
+
 void ray::intersect_one_time()
 {
     time++;
