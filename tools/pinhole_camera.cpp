@@ -10,7 +10,7 @@ pinhole_camera::~pinhole_camera()
 
 }
 
-std::vector<ray> pinhole_camera::ray_generation()
+std::vector<ray> pinhole_camera::ray_generation() const
 {
     return {};
 }

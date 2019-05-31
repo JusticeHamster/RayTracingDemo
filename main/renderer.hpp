@@ -3,6 +3,7 @@
 
 #include <QMutex>
 #include <optional>
+#include <queue>
 
 #include "tools/image.hpp"
 #include "tools/scene.hpp"
@@ -15,6 +16,7 @@ private:
 
     QMutex render_lock;
 
+    void __render(std::queue<ray> rays);
     void __render(scene &scn);
 
     image result;

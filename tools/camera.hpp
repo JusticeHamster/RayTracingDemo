@@ -14,7 +14,7 @@ protected:
     camera(unsigned width, unsigned height);
 public:
     virtual ~camera();
-    virtual std::vector<ray> ray_generation() = 0;
+    virtual std::vector<ray> ray_generation() const = 0;
     model object(glm::vec3 position, glm::vec3 direction) const;
 };
 

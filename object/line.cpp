@@ -67,9 +67,6 @@ inline std::optional<float> __t(float left, float right) {
 // (1 - t) * s + t * e { 0 <= t <= 1 }
 float line::intersect(ray &in) const
 {
-    if (in.is_end()) {
-        return -1;
-    }
     // not implemented
     return -1;
 }
