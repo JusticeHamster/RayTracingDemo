@@ -70,19 +70,7 @@ float line::intersect(ray &in) const
     if (in.is_end()) {
         return -1;
     }
-    auto right = start - in.start;
-    auto left = right + in.end - end;
-    auto t1 = __t(left.x, right.x);
-    auto t2 = __t(left.y, right.y);
-    auto t3 = __t(left.z, right.z);
-    if (t1 == t2 && t2 == t3) {
-        if (!t1)
-            return -1;
-        float t = *t1;
-        if (t < 0 || t > 1)
-            return -1;
-        return t;
-    }
+    // not implemented
     return -1;
 }
 
