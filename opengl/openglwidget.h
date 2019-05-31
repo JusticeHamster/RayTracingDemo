@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include <QGLWidget>
+#include <QtCore>
+#include <memory>
 #include <vector>
 
 #include "tools/loader.hpp"
@@ -11,6 +13,7 @@ class OpenGLWidget : public QGLWidget {
     Q_OBJECT
 public:
     explicit OpenGLWidget(QWidget *parent = nullptr);
+    virtual ~OpenGLWidget();
 
 protected:
     void initializeGL();
@@ -18,7 +21,11 @@ protected:
     void paintGL();
 
 private:
-    loader &ldr = loader::instance;
+    loader &ldr;
+    std::unique_ptr<QTimer> timer;
+
+private slots:
+    void timer_update();
 };
 
 #endif // OPENGLWIDGET_H

@@ -1,10 +1,17 @@
 #include "openglwidget.h"
 #include "opengl_header.hpp"
 
-#include <QDebug>
-#include <iostream>
+OpenGLWidget::OpenGLWidget(QWidget *parent) : QGLWidget(parent), ldr(loader::instance) {
+    timer = std::make_unique<QTimer>(this);
+    connect(timer.get(), SIGNAL(timeout()), this, SLOT(timer_update()));
+    timer->start(1000 / ldr.get_fps());
 
-OpenGLWidget::OpenGLWidget(QWidget *parent) : QGLWidget(parent) {
+    ldr.get_scene("base").hello();
+}
+
+OpenGLWidget::~OpenGLWidget()
+{
+    timer->stop();
 }
 
 void OpenGLWidget::initializeGL() {
@@ -34,5 +41,10 @@ void OpenGLWidget::paintGL() {
     glLoadIdentity(); // 恢复初始坐标系
 
     glMatrixMode(GL_MODELVIEW); // 设置投影矩阵
-    ldr.get_scene("base").draw();
+    ldr.get_running_scene().draw();
+}
+
+void OpenGLWidget::timer_update()
+{
+    updateGL();
 }

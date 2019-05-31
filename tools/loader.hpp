@@ -12,12 +12,14 @@ class loader
 private:
     loader();
     std::optional<scene> scn;
+    constexpr static int FPS = 60;
 
     QMutex lock;
 public:
     static loader instance;
     scene &get_scene(std::string name);
     scene &get_running_scene();
+    int get_fps() const;
 };
 
 #endif // LOADER_HPP

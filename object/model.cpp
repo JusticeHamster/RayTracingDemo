@@ -68,8 +68,8 @@ intersection model::BRDF(ray &in, intersect_result ir) const
     glm::vec3 intersect_point = in.point(t);
     glm::vec3 norm = s.normal(intersect_point);
     if (in.is_end()) {
-        // 计算stop_energy
-        return intersection(true, nullptr, intersect_point, {});
+        scene &scn = ldr.get().get_running_scene();
+        return intersection(true, nullptr, intersect_point, scn.power(line(intersect_point, norm, true)));
     }
     in.intersect_one_time();
     // 根据配置的表面信息选择ray_distribution

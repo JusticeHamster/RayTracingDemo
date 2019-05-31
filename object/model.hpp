@@ -19,7 +19,7 @@ class loader;
 class model: public drawable, public transformable
 {
 private:
-    const loader &ldr;
+    std::reference_wrapper<loader> ldr;
     std::vector<std::shared_ptr<shape> > shapes;
     glm::vec3 position;
     glm::vec3 direction;
@@ -28,7 +28,7 @@ private:
 public:
     using intersect_result = std::tuple<std::optional<std::reference_wrapper<const shape> >, float>;
     enum Distribution {
-        diffuse, mirror
+        diffuse, mirror, phone
     };
 
     model(std::vector<std::shared_ptr<shape> > shapes, glm::vec3 position, glm::vec3 direction, bool illuminated, glm::vec3 light);

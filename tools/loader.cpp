@@ -26,3 +26,8 @@ scene &loader::get_running_scene()
     }
     return *scn;
 }
+
+int loader::get_fps() const
+{
+    return FPS;
+}

@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <QMutex>
 
 #include "glm/glm.hpp"
 
@@ -16,11 +17,20 @@ private:
     std::string name;
     std::vector<model> models;
     std::vector<model> lights;
+
+    mutable QMutex lock;
 public:
     scene(std::string name);
-    void draw();
+    scene(const scene &scn);
+    scene(scene &&scn);
+    scene &operator=(const scene &scn);
+    scene &operator=(scene &&scn);
+
+    void hello() const;
+    void draw() const;
     glm::vec3 power(line norm) const;
     void push(model m);
+    void pop(int index);
     int object_count() const;
 };
 
