@@ -86,6 +86,21 @@ float line::intersect(ray &in) const
     return -1;
 }
 
+glm::vec3 line::start_point() const
+{
+    return start;
+}
+
+bool line::is_direction() const
+{
+    return is_ray;
+}
+
+glm::vec3 line::end_point_or_direction() const
+{
+    return end;
+}
+
 glm::vec3 line::point(float t)
 {
     if (is_ray)
