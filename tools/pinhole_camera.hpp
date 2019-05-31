@@ -8,7 +8,7 @@ class pinhole_camera : public camera
 public:
     pinhole_camera();
     virtual ~pinhole_camera();
-    std::vector<ray> ray_generation();
+    std::vector<ray> ray_generation() const;
 };
 
 #endif // PINHOLE_CAMERA_HPP

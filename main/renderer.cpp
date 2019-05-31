@@ -1,6 +1,5 @@
 #include "renderer.hpp"
 
-#include <chrono>
 #include <QDebug>
 
 #include "qtconcurrentrun.h"
@@ -10,7 +9,10 @@ renderer::renderer(const camera &cmr): cmr(cmr)
     ;
 }
 
-using namespace std::chrono_literals;
+void renderer::__render(std::queue<ray> rays)
+{
+    // render all the rays in queue<ray>
+}
 
 void renderer::__render(scene &scn)
 {
@@ -23,7 +25,11 @@ void renderer::__render(scene &scn)
     glm::vec3 position(2, 2, 2);
     int index = scn.object_count();
     scn.push(cmr.object(position, -position));
-    std::this_thread::sleep_for(10s);
+    auto rays = cmr.ray_generation();
+    std::queue<ray> q_rays;
+    for (auto &ray : rays)
+        q_rays.push(std::move(ray));
+    __render(q_rays);
     scn.pop(index);
     //
     render_lock.unlock();
