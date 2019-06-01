@@ -21,7 +21,4 @@ MainWindow::~MainWindow()
 void MainWindow::on_start_clicked()
 {
     r.render(ldr.get_scene("base"));
-    //if (r.is_rendering()) {
-    //    start_button->setText("rendering...");
-    //}
 }

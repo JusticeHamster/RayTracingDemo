@@ -16,7 +16,7 @@ private:
 
     QMutex render_lock;
 
-    void rays_render(std::queue<ray> rays);
+    void rays_render(std::queue<ray> &rays);
     void __render(scene &scn);
 
     image result;

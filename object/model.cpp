@@ -51,7 +51,7 @@ model::intersect_result model::intersect(ray &in) const
     std::optional<float> min;
     for (const auto &s : shapes) {
         float t = s->ray_intersect(in);
-        if (t > 0 && (!min || t < *min)) {
+        if (t >= 0 && (!min || t < *min)) {
             min = t;
             intersect_shape = *s;
         }
