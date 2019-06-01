@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
     r(pinhole_camera())
 {
     ui->setupUi(this);
+    start_button = findChild<QPushButton *>("start");
 }
 
 MainWindow::~MainWindow()
@@ -20,4 +21,7 @@ MainWindow::~MainWindow()
 void MainWindow::on_start_clicked()
 {
     r.render(ldr.get_scene("base"));
+    //if (r.is_rendering()) {
+    //    start_button->setText("rendering...");
+    //}
 }

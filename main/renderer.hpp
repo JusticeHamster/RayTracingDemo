@@ -16,15 +16,17 @@ private:
 
     QMutex render_lock;
 
-    void __render(std::queue<ray> rays);
+    void rays_render(std::queue<ray> rays);
     void __render(scene &scn);
 
     image result;
+    bool rendering = false;
 public:
     renderer(const renderer &r) = delete;
     renderer(const renderer &&r) = delete;
     renderer(const camera &cmr);
     void render(scene &scn);
+    bool is_rendering() const;
 };
 
 #endif // RENDERER_HPP

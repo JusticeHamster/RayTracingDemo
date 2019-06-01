@@ -13,8 +13,8 @@
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralWidget">
-   <widget class="OpenGLWidget" name="openGLWidget" native="true">
+  <widget class="QWidget" name="format">
+   <widget class="OpenGLWidget" name="openGL" native="true">
     <property name="geometry">
      <rect>
       <x>10</x>

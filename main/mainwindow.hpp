@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QPushButton>
 
 #include "renderer.hpp"
 #include "tools/loader.hpp"
@@ -23,6 +24,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    QPushButton *start_button;
     renderer r;
     loader &ldr = loader::instance;
 };
