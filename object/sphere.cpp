@@ -93,7 +93,16 @@ float sphere::intersect(ray &in) const
         return -1;
     else
     {
-        auto t = glm::max(-b / 2 / a + glm::sqrt(delt), -b / 2 / a - glm::sqrt(delt));
-        return t >= 0 ? t : -1;
+        auto t1 = -b / 2 / a + glm::sqrt(delt);
+        auto t2 = -b / 2 / a - glm::sqrt(delt);
+        if (t1*t2<0)
+            return glm::max(t1,t2);
+        else if (t1*t2==0)
+            return 0;
+        else if (t1<0 & t2<0)
+            return -1;
+        else
+            return glm::min(t1,t2);
+        
     }
 }
