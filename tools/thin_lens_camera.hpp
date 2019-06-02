@@ -6,7 +6,7 @@
 class thin_lens_camera: public camera
 {
 public:
-    thin_lens_camera();
+    thin_lens_camera(unsigned width, unsigned height, glm::vec3 position, glm::vec3 direction, glm::vec3 up = glm::vec3(0, 0, 1));
     virtual ~thin_lens_camera();
     std::vector<ray> ray_generation();
 };

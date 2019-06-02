@@ -9,7 +9,7 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    r(std::make_unique<pinhole_camera>())
+    r(std::make_unique<pinhole_camera>(3, 3, glm::vec3(-2), glm::vec3(2)))
 {
     ui->setupUi(this);
     start_button = findChild<QPushButton *>("start");

@@ -1,6 +1,7 @@
 #include "pinhole_camera.hpp"
 
-pinhole_camera::pinhole_camera(): camera(0, 0)
+pinhole_camera::pinhole_camera(unsigned width, unsigned height, glm::vec3 position, glm::vec3 direction, glm::vec3 up):
+    camera(width, height, position, direction, up)
 {
 
 }

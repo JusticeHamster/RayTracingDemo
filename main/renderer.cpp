@@ -52,8 +52,7 @@ void renderer::__render(scene &scn)
 {
     rendering = true;
     // add camera object
-    glm::vec3 position(2, 2, 2);
-    scn.push(cmr->object(position, -position));
+    scn.push(cmr->object());
     auto rays = cmr->ray_generation();
     std::queue<ray> q_rays;
     for (const ray &r : rays)
