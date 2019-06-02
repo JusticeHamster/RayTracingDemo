@@ -13,13 +13,14 @@
 class camera
 {
 private:
+    std::optional<model> obj;
+
     QMutex object_lock;
 protected:
     glm::vec3 position, direction, up;
     camera(unsigned width, unsigned height, glm::vec3 position, glm::vec3 direction, glm::vec3 up);
 public:
     image img;
-    std::optional<model> obj;
 
     virtual ~camera();
     virtual std::vector<ray> ray_generation() = 0;
