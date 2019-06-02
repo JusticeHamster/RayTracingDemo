@@ -9,7 +9,8 @@ private:
     glm::vec3 axis_x, axis_y, axis_z, extend, center;
     glm::vec3 vertex[8];
     void init_vertex();
-    float plane(glm::vec3 point, glm::vec3 normal, ray &in);
+    float plane(glm::vec3 point, glm::vec3 normal, ray &in) const;
+    bool point_in_plane() const;
 
 public:
     cube(glm::vec3 axis_x, glm::vec3 axis_y, glm::vec3 axis_z, glm::vec3 extend, glm::vec3 center);

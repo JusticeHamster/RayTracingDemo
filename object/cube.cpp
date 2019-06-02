@@ -5,9 +5,9 @@
 
 cube::cube(glm::vec3 axis_x, glm::vec3 axis_y, glm::vec3 axis_z, glm::vec3 extend, glm::vec3 center)
 {
-    this->axis_x = axis_x;
-    this->axis_y = axis_y;
-    this->axis_z = axis_z;
+    this->axis_x = glm::normalize(axis_x);
+    this->axis_y = glm::normalize(axis_y);
+    this->axis_z = glm::normalize(axis_z);
     this->extend = extend;
     this->center = center;
     init_vertex();
@@ -70,7 +70,7 @@ void cube::scale()
 ** in: 射线
 ** RETURN: t,点坐标为in.start + t*in.direction(),如果不存在点则返回-1.
 */
-float cube::plane(glm::vec3 point, glm::vec3 normal, ray &in)
+float cube::plane(glm::vec3 point, glm::vec3 normal, ray &in) const
 {
     auto t1 = glm::normalize(normal)*in.direction();
     auto ans1 = t1.x+t1.y+t1.z;
@@ -82,8 +82,32 @@ float cube::plane(glm::vec3 point, glm::vec3 normal, ray &in)
     return ans<0?-1:ans;
 }
 
+/* 传入四个点（构成一个矩形）和一个点，判断点是否在围成点矩形中。
+*/
+bool cube::point_in_plane() const{
+    return true;
+}
 
 float cube::intersect(ray &in) const
 {
-    return -1;
+    float t[6];
+    t[0] = plane(vertex[0],axis_z,in);
+    t[0] = point_in_plane()?t[0]:-1;
+    t[1] = plane(vertex[2],axis_x,in);
+    t[1] = point_in_plane()?t[1]:-1;
+    t[2] = plane(vertex[4],axis_z,in);
+    t[2] = point_in_plane()?t[2]:-1;
+    t[3] = plane(vertex[6],axis_x,in);
+    t[3] = point_in_plane()?t[3]:-1;
+    t[4] = plane(vertex[0],axis_y,in);
+    t[4] = point_in_plane()?t[4]:-1;
+    t[5] = plane(vertex[1],axis_y,in);
+    t[5] = point_in_plane()?t[5]:-1;
+    float ans = -1;
+    for (int i=0;i<6;i++){
+        if (t[i]<0)
+            continue;
+        ans = ans==-1?t[i]:glm::min(ans,t[i]);
+    }
+    return ans;
 }
