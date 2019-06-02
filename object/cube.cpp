@@ -43,12 +43,12 @@ void cube::draw(glm::vec3 pos, glm::vec3 di) const
 {
     glBegin(GL_QUAD_STRIP); //填充凸多边形
     for (int i = 0; i < 8; i++)
-        glVertex3f(vertex[i].x, vertex[i].y, vertex[i].z);
+        glVertex3f(vertex[i].x+pos.x, vertex[i].y+pos.y, vertex[i].z+pos.z);
     glEnd();
     glBegin(GL_QUAD_STRIP);
     int t[8] = {0, 2, 6, 4, 1, 3, 7, 5};
     for (int i = 0; i < 8; i++)
-        glVertex3f(vertex[t[i]].x, vertex[t[i]].y, vertex[t[i]].z);
+        glVertex3f(vertex[t[i]].x, vertex[t[i]].y+pos.y, vertex[t[i]].z+pos.z);
     glEnd();
 }
 
