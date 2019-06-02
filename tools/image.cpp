@@ -1,6 +1,6 @@
 #include "image.hpp"
 
-image::image(): width(0), height(0)
+image::image(unsigned width, unsigned height): width(width), height(height)
 {
 
 }

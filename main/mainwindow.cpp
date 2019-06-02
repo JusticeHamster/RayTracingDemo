@@ -4,10 +4,12 @@
 #include "tools/pinhole_camera.hpp"
 #include "tools/scene.hpp"
 
+#include <memory>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    r(pinhole_camera())
+    r(std::make_unique<pinhole_camera>())
 {
     ui->setupUi(this);
     start_button = findChild<QPushButton *>("start");

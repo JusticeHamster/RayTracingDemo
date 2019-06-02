@@ -6,7 +6,7 @@ class image
 private:
     unsigned width, height;
 public:
-    image();
+    image(unsigned width, unsigned height);
 };
 
 #endif // IMAGE_HPP

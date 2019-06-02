@@ -3,7 +3,7 @@
 #include "object/cube.hpp"
 #include "object/model.hpp"
 
-camera::camera(unsigned width, unsigned height): width(width), height(height)
+camera::camera(unsigned width, unsigned height): img(image(width, height))
 {
 
 }

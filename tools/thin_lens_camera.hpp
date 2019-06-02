@@ -8,7 +8,7 @@ class thin_lens_camera: public camera
 public:
     thin_lens_camera();
     virtual ~thin_lens_camera();
-    std::vector<ray> ray_generation() const;
+    std::vector<ray> ray_generation();
 };
 
 #endif // THIN_LENS_CAMERA_HPP

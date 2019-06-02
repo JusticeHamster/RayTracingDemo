@@ -8,12 +8,12 @@
 #include "object/diffuse_distribution.hpp"
 #include "object/mirror_distribution.hpp"
 
-renderer::renderer(const camera &cmr): cmr(cmr)
+renderer::renderer(std::unique_ptr<camera> cmr): cmr(std::move(cmr))
 {
     ;
 }
 
-void renderer::rays_render(const scene &scn, std::queue<ray> &rays)
+void renderer::rays_render(scene &scn, std::queue<ray> &rays)
 {
     while (!rays.empty()) {
         ray &r = rays.front();
@@ -27,16 +27,18 @@ void renderer::rays_render(const scene &scn, std::queue<ray> &rays)
                     result = ir;
             }
         }
+        // generate new Rays or stop
         auto [optional_reference_shape, t] = result;
         if (optional_reference_shape) {
             intersection i = BRDF(r, optional_reference_shape->get(), r.point(t), scn);
             if (i) {
-                ;
+                for (const ray &r : i.out->random(10)) {
+                    rays.push(r);
+                }
             } else {
-                i.stop_energy;
+                r.stop(i.stop_energy);
             }
         }
-        r.intersect_one_time();
         rays.pop();
     }
 }
@@ -46,14 +48,12 @@ void renderer::__render(scene &scn)
     rendering = true;
     // add camera object
     glm::vec3 position(2, 2, 2);
-    int index = scn.object_count();
-    scn.push(cmr.object(position, -position));
-    auto rays = cmr.ray_generation();
+    scn.push(cmr->object(position, -position));
+    auto rays = cmr->ray_generation();
     std::queue<ray> q_rays;
-    for (auto &ray : rays)
-        q_rays.push(std::move(ray));
+    for (const ray &r : rays)
+        q_rays.push(r);
     rays_render(scn, q_rays);
-    scn.pop(index);
     //
     rendering = false;
     render_lock.unlock();

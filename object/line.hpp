@@ -1,8 +1,6 @@
 #ifndef LINE_HPP
 #define LINE_HPP
 
-#include <optional>
-
 #include "shape.hpp"
 #include "glm/glm.hpp"
 
