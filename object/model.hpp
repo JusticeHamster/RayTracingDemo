@@ -13,13 +13,10 @@
 #include "transformable.hpp"
 
 class shape;
-class intersection;
-class loader;
 
 class model: public drawable, public transformable
 {
 private:
-    std::reference_wrapper<loader> ldr;
     std::vector<std::shared_ptr<shape> > shapes;
     glm::vec3 position;
     glm::vec3 direction;
@@ -38,8 +35,7 @@ public:
     void move();
     void scale();
     bool is_light() const;
-    intersect_result intersect(ray &in) const;
-    intersection BRDF(ray &in, intersect_result ir) const;
+    intersect_result intersect(const ray &in) const;
 };
 
 #endif // MODEL_HPP

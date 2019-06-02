@@ -8,10 +8,10 @@ class blockable
 private:
     bool block = true;
 protected:
-    virtual float intersect(ray &in) const = 0;
+    virtual float intersect(const ray &in) const = 0;
 public:
     virtual ~blockable();
-    float ray_intersect(ray &in) const;
+    float ray_intersect(const ray &in) const;
     void set_blockable(bool block);
 };
 

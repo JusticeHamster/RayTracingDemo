@@ -20,11 +20,11 @@ public:
     virtual void rotate();
     virtual void move();
     virtual void scale();
-    virtual float intersect(ray &in) const;
+    virtual float intersect(const ray &in) const;
     glm::vec3 start_point() const;
     glm::vec3 end_point_or_direction() const;
     bool is_direction() const;
-    glm::vec3 point(float t);
+    glm::vec3 point(float t) const;
 };
 
 #endif // LINE_HPP

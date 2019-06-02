@@ -85,7 +85,7 @@ void tetrahedron::scale()
 
 }
 
-float tetrahedron::intersect(ray &in) const
+float tetrahedron::intersect(const ray &in) const
 {
     return -1;
 }

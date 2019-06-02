@@ -9,7 +9,7 @@ private:
     glm::vec3 axis_x, axis_y, axis_z, extend, center;
     glm::vec3 vertex[8];
     void init_vertex();
-    float plane(glm::vec3 point, glm::vec3 normal, ray &in) const;
+    float plane(glm::vec3 point, glm::vec3 normal, const ray &in) const;
     bool point_in_plane() const;
 
 public:
@@ -20,7 +20,7 @@ public:
     virtual void rotate();
     virtual void move();
     virtual void scale();
-    virtual float intersect(ray &in) const;
+    virtual float intersect(const ray &in) const;
 };
 
 #endif // CUBE_HPP

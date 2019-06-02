@@ -9,7 +9,7 @@ intersection::intersection(bool stop,
     ;
 }
 
-bool intersection::operator()() const
+intersection::operator bool() const
 {
-    return stop;
+    return !stop;
 }

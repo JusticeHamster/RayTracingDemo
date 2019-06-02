@@ -11,15 +11,17 @@ class intersection
 {
 private:
     bool stop;
+public:
     std::shared_ptr<ray_distribution> out;
     glm::vec3 point;
     glm::vec3 stop_energy;
-public:
+
     intersection(
         bool stop, std::shared_ptr<ray_distribution> out,
         glm::vec3 point, glm::vec3 stop_energy
     );
-    bool operator()() const;
+
+    operator bool() const;
 };
 
 #endif // INTERSECTION_HPP

@@ -70,7 +70,7 @@ void cube::scale()
 ** in: 射线
 ** RETURN: t,点坐标为in.start + t*in.direction(),如果不存在点则返回-1.
 */
-float cube::plane(glm::vec3 point, glm::vec3 normal, ray &in) const
+float cube::plane(glm::vec3 point, glm::vec3 normal, const ray &in) const
 {
     auto t1 = glm::normalize(normal)*in.direction();
     auto ans1 = t1.x+t1.y+t1.z;
@@ -88,7 +88,7 @@ bool cube::point_in_plane() const{
     return true;
 }
 
-float cube::intersect(ray &in) const
+float cube::intersect(const ray &in) const
 {
     float t[6];
     t[0] = plane(vertex[0],axis_z,in);

@@ -9,6 +9,8 @@
 #include "tools/scene.hpp"
 #include "tools/camera.hpp"
 
+class intersection;
+
 class renderer
 {
 private:
@@ -16,7 +18,7 @@ private:
 
     QMutex render_lock;
 
-    void rays_render(std::queue<ray> &rays);
+    void rays_render(const scene &scn, std::queue<ray> &rays);
     void __render(scene &scn);
 
     image result;
@@ -27,6 +29,7 @@ public:
     renderer(const camera &cmr);
     void render(scene &scn);
     bool is_rendering() const;
+    intersection BRDF(const ray &in, const shape &s, glm::vec3 point, const scene &scn) const;
 };
 
 #endif // RENDERER_HPP

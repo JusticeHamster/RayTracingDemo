@@ -65,7 +65,7 @@ inline std::optional<float> __t(float left, float right) {
 }
 
 // (1 - t) * s + t * e { 0 <= t <= 1 }
-float line::intersect(ray &in) const
+float line::intersect(const ray &in) const
 {
     // not implemented
     return -1;
@@ -86,7 +86,7 @@ glm::vec3 line::end_point_or_direction() const
     return end;
 }
 
-glm::vec3 line::point(float t)
+glm::vec3 line::point(float t) const
 {
     if (is_ray)
         return start + t * end;

@@ -19,6 +19,7 @@ private:
     std::vector<model> lights;
 
     mutable QMutex lock;
+    friend class renderer;
 public:
     scene(std::string name);
     scene(const scene &scn);

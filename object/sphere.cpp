@@ -78,7 +78,7 @@ void sphere::scale()
 {
 }
 
-float sphere::intersect(ray &in) const
+float sphere::intersect(const ray &in) const
 {
     glm::vec3 dect = glm::normalize(in.direction());
     auto t = dect * dect;

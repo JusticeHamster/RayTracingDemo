@@ -64,7 +64,8 @@ SOURCES += \
     object/blockable.cpp \
     object/drawable.cpp \
     object/shape.cpp \
-    object/transformable.cpp
+    object/transformable.cpp \
+    main/tester.cpp
 
 HEADERS += \
     object/blockable.hpp \
@@ -92,7 +93,8 @@ HEADERS += \
     main/mainwindow.hpp \
     stb/stb_image.h \
     tools/thin_lens_camera.hpp \
-    tools/not_running_exception.hpp
+    tools/not_running_exception.hpp \
+    main/tester.hpp
 
 FORMS += \
     main/mainwindow.ui

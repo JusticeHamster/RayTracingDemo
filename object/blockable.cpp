@@ -5,7 +5,7 @@ blockable::~blockable()
 
 }
 
-float blockable::ray_intersect(ray &in) const
+float blockable::ray_intersect(const ray &in) const
 {
     if (!block) {
         return -1;
