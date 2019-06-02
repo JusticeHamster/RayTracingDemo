@@ -17,8 +17,8 @@ void renderer::rays_render(scene &scn, std::queue<ray> &rays)
 {
     while (!rays.empty()) {
         ray &r = rays.front();
-        model::intersect_result result(std::nullopt, -1);
         // work through all the models (no acceleration)
+        model::intersect_result result(std::nullopt, -1);
         for (const model &m : scn.models) {
             auto ir = m.intersect(r);
             auto [optional_reference_shape, t] = ir;
@@ -29,16 +29,21 @@ void renderer::rays_render(scene &scn, std::queue<ray> &rays)
         }
         // generate new Rays or stop
         auto [optional_reference_shape, t] = result;
+        auto l = std::make_shared<line>(r);
+        l->set_blockable(false);
         if (optional_reference_shape) {
+            l->set_t(t);
             intersection i = BRDF(r, optional_reference_shape->get(), r.point(t), scn);
             if (i) {
-                for (const ray &r : i.out->random(10)) {
+                for (const ray &r : i.out->random(sampling_number))
                     rays.push(r);
-                }
             } else {
                 r.stop(i.stop_energy);
             }
         }
+        // draw
+        scn.push(model({ l }, glm::vec3(), glm::vec3(), false, glm::vec3()));
+        // pop
         rays.pop();
     }
 }

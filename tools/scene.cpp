@@ -11,6 +11,7 @@
 scene::scene(std::string name): name(name)
 {
     // 随便放一个场景
+    /*
     push(model({
         std::make_shared<sphere>(glm::vec3(), 0.5, 100, 100),
     }, glm::vec3(), glm::vec3(), false, glm::vec3()));
@@ -18,10 +19,12 @@ scene::scene(std::string name): name(name)
     push(model({
         std::make_shared<tetrahedron>(),
     }, glm::vec3(0, 3, 0), glm::vec3(), false, glm::vec3()));
+    */
 
     push(model({
         std::make_shared<line>(glm::vec3(), glm::vec3(3, 3, -3)),
-               }, glm::vec3(0, -3, 0), glm::vec3(), false, glm::vec3()));
+    }, glm::vec3(0, -3, 0), glm::vec3(), false, glm::vec3()));
+
 }
 
 scene::scene(const scene &scn)

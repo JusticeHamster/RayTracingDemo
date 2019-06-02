@@ -29,11 +29,21 @@ glm::vec3 line::normal(glm::vec3 point) const
 
 void line::draw(glm::vec3 pos, glm::vec3 di) const
 {
+    glm::vec3 __end(end);
+    if (is_direction()) {
+        __end *= t;
+        __end += start;
+        glEnable(GL_LINE_STIPPLE);
+        glLineStipple(1, 0x0F0F);
+    }
     glColor3f(0, 0, 0);
     glBegin(GL_LINES);
     glVertex3f(start.x + pos.x, start.y + pos.y, start.z + pos.z);
-    glVertex3f(end.x + pos.x, end.y + pos.y, end.z + pos.z);
+    glVertex3f(__end.x + pos.x, __end.y + pos.y, __end.z + pos.z);
     glEnd();
+    if (is_direction()) {
+        glDisable(GL_LINE_STIPPLE);
+    }
 }
 
 void line::rotate()
@@ -91,4 +101,9 @@ glm::vec3 line::point(float t) const
     if (is_ray)
         return start + t * end;
     return start + t * (end - start);
+}
+
+void line::set_t(float t)
+{
+    this->t = t;
 }
