@@ -1,5 +1,6 @@
 #include "line.hpp"
 #include "ray.hpp"
+#include "model.hpp"
 
 #include "opengl/opengl_header.hpp"
 
@@ -27,8 +28,9 @@ glm::vec3 line::normal(glm::vec3 point) const
     return point;
 }
 
-void line::draw(glm::vec3 pos, glm::vec3 di) const
+void line::draw() const
 {
+    glm::vec3 pos = get_parent()->get_position();
     glm::vec3 __end(end);
     if (is_direction()) {
         __end *= t;

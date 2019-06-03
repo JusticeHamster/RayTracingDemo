@@ -1,5 +1,6 @@
 #include "sphere.hpp"
 #include "ray.hpp"
+#include "model.hpp"
 
 #include <optional>
 
@@ -19,8 +20,9 @@ glm::vec3 sphere::normal(glm::vec3 point) const
     return glm::normalize(point - center);
 }
 
-void sphere::draw(glm::vec3 pos, glm::vec3 di) const
+void sphere::draw() const
 {
+    glm::vec3 pos = get_parent()->get_position();
     float xx = pos.x + center.x;
     float yy = pos.y + center.y;
     float zz = pos.z + center.z;
@@ -79,12 +81,13 @@ void sphere::scale()
 
 float sphere::intersect(const ray &in) const
 {
+    glm::vec3 _center = center + get_parent()->get_position();
     glm::vec3 dect = glm::normalize(in.direction());
     auto t = dect * dect;
     auto a = t.x + t.y + t.z;
-    t = (in.start_point() - center) * in.direction();
+    t = (in.start_point() - _center) * in.direction();
     auto b = 2 * (t.x + t.y + t.z);
-    t = in.start_point() - center;
+    t = in.start_point() - _center;
     t *= t;
     auto c = t.x + t.y + t.z - radius * radius;
     auto delt = b * b - 4 * a * c;

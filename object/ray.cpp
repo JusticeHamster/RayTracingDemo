@@ -30,7 +30,7 @@ unsigned ray::get_time() const
 
 void ray::stop(glm::vec3 stop_energy)
 {
-    ;
+    rgb = stop_energy;
 }
 
 image &ray::get_img()

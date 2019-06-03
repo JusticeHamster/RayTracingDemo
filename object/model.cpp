@@ -6,6 +6,8 @@ model::model(std::vector<std::shared_ptr<shape> > shapes, glm::vec3 position,
     glm::vec3 direction, bool illuminated, glm::vec3 light):
     position(position), direction(direction), illuminated(illuminated), light(light)
 {
+    for (auto s : shapes)
+        s->set_parent(this);
     shapes.swap(this->shapes);
 }
 
@@ -14,10 +16,10 @@ model::~model()
 
 }
 
-void model::draw(glm::vec3 pos, glm::vec3 di) const
+void model::draw() const
 {
     for (const auto &s : shapes) {
-        s->draw(position + pos, direction + di);
+        s->draw();
     }
 }
 
@@ -49,6 +51,11 @@ glm::vec3 model::get_light() const
 glm::vec3 model::get_position() const
 {
     return position;
+}
+
+glm::vec3 model::get_direction() const
+{
+    return direction;
 }
 
 model::intersect_result model::intersect(const ray &in) const

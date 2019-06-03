@@ -1,5 +1,6 @@
 #include "cube.hpp"
 #include "ray.hpp"
+#include "model.hpp"
 
 #include "opengl/opengl_header.hpp"
 
@@ -39,8 +40,9 @@ glm::vec3 cube::normal(glm::vec3 point) const
     return point;
 }
 
-void cube::draw(glm::vec3 pos, glm::vec3 di) const
+void cube::draw() const
 {
+    glm::vec3 pos = get_parent()->get_position();
     glBegin(GL_QUAD_STRIP); //填充凸多边形
     for (int i = 0; i < 8; i++)
         glVertex3f(vertex[i].x+pos.x, vertex[i].y+pos.y, vertex[i].z+pos.z);

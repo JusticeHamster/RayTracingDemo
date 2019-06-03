@@ -15,15 +15,12 @@ scene::scene(std::string name): name(name)
         std::make_shared<sphere>(glm::vec3(), 1.5, 100, 100),
     }, glm::vec3(), glm::vec3(), false, glm::vec3()));
 
-    /* push(model({
-        std::make_shared<tetrahedron>(),
-    }, glm::vec3(0, 3, 0), glm::vec3(), false, glm::vec3()));
-    */
-
+    // 坐标轴
     push(model({
-        std::make_shared<line>(glm::vec3(), glm::vec3(3, 3, -3)),
-    }, glm::vec3(0, -3, 0), glm::vec3(), false, glm::vec3()));
-
+        std::make_shared<line>(glm::vec3(), glm::vec3(-10, 0, 0)),
+        std::make_shared<line>(glm::vec3(), glm::vec3(0, 10, 0)),
+        std::make_shared<line>(glm::vec3(), glm::vec3(0, 0, -10)),
+    }, glm::vec3(), glm::vec3(), false, glm::vec3()));
 }
 
 scene::scene(const scene &scn)
@@ -62,7 +59,7 @@ void scene::draw() const
     if (!lock.try_lock())
         return;
     for (const model &m : models) {
-        m.draw(glm::vec3(), glm::vec3());
+        m.draw();
     }
     lock.unlock();
 }
