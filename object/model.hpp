@@ -35,6 +35,8 @@ public:
     void move();
     void scale();
     bool is_light() const;
+    glm::vec3 get_light() const;
+    glm::vec3 get_position() const;
     intersect_result intersect(const ray &in) const;
 };
 

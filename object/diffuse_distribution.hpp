@@ -7,7 +7,7 @@ class diffuse_distribution: public ray_distribution
 {
 public:
     virtual ~diffuse_distribution();
-    diffuse_distribution(ray &parent, glm::vec3 point);
+    diffuse_distribution(ray &parent, glm::vec3 point, glm::vec3 norm);
     std::vector<ray> random(int num) const;
 };
 

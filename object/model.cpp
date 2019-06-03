@@ -41,6 +41,16 @@ bool model::is_light() const
     return illuminated;
 }
 
+glm::vec3 model::get_light() const
+{
+    return light;
+}
+
+glm::vec3 model::get_position() const
+{
+    return position;
+}
+
 model::intersect_result model::intersect(const ray &in) const
 {
     std::optional<std::reference_wrapper<const shape> > intersect_shape;
