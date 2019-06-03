@@ -78,13 +78,13 @@ bool renderer::is_rendering() const
     return rendering;
 }
 
-intersection renderer::BRDF(const ray &in, const shape &s, glm::vec3 point, const scene &scn) const
+intersection renderer::BRDF(ray &in, const shape &s, glm::vec3 point, const scene &scn) const
 {
     glm::vec3 norm = s.normal(point);
     if (in.is_end()) {
         return intersection(true, nullptr, point, scn.power(line(point, norm, true)));
     }
     // 根据配置的表面信息选择ray_distribution
-    std::shared_ptr<ray_distribution> rd(new diffuse_distribution());
+    std::shared_ptr<ray_distribution> rd(new diffuse_distribution(in, point));
     return intersection(false, rd, point, {});
 }

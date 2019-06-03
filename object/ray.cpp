@@ -32,3 +32,13 @@ void ray::stop(glm::vec3 stop_energy)
 {
     ;
 }
+
+image &ray::get_img()
+{
+    return img;
+}
+
+glm::vec2 ray::get_img_position() const
+{
+    return image_position;
+}

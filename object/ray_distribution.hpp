@@ -9,9 +9,11 @@ class ray;
 
 class ray_distribution
 {
-private:
+protected:
+    ray &parent;
     glm::vec3 point;
 public:
+    ray_distribution(ray &parent, glm::vec3 point);
     virtual std::vector<ray> random(int num) const = 0;
     virtual ~ray_distribution();
 };

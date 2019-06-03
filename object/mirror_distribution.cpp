@@ -6,7 +6,7 @@ mirror_distribution::~mirror_distribution()
 
 }
 
-mirror_distribution::mirror_distribution()
+mirror_distribution::mirror_distribution(ray &parent, glm::vec3 point): ray_distribution(parent, point)
 {
 
 }

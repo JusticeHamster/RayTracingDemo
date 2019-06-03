@@ -7,7 +7,7 @@ class mirror_distribution: public ray_distribution
 {
 public:
     virtual ~mirror_distribution();
-    mirror_distribution();
+    mirror_distribution(ray &parent, glm::vec3 point);
     std::vector<ray> random(int num) const;
 };
 

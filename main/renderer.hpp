@@ -29,7 +29,7 @@ public:
     renderer(std::unique_ptr<camera> cmr);
     void render(scene &scn);
     bool is_rendering() const;
-    intersection BRDF(const ray &in, const shape &s, glm::vec3 point, const scene &scn) const;
+    intersection BRDF(ray &in, const shape &s, glm::vec3 point, const scene &scn) const;
 };
 
 #endif // RENDERER_HPP

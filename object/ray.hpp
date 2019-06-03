@@ -25,6 +25,8 @@ public:
     glm::vec3 direction() const;
     unsigned get_time() const;
     void stop(glm::vec3 stop_energy);
+    image &get_img();
+    glm::vec2 get_img_position() const;
 };
 
 #endif // RAY_HPP
