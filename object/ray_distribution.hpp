@@ -12,8 +12,9 @@ class ray_distribution
 protected:
     ray &parent;
     glm::vec3 point;
+    glm::vec3 norm;
 public:
-    ray_distribution(ray &parent, glm::vec3 point);
+    ray_distribution(ray &parent, glm::vec3 point, glm::vec3 norm);
     virtual std::vector<ray> random(int num) const = 0;
     virtual ~ray_distribution();
 };

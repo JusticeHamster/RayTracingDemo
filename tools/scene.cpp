@@ -12,7 +12,7 @@ scene::scene(std::string name): name(name)
 {
     // 随便放一个场景
     push(model({
-        std::make_shared<sphere>(glm::vec3(), 0.5, 100, 100),
+        std::make_shared<sphere>(glm::vec3(), 1.5, 100, 100),
     }, glm::vec3(), glm::vec3(), false, glm::vec3()));
 
     /* push(model({
@@ -69,7 +69,12 @@ void scene::draw() const
 
 glm::vec3 scene::power(line norm) const
 {
-    return {};
+    glm::vec3 light_power;
+    for (const model &light : lights) {
+        float factor = glm::dot(norm.end_point_or_direction(), glm::normalize(light.get_position() - norm.start_point()));
+        light_power += light.get_light() * factor;
+    }
+    return light_power;
 }
 
 void scene::push(model m)
