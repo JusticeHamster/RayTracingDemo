@@ -92,3 +92,8 @@ float tetrahedron::intersect(const ray &in) const
 {
     return -1;
 }
+
+void tetrahedron::hello() const
+{
+    qDebug() << "I'm tetrahedron";
+}

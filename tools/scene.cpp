@@ -10,9 +10,9 @@
 
 scene::scene(std::string name): name(name)
 {
-    // 随便放一个场景
+    // 放一个球
     push(model({
-        std::make_shared<sphere>(glm::vec3(), 1.5, 100, 100),
+        std::make_shared<sphere>(glm::vec3(), 1, 10, 10),
     }, glm::vec3(), glm::vec3(), false, glm::vec3()));
 
     // 坐标轴

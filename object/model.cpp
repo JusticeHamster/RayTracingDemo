@@ -6,7 +6,7 @@ model::model(std::vector<std::shared_ptr<shape> > shapes, glm::vec3 position,
     glm::vec3 direction, bool illuminated, glm::vec3 light):
     position(position), direction(direction), illuminated(illuminated), light(light)
 {
-    for (auto s : shapes)
+    for (const auto &s : shapes)
         s->set_parent(this);
     shapes.swap(this->shapes);
 }
@@ -70,4 +70,12 @@ model::intersect_result model::intersect(const ray &in) const
         }
     }
     return {intersect_shape, min ? *min : 0};
+}
+
+void model::hello() const
+{
+    qDebug() << "I have" << shapes.size() << "shapes:";
+    for (const auto &s : shapes) {
+        s->hello();
+    }
 }

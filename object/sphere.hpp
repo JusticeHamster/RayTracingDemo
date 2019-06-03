@@ -20,6 +20,7 @@ public:
     virtual void move();
     virtual void scale();
     virtual float intersect(const ray &in) const;
+    virtual void hello() const;
 };
 
 #endif // SPHERE_HPP

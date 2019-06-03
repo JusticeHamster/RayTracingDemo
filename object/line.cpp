@@ -38,7 +38,6 @@ void line::draw() const
         glEnable(GL_LINE_STIPPLE);
         glLineStipple(1, 0x0F0F);
     }
-    glColor3f(0, 0, 0);
     glBegin(GL_LINES);
     glVertex3f(start.x + pos.x, start.y + pos.y, start.z + pos.z);
     glVertex3f(__end.x + pos.x, __end.y + pos.y, __end.z + pos.z);
@@ -108,4 +107,9 @@ glm::vec3 line::point(float t) const
 void line::set_t(float t)
 {
     this->t = t;
+}
+
+void line::hello() const
+{
+    qDebug() << "I'm line";
 }

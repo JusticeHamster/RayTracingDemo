@@ -25,6 +25,7 @@ public:
     bool is_direction() const;
     glm::vec3 point(float t) const;
     void set_t(float t);
+    virtual void hello() const;
 };
 
 #endif // LINE_HPP

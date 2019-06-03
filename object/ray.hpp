@@ -27,6 +27,7 @@ public:
     void stop(glm::vec3 stop_energy);
     image &get_img();
     glm::vec2 get_img_position() const;
+    virtual void hello() const;
 };
 
 #endif // RAY_HPP

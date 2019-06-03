@@ -4,11 +4,12 @@
 #include "drawable.hpp"
 #include "blockable.hpp"
 #include "transformable.hpp"
+#include "helloable.hpp"
 #include "glm/gtc/constants.hpp"
 
 class model;
 
-class shape: public transformable, public blockable, public drawable
+class shape: public transformable, public blockable, public drawable, public helloable
 {
 private:
     model *parent = nullptr;

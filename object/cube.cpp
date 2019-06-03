@@ -113,3 +113,8 @@ float cube::intersect(const ray &in) const
     }
     return ans;
 }
+
+void cube::hello() const
+{
+    qDebug() << "I'm cube";
+}

@@ -42,3 +42,8 @@ glm::vec2 ray::get_img_position() const
 {
     return image_position;
 }
+
+void ray::hello() const
+{
+    qDebug() << "I'm ray";
+}

@@ -8,10 +8,11 @@
 #include "glm/glm.hpp"
 
 #include "object/model.hpp"
+#include "object/helloable.hpp"
 
 class line;
 
-class scene
+class scene: public helloable
 {
 private:
     std::string name;

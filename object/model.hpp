@@ -11,10 +11,11 @@
 #include "drawable.hpp"
 #include "blockable.hpp"
 #include "transformable.hpp"
+#include "helloable.hpp"
 
 class shape;
 
-class model: public drawable, public transformable
+class model: public drawable, public transformable, public helloable
 {
 private:
     std::vector<std::shared_ptr<shape> > shapes;
@@ -39,6 +40,7 @@ public:
     glm::vec3 get_position() const;
     glm::vec3 get_direction() const;
     intersect_result intersect(const ray &in) const;
+    void hello() const;
 };
 
 #endif // MODEL_HPP
