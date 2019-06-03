@@ -61,7 +61,7 @@ void scene::draw() const
     if (!lock.try_lock())
         return;
     for (const model &m : models) {
-        m.draw(glm::vec3(), glm::vec3());
+        m.draw();
     }
     lock.unlock();
 }

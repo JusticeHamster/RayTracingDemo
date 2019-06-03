@@ -81,12 +81,13 @@ void sphere::scale()
 
 float sphere::intersect(const ray &in) const
 {
+    glm::vec3 _center = center + get_parent()->get_position();
     glm::vec3 dect = glm::normalize(in.direction());
     auto t = dect * dect;
     auto a = t.x + t.y + t.z;
-    t = (in.start_point() - center) * in.direction();
+    t = (in.start_point() - _center) * in.direction();
     auto b = 2 * (t.x + t.y + t.z);
-    t = in.start_point() - center;
+    t = in.start_point() - _center;
     t *= t;
     auto c = t.x + t.y + t.z - radius * radius;
     auto delt = b * b - 4 * a * c;
