@@ -30,22 +30,25 @@ glm::vec3 line::normal(glm::vec3 point) const
 
 void line::draw() const
 {
-    glm::vec3 pos = get_parent()->get_position();
+    glm::vec3 pos(get_parent()->get_position());
+    glm::vec3 __start(start + pos);
     glm::vec3 __end(end);
     if (is_direction()) {
         __end *= t;
-        __end += start;
+        __end += __start;
         glEnable(GL_LINE_STIPPLE);
         glLineStipple(1, 0x0F0F);
-        glColor3f(1, 1, 0);
+        // glColor3f(1, 1, 0);
+    } else {
+        __end += pos;
     }
     glBegin(GL_LINES);
-    glVertex3f(start.x + pos.x, start.y + pos.y, start.z + pos.z);
-    glVertex3f(__end.x + pos.x, __end.y + pos.y, __end.z + pos.z);
+    glVertex3f(__start.x, __start.y, __start.z);
+    glVertex3f(__end.x, __end.y, __end.z);
     glEnd();
     if (is_direction()) {
         glDisable(GL_LINE_STIPPLE);
-        glColor3f(0, 0, 0);
+        // glColor3f(0, 0, 0);
     }
 }
 
