@@ -22,6 +22,7 @@ public:
     virtual void scale();
     virtual float intersect(const ray &in) const;
     virtual void hello() const;
+    virtual std::shared_ptr<shape> copy() const;
 };
 
 #endif // CUBE_HPP

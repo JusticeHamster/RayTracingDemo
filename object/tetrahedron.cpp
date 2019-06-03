@@ -4,6 +4,11 @@
 
 #include "opengl/opengl_header.hpp"
 
+void tetrahedron::copy(std::shared_ptr<tetrahedron> new_tetrahedron) const
+{
+    shape::copy(new_tetrahedron);
+}
+
 tetrahedron::tetrahedron()
 {
 
@@ -96,4 +101,11 @@ float tetrahedron::intersect(const ray &in) const
 void tetrahedron::hello() const
 {
     qDebug() << "I'm tetrahedron";
+}
+
+std::shared_ptr<shape> tetrahedron::copy() const
+{
+    auto t = std::make_shared<tetrahedron>();
+    tetrahedron::copy(t);
+    return std::shared_ptr<shape>(t);
 }

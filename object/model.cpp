@@ -6,15 +6,20 @@ model::model(std::vector<std::shared_ptr<shape> > shapes, glm::vec3 position,
     glm::vec3 direction, bool illuminated, glm::vec3 light):
     position(position), direction(direction), illuminated(illuminated), light(light)
 {
-    for (const auto &s : shapes)
-        s->set_parent(this);
-    shapes.swap(this->shapes);
+    for (const auto &s : shapes) {
+        auto new_shape = s->copy();
+        new_shape->set_parent(this);
+        this->shapes.push_back(new_shape);
+    }
 }
 
-model::model(const model &m): shapes(m.shapes), position(m.position), direction(m.direction), illuminated(m.illuminated), light(m.light)
+model::model(const model &m): position(m.position), direction(m.direction), illuminated(m.illuminated), light(m.light)
 {
-    for (const auto &s : shapes)
-        s->set_parent(this);
+    for (const auto &s : m.shapes) {
+        auto new_shape = s->copy();
+        new_shape->set_parent(this);
+        shapes.push_back(new_shape);
+    }
 }
 
 model::model(model &&m): position(m.position), direction(m.direction), illuminated(m.illuminated), light(m.light)
@@ -30,9 +35,11 @@ model &model::operator=(const model &m)
     direction = m.direction;
     illuminated = m.illuminated;
     light = m.light;
-    shapes = m.shapes;
-    for (const auto &s : shapes)
-        s->set_parent(this);
+    for (const auto &s : shapes) {
+        auto new_shape = s->copy();
+        new_shape->set_parent(this);
+        this->shapes.push_back(new_shape);
+    }
     return *this;
 }
 

@@ -17,3 +17,8 @@ void blockable::set_blockable(bool block)
 {
     this->block = block;
 }
+
+bool blockable::is_block() const
+{
+    return block;
+}

@@ -7,16 +7,21 @@
 #include "helloable.hpp"
 #include "glm/gtc/constants.hpp"
 
+#include <memory>
+
 class model;
 
 class shape: public transformable, public blockable, public drawable, public helloable
 {
 private:
     model *parent = nullptr;
+protected:
+    void copy(std::shared_ptr<shape> new_shape) const;
 public:
     constexpr static float PI = glm::pi<float>();
     virtual ~shape();
     virtual glm::vec3 normal(glm::vec3 point) const = 0;
+    virtual std::shared_ptr<shape> copy() const = 0;
     void set_parent(model *parent);
     model *get_parent() const;
 };

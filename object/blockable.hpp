@@ -13,6 +13,7 @@ public:
     virtual ~blockable();
     float ray_intersect(const ray &in) const;
     void set_blockable(bool block);
+    bool is_block() const;
 };
 
 #endif // BLOCKABLE_HPP

@@ -5,7 +5,8 @@
 
 class tetrahedron: public shape
 {
-private:
+protected:
+    void copy(std::shared_ptr<tetrahedron> new_tetrahedron) const;
 public:
     tetrahedron();
     virtual ~tetrahedron();
@@ -16,6 +17,7 @@ public:
     virtual void scale();
     virtual float intersect(const ray &in) const;
     virtual void hello() const;
+    virtual std::shared_ptr<shape> copy() const;
 };
 
 #endif // TETRAHEDRON_HPP

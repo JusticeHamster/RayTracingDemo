@@ -4,6 +4,12 @@
 
 #include "opengl/opengl_header.hpp"
 
+void line::copy(std::shared_ptr<line> new_line) const
+{
+    new_line->set_t(t);
+    shape::copy(new_line);
+}
+
 line::line(glm::vec3 start, glm::vec3 direction, bool is_ray): is_ray(is_ray), start(start)
 {
     if (is_ray) {
@@ -117,4 +123,11 @@ void line::set_t(float t)
 void line::hello() const
 {
     qDebug() << "I'm line";
+}
+
+std::shared_ptr<shape> line::copy() const
+{
+    auto l = std::make_shared<line>(start, end, is_ray);
+    line::copy(l);
+    return std::shared_ptr<shape>(l);
 }

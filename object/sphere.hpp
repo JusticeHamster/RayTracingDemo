@@ -11,6 +11,8 @@ private:
     glm::vec3 center;
     float radius;
     int m, n;
+protected:
+    void copy(std::shared_ptr<sphere> new_sphere) const;
 public:
     sphere(glm::vec3 center, float radius, int m, int n);
     virtual ~sphere();
@@ -21,6 +23,7 @@ public:
     virtual void scale();
     virtual float intersect(const ray &in) const;
     virtual void hello() const;
+    virtual std::shared_ptr<shape> copy() const;
 };
 
 #endif // SPHERE_HPP

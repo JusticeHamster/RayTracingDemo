@@ -1,6 +1,10 @@
 #include "shape.hpp"
 
-#include <QDebug>
+void shape::copy(std::shared_ptr<shape> new_shape) const
+{
+    new_shape->set_parent(get_parent());
+    new_shape->set_blockable(is_block());
+}
 
 shape::~shape()
 {

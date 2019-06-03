@@ -118,3 +118,10 @@ void cube::hello() const
 {
     qDebug() << "I'm cube";
 }
+
+std::shared_ptr<shape> cube::copy() const
+{
+    std::shared_ptr<shape> c = std::make_shared<cube>(axis_x, axis_y, axis_z, extend, center);
+    shape::copy(c);
+    return c;
+}

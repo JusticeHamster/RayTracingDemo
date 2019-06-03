@@ -1,5 +1,10 @@
 #include "ray.hpp"
 
+void ray::copy(std::shared_ptr<ray> new_ray) const
+{
+    line::copy(new_ray);
+}
+
 ray::ray(glm::vec3 start, glm::vec3 direction, glm::vec3 rgb, std::reference_wrapper<image> img,
          glm::vec2 image_position, double weight, unsigned time):
     line(start, direction, true), rgb(rgb), img(img),
@@ -46,4 +51,11 @@ glm::vec2 ray::get_img_position() const
 void ray::hello() const
 {
     qDebug() << "I'm ray";
+}
+
+std::shared_ptr<shape> ray::copy() const
+{
+    auto r = std::make_shared<ray>(start_point(), direction(), rgb, img, image_position, weight, time);
+    ray::copy(r);
+    return std::shared_ptr<shape>(r);
 }

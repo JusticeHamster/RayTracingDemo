@@ -7,6 +7,11 @@
 #include "glm/glm.hpp"
 #include "opengl/opengl_header.hpp"
 
+void sphere::copy(std::shared_ptr<sphere> new_sphere) const
+{
+    shape::copy(new_sphere);
+}
+
 sphere::sphere(glm::vec3 center, float radius, int m, int n) : center(center), radius(radius), m(m), n(n)
 {
 }
@@ -109,4 +114,11 @@ float sphere::intersect(const ray &in) const
 void sphere::hello() const
 {
     qDebug() << "I'm sphere";
+}
+
+std::shared_ptr<shape> sphere::copy() const
+{
+    auto s = std::make_shared<sphere>(center, radius, m, n);
+    sphere::copy(s);
+    return std::shared_ptr<shape>(s);
 }
