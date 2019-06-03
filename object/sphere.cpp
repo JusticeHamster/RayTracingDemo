@@ -1,5 +1,6 @@
 #include "sphere.hpp"
 #include "ray.hpp"
+#include "model.hpp"
 
 #include <optional>
 
@@ -19,8 +20,9 @@ glm::vec3 sphere::normal(glm::vec3 point) const
     return glm::normalize(point - center);
 }
 
-void sphere::draw(glm::vec3 pos, glm::vec3 di) const
+void sphere::draw() const
 {
+    glm::vec3 pos = get_parent()->get_position();
     float xx = pos.x + center.x;
     float yy = pos.y + center.y;
     float zz = pos.z + center.z;

@@ -13,5 +13,5 @@ pinhole_camera::~pinhole_camera()
 
 std::vector<ray> pinhole_camera::ray_generation()
 {
-    return { ray(glm::vec3(4, 4, -4), glm::vec3(-1, -1, 1), glm::vec3(), img, glm::vec2(0, 0), 1, 0) };
+    return { ray(glm::vec3(4, 4, 4), glm::vec3(-1, -1, -1), glm::vec3(), img, glm::vec2(0, 0), 1, 0) };
 }

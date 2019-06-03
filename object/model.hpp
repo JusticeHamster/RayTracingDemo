@@ -30,13 +30,14 @@ public:
 
     model(std::vector<std::shared_ptr<shape> > shapes, glm::vec3 position, glm::vec3 direction, bool illuminated, glm::vec3 light);
     virtual ~model();
-    void draw(glm::vec3 pos, glm::vec3 di) const;
+    void draw() const;
     void rotate();
     void move();
     void scale();
     bool is_light() const;
     glm::vec3 get_light() const;
     glm::vec3 get_position() const;
+    glm::vec3 get_direction() const;
     intersect_result intersect(const ray &in) const;
 };
 

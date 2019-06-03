@@ -1,5 +1,6 @@
 #include "tetrahedron.hpp"
 #include "ray.hpp"
+#include "model.hpp"
 
 #include "opengl/opengl_header.hpp"
 
@@ -18,8 +19,10 @@ glm::vec3 tetrahedron::normal(glm::vec3 point) const
     return point;
 }
 
-void tetrahedron::draw(glm::vec3 pos, glm::vec3 di) const
+void tetrahedron::draw() const
 {
+    glm::vec3 pos = get_parent()->get_position();
+
     glBegin(GL_QUADS);
     glNormal3f(0, 0, -1);
     glColor3f(1.0, 0.0, 0.0);
