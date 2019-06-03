@@ -1,5 +1,6 @@
 #include "tester.hpp"
 #include "object/sphere.hpp"
+#include "object/cube.hpp"
 #include "object/ray.hpp"
 #include "tools/image.hpp"
 #include <QDebug>
@@ -21,5 +22,13 @@ void tester::test_all()
           glm::vec3(100,100,100),img,glm::vec2(0, 0), 1, 0);
     auto t = sphere.intersect(r);
     qDebug()<<t << r.point(t).x<<r.point(t).y<<r.point(t).z;
+    // 5.51399 -0.183505 0.816495 1.8165
 
+    cube c(glm::vec3(0.5,0.5,0),
+           glm::vec3(0.5,-0.5,0),
+           glm::vec3(0,0,1),
+           glm::vec3(2,2,2),
+           glm::vec3(0,0,0));
+    t = c.intersect(r);
+    qDebug()<<t << r.point(t).x<<r.point(t).y<<r.point(t).z;
 }
