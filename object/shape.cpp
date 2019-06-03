@@ -1,5 +1,7 @@
 #include "shape.hpp"
 
+#include <QDebug>
+
 shape::~shape()
 {
 

@@ -12,8 +12,8 @@ scene::scene(std::string name): name(name)
 {
     // 放一个球
     push(model({
-        std::make_shared<sphere>(glm::vec3(), 1, 10, 10),
-    }, glm::vec3(), glm::vec3(), false, glm::vec3()));
+        std::make_shared<sphere>(glm::vec3(), 1, 30, 30),
+    }, glm::vec3(0, 0, 5), glm::vec3(), false, glm::vec3()));
 
     // 坐标轴
     push(model({

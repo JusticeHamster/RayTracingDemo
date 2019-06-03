@@ -37,6 +37,7 @@ void line::draw() const
         __end += start;
         glEnable(GL_LINE_STIPPLE);
         glLineStipple(1, 0x0F0F);
+        glColor3f(1, 1, 0);
     }
     glBegin(GL_LINES);
     glVertex3f(start.x + pos.x, start.y + pos.y, start.z + pos.z);
@@ -44,6 +45,7 @@ void line::draw() const
     glEnd();
     if (is_direction()) {
         glDisable(GL_LINE_STIPPLE);
+        glColor3f(0, 0, 0);
     }
 }
 

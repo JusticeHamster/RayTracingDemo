@@ -30,6 +30,11 @@ public:
     };
 
     model(std::vector<std::shared_ptr<shape> > shapes, glm::vec3 position, glm::vec3 direction, bool illuminated, glm::vec3 light);
+    model(const model &m);
+    model(model &&m);
+    model &operator=(const model &m);
+    model &operator=(model &&m);
+
     virtual ~model();
     void draw() const;
     void rotate();

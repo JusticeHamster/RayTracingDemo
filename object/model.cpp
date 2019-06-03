@@ -11,6 +11,43 @@ model::model(std::vector<std::shared_ptr<shape> > shapes, glm::vec3 position,
     shapes.swap(this->shapes);
 }
 
+model::model(const model &m): shapes(m.shapes), position(m.position), direction(m.direction), illuminated(m.illuminated), light(m.light)
+{
+    for (const auto &s : shapes)
+        s->set_parent(this);
+}
+
+model::model(model &&m): position(m.position), direction(m.direction), illuminated(m.illuminated), light(m.light)
+{
+    shapes.swap(m.shapes);
+    for (const auto &s : shapes)
+        s->set_parent(this);
+}
+
+model &model::operator=(const model &m)
+{
+    position = m.position;
+    direction = m.direction;
+    illuminated = m.illuminated;
+    light = m.light;
+    shapes = m.shapes;
+    for (const auto &s : shapes)
+        s->set_parent(this);
+    return *this;
+}
+
+model &model::operator=(model &&m)
+{
+    position = m.position;
+    direction = m.direction;
+    illuminated = m.illuminated;
+    light = m.light;
+    shapes.swap(m.shapes);
+    for (const auto &s : shapes)
+        s->set_parent(this);
+    return *this;
+}
+
 model::~model()
 {
 

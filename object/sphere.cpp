@@ -22,10 +22,7 @@ glm::vec3 sphere::normal(glm::vec3 point) const
 
 void sphere::draw() const
 {
-    glm::vec3 pos = get_parent()->get_position();
-    float xx = pos.x + center.x;
-    float yy = pos.y + center.y;
-    float zz = pos.z + center.z;
+    glm::vec3 _center = center + get_parent()->get_position();
     float step_z = PI / m;
     float step_xy = 2 * PI / n;
     float x[4], y[4], z[4];
@@ -58,10 +55,12 @@ void sphere::draw() const
             z[3] = radius * glm::cos(angle_z);
             for (int k = 0; k < 4; k++)
             {
-                glVertex3f(xx + x[k], yy + y[k], zz + z[k]);
+                glColor3f(glm::sin(angle_z), glm::cos(angle_z), glm::tan(angle_z));
+                glVertex3f(_center.x + x[k], _center.y + y[k], _center.z + z[k]);
             }
         }
     }
+    glColor3f(0, 0, 0);
     glEnd();
 }
 
