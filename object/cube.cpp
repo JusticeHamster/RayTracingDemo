@@ -45,11 +45,13 @@ void cube::draw() const
     glm::vec3 pos = get_parent()->get_position();
     glBegin(GL_QUAD_STRIP); //填充凸多边形
     for (int i = 0; i < 8; i++)
+        glVertex3f(1.0f, 0.0f, 0.0f); // 染成红色
         glVertex3f(vertex[i].x+pos.x, vertex[i].y+pos.y, vertex[i].z+pos.z);
     glEnd();
     glBegin(GL_QUAD_STRIP);
     int t[8] = {0, 2, 6, 4, 1, 3, 7, 5};
     for (int i = 0; i < 8; i++)
+        glVertex3f(1.0f, 0.0f, 0.0f); // 染成红色v
         glVertex3f(vertex[t[i]].x+pos.x, vertex[t[i]].y+pos.y, vertex[t[i]].z+pos.z);
     glEnd();
 }
