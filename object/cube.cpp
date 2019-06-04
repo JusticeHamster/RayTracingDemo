@@ -42,7 +42,6 @@ glm::vec3 cube::normal(glm::vec3 point) const
 
 void cube::draw() const
 {
-    init_vertex();
     glm::vec3 pos = get_parent()->get_position();
     glBegin(GL_QUAD_STRIP); //填充凸多边形
     for (int i = 0; i < 8; i++)
