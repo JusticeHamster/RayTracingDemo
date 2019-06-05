@@ -101,6 +101,41 @@ float cube::plane(glm::vec3 point, glm::vec3 normal, const ray &in) const
 /* 传入四个点（构成一个矩形）和一个点，判断点是否在围成点矩形中。
 */
 bool cube::point_in_plane() const{
+    // 计算转换矩阵
+    glm::vec3 vex[4];
+    vex[0] = extend * (-axis_x - axis_y + axis_z);
+    vex[1] = extend * (-axis_x + axis_y + axis_z);
+    vex[2] = extend * (axis_x - axis_y + axis_z);
+    vex[3] = extend * (axis_x + axis_y + axis_z);
+    glm::mat4 A();
+    A[0] = glm::vec4(vex[0].x,vex[1].x,vex[2].x,vex[3].x);
+    A[1] = glm::vec4(vex[0].y,vex[1].y,vex[2].y,vex[3].y);
+    A[2] = glm::vec4(vex[0].z,vex[1].z,vex[2].z,vex[3].z);
+    A[3] = glm::vec4(1,1,1,1);
+    glm::mat4 B();
+    B[0] = glm::vec4(vertex[0].x,vertex[1].x,vertex[2].x,vertex[3].x);
+    B[1] = glm::vec4(vertex[0].y,vertex[1].y,vertex[2].y,vertex[3].y);
+    B[2] = glm::vec4(vertex[0].z,vertex[1].z,vertex[2].z,vertex[3].z);
+    B[3] = glm::vec4(1,1,1,1);
+    glm::mat4 T = glm::dot(B, glm::inverse(A));
+    glm::mat4 homo_A = glm::dot(T, A);
+    qDebug() << 
+        homo_A[0][0]<< 
+        homo_A[0][1]<< 
+        homo_A[0][2]<< 
+        homo_A[0][3]<< 
+        homo_A[1][0]<< 
+        homo_A[1][1]<< 
+        homo_A[1][2]<< 
+        homo_A[1][3]<< 
+        homo_A[2][0]<< 
+        homo_A[2][1]<<
+        homo_A[2][2]<< 
+        homo_A[2][3]<< 
+        homo_A[3][0]<< 
+        homo_A[3][1]<< 
+        homo_A[3][2]<< 
+        homo_A[3][3]<< 
     return true;
 }
 
