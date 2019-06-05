@@ -13,6 +13,7 @@ cube::cube(glm::vec3 axis_x, glm::vec3 axis_y, glm::vec3 axis_z, glm::vec3 exten
     this->extend = extend;
     this->center = center;
     init_vertex();
+    init_T();
 }
 
 cube::~cube()
