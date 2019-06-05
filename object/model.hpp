@@ -25,7 +25,7 @@ private:
     glm::vec3 light;
 public:
     using intersect_result = std::tuple<std::optional<std::reference_wrapper<const shape> >, float>;
-    enum Distribution {
+    enum distribution {
         diffuse, mirror, phone
     };
 

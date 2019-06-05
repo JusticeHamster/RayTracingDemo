@@ -16,6 +16,10 @@ private:
 
     static std::vector<int> QUAD_ORDER, LINES_ORDER;
 public:
+    enum style {
+        QUAD, LINES
+    } draw_style = QUAD;
+
     cube(glm::vec3 axis_x, glm::vec3 axis_y, glm::vec3 axis_z, glm::vec3 extend, glm::vec3 center);
     virtual ~cube();
     virtual glm::vec3 normal(glm::vec3 point) const;

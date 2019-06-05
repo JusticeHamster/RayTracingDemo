@@ -6,8 +6,8 @@
 
 void line::copy(std::shared_ptr<line> new_line) const
 {
-    new_line->set_t(t);
     shape::copy(new_line);
+    new_line->set_t(t);
 }
 
 line::line(glm::vec3 start, glm::vec3 direction, bool is_ray): is_ray(is_ray), start(start)

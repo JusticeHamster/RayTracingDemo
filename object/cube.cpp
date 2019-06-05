@@ -46,17 +46,20 @@ std::vector<int> cube::LINES_ORDER = {0, 1, 2, 3, 4, 5, 6, 7, 0, 2, 1, 3, 4, 6, 
 void cube::draw() const
 {
     glm::vec3 pos = get_parent()->get_position();
-    glColor3f(.28f, .46f, 1.f); // 染色
-    glBegin(GL_QUAD_STRIP); //填充凸多边形
-    for (int i = 0; i < 8; i++) {
-        glVertex3f(vertex[i].x + pos.x, vertex[i].y + pos.y, vertex[i].z + pos.z);
+    qDebug() << (draw_style == style::QUAD);
+    if (draw_style == style::QUAD) {
+        glColor3f(.28f, .46f, 1.f); // 染色
+        glBegin(GL_QUAD_STRIP); //填充凸多边形
+        for (int i = 0; i < 8; i++) {
+            glVertex3f(vertex[i].x + pos.x, vertex[i].y + pos.y, vertex[i].z + pos.z);
+        }
+        glEnd();
+        glBegin(GL_QUAD_STRIP);
+        for (unsigned long i = 0; i < QUAD_ORDER.size(); i++) {
+            glVertex3f(vertex[QUAD_ORDER[i]].x + pos.x, vertex[QUAD_ORDER[i]].y + pos.y, vertex[QUAD_ORDER[i]].z + pos.z);
+        }
+        glEnd();
     }
-    glEnd();
-    glBegin(GL_QUAD_STRIP);
-    for (unsigned long i = 0; i < QUAD_ORDER.size(); i++) {
-        glVertex3f(vertex[QUAD_ORDER[i]].x + pos.x, vertex[QUAD_ORDER[i]].y + pos.y, vertex[QUAD_ORDER[i]].z + pos.z);
-    }
-    glEnd();
     glColor3f(0, 0, 0);
     glBegin(GL_LINES);
     for (unsigned long i = 0; i < LINES_ORDER.size(); i++) {
@@ -104,6 +107,7 @@ bool cube::point_in_plane() const{
 void cube::copy(std::shared_ptr<cube> new_cube) const
 {
     shape::copy(new_cube);
+    new_cube->draw_style = draw_style;
 }
 
 float cube::intersect(const ray &in) const
