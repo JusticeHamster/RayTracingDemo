@@ -3,6 +3,7 @@
 #include "model.hpp"
 
 #include "opengl/opengl_header.hpp"
+#include <glm/gtc/type_ptr.hpp>
 
 cube::cube(glm::vec3 axis_x, glm::vec3 axis_y, glm::vec3 axis_z, glm::vec3 extend, glm::vec3 center)
 {
@@ -106,35 +107,26 @@ bool cube::point_in_plane() const{
     vex[1] = extend * (-axis_x + axis_y + axis_z);
     vex[2] = extend * (axis_x - axis_y + axis_z);
     vex[3] = extend * (axis_x + axis_y + axis_z);
-    glm::mat4 A();
-    A[0] = glm::vec4(vex[0].x,vex[1].x,vex[2].x,vex[3].x);
-    A[1] = glm::vec4(vex[0].y,vex[1].y,vex[2].y,vex[3].y);
-    A[2] = glm::vec4(vex[0].z,vex[1].z,vex[2].z,vex[3].z);
-    A[3] = glm::vec4(1,1,1,1);
-    glm::mat4 B();
-    B[0] = glm::vec4(vertex[0].x,vertex[1].x,vertex[2].x,vertex[3].x);
-    B[1] = glm::vec4(vertex[0].y,vertex[1].y,vertex[2].y,vertex[3].y);
-    B[2] = glm::vec4(vertex[0].z,vertex[1].z,vertex[2].z,vertex[3].z);
-    B[3] = glm::vec4(1,1,1,1);
-    glm::mat4 T = glm::dot(B, glm::inverse(A));
-    glm::mat4 homo_A = glm::dot(T, A);
-    qDebug() << 
-        homo_A[0][0]<< 
-        homo_A[0][1]<< 
-        homo_A[0][2]<< 
-        homo_A[0][3]<< 
-        homo_A[1][0]<< 
-        homo_A[1][1]<< 
-        homo_A[1][2]<< 
-        homo_A[1][3]<< 
-        homo_A[2][0]<< 
-        homo_A[2][1]<<
-        homo_A[2][2]<< 
-        homo_A[2][3]<< 
-        homo_A[3][0]<< 
-        homo_A[3][1]<< 
-        homo_A[3][2]<< 
-        homo_A[3][3]<< 
+    float a[16]={ vex[0].x,vex[1].x,vex[2].x,vex[3].x,
+                    vex[0].y,vex[1].y,vex[2].y,vex[3].y,
+                    vex[0].z,vex[1].z,vex[2].z,vex[3].z,
+                    1.f,1.f,1.f,1.f};
+    glm::mat4 A = glm::make_mat4(a);
+    float b[16]={vertex[0].x,vertex[1].x,vertex[2].x,vertex[3].x,
+                 vertex[0].y,vertex[1].y,vertex[2].y,vertex[3].y,
+                 vertex[0].z,vertex[1].z,vertex[2].z,vertex[3].z,
+                 1.f,1.f,1.f,1.f};
+    glm::mat4 B = glm::make_mat4(b);
+    glm::mat4 T = glm::inverse(A)*B;
+    glm::mat4 homo_A = A*T;
+    qDebug() << vertex[0].x<<vertex[1].x<<vertex[2].x<<vertex[3].x<<
+                 vertex[0].y<<vertex[1].y<<vertex[2].y<<vertex[3].y<<
+                 vertex[0].z<<vertex[1].z<<vertex[2].z<<vertex[3].z;
+    qDebug()<<"--------"
+    qDebug() << homo_A[0][0]<< homo_A[0][1]<< homo_A[0][2]<< homo_A[0][3]<<
+        homo_A[1][0]<< homo_A[1][1]<< homo_A[1][2]<< homo_A[1][3]<<
+        homo_A[2][0]<< homo_A[2][1]<<homo_A[2][2]<< homo_A[2][3]<<
+        homo_A[3][0]<< homo_A[3][1]<< homo_A[3][2]<< homo_A[3][3];
     return true;
 }
 

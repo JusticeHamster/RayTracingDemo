@@ -10,8 +10,6 @@ private:
     glm::vec3 vertex[8];
     void init_vertex();
     float plane(glm::vec3 point, glm::vec3 normal, const ray &in) const;
-    bool point_in_plane() const;
-
     void copy(std::shared_ptr<cube> new_cube) const;
 
     static std::vector<int> QUAD_ORDER, LINES_ORDER;
@@ -27,6 +25,7 @@ public:
     virtual void rotate();
     virtual void move();
     virtual void scale();
+    bool point_in_plane() const;
     virtual float intersect(const ray &in) const;
     virtual void hello() const;
     virtual std::shared_ptr<shape> copy() const;
