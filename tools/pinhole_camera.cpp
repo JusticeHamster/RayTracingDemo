@@ -13,5 +13,18 @@ pinhole_camera::~pinhole_camera()
 
 std::vector<ray> pinhole_camera::ray_generation()
 {
-    return { ray(glm::vec3(-2, -0.5, 0.5), glm::vec3(1, 0, 0), glm::vec3(), img, glm::vec2(0, 0), 1, 0) };
+    std::vector<ray> r;
+    glm::vec3 right = -left * PACK_FACTOR;
+    glm::vec3 down = -up * PACK_FACTOR;
+    glm::vec3 start = position + direction * DISTANCE_FACTOR;
+        - right * ((img.get_width() - 1) / 2.f) - down * ((img.get_height() - 1) / 2.f);
+    glm::vec3 p = start;
+    for (unsigned i = 0; i < img.get_height(); i++) {
+        p = start + down * static_cast<float>(i);
+        for (unsigned j = 0; j < img.get_width(); j++) {
+            r.push_back(ray(position, p - position, glm::vec3(), img, glm::vec2(i, j), 1, 0));
+            p += right;
+        }
+    }
+    return r;
 }

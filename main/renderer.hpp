@@ -26,7 +26,7 @@ public:
     constexpr static int sampling_number = 10;
     renderer(const renderer &r) = delete;
     renderer(const renderer &&r) = delete;
-    renderer(std::unique_ptr<camera> cmr);
+    renderer();
     void render(scene &scn);
     bool is_rendering() const;
     intersection BRDF(ray &in, const shape &s, glm::vec3 point, const scene &scn) const;

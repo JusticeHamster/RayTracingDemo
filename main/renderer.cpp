@@ -7,11 +7,7 @@
 #include "object/intersection.hpp"
 #include "object/diffuse_distribution.hpp"
 #include "object/mirror_distribution.hpp"
-
-renderer::renderer(std::unique_ptr<camera> cmr): cmr(std::move(cmr))
-{
-    ;
-}
+#include "tools/pinhole_camera.hpp"
 
 void renderer::rays_render(scene &scn, std::queue<ray> &rays)
 {
@@ -67,6 +63,11 @@ void renderer::__render(scene &scn)
     //
     rendering = false;
     render_lock.unlock();
+}
+
+renderer::renderer()
+{
+    cmr = std::make_unique<pinhole_camera>(2, 2, glm::vec3(-2), glm::vec3(2));
 }
 
 void renderer::render(scene &scn)
