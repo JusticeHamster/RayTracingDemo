@@ -6,7 +6,7 @@ void ray::copy(std::shared_ptr<ray> new_ray) const
 }
 
 ray::ray(glm::vec3 start, glm::vec3 direction, glm::vec3 rgb, std::reference_wrapper<image> img,
-         glm::vec2 image_position, double weight, unsigned time):
+         glm::vec2 image_position, float weight, unsigned time):
     line(start, direction, true), rgb(rgb), img(img),
     image_position(image_position), weight(weight), time(time)
 {
@@ -58,4 +58,9 @@ std::shared_ptr<shape> ray::copy() const
     auto r = std::make_shared<ray>(start_point(), direction(), rgb, img, image_position, weight, time);
     ray::copy(r);
     return std::shared_ptr<shape>(r);
+}
+
+void ray::set_weight(float weight)
+{
+    this->weight = weight;
 }

@@ -17,7 +17,7 @@ private:
 
     QMutex object_lock;
 protected:
-    glm::vec3 position, direction, up;
+    glm::vec3 position, direction, up, left;
     camera(unsigned width, unsigned height, glm::vec3 position, glm::vec3 direction, glm::vec3 up);
 public:
     image img;

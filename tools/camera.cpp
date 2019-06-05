@@ -7,7 +7,10 @@
 camera::camera(unsigned width, unsigned height, glm::vec3 position, glm::vec3 direction, glm::vec3 up):
     position(position), direction(direction), up(up), img(image(width, height))
 {
-
+    // recalculate vectors
+    direction = glm::normalize(direction);
+    left = glm::normalize(glm::cross(up, direction));
+    up = glm::normalize(glm::cross(direction, left));
 }
 
 camera::~camera()
@@ -17,6 +20,8 @@ camera::~camera()
 
 model camera::object()
 {
+    if (obj)
+        return *obj;
     QMutexLocker locker(&object_lock);
     if (obj)
         return *obj;

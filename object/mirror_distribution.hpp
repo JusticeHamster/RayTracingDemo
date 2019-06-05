@@ -5,9 +5,13 @@
 
 class mirror_distribution: public ray_distribution
 {
+private:
+    float reflection_rate;
+    float refraction_rate;
+    float eta;
 public:
     virtual ~mirror_distribution();
-    mirror_distribution(ray &parent, glm::vec3 point, glm::vec3 norm);
+    mirror_distribution(ray &parent, glm::vec3 point, glm::vec3 norm, float reflection_rate, float refraction_rate, float eta);
     std::vector<ray> random(int num) const;
 };
 

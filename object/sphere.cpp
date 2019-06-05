@@ -5,6 +5,7 @@
 #include <optional>
 
 #include "glm/glm.hpp"
+#include "glm/gtx/norm.hpp"
 #include "opengl/opengl_header.hpp"
 
 void sphere::copy(std::shared_ptr<sphere> new_sphere) const
@@ -22,7 +23,7 @@ sphere::~sphere()
 
 glm::vec3 sphere::normal(glm::vec3 point) const
 {
-    return glm::normalize(point - center);
+    return glm::normalize(point - center - get_parent()->get_position());
 }
 
 void sphere::draw() const
@@ -119,4 +120,9 @@ std::shared_ptr<shape> sphere::copy() const
     auto s = std::make_shared<sphere>(center, radius, m, n);
     sphere::copy(s);
     return std::shared_ptr<shape>(s);
+}
+
+bool sphere::inside(glm::vec3 point) const
+{
+    return radius * radius >= glm::distance2(point, center + get_parent()->get_position());
 }

@@ -13,13 +13,18 @@ private:
     loader();
     std::optional<scene> scn;
     constexpr static int FPS = 60;
+    constexpr static int sampling_number = 10;
+    constexpr static float PACK_FACTOR = .5f;
+    constexpr static float DISTANCE_FACTOR = 2.f;
 
-    QMutex lock;
+    QMutex load_lock;
 public:
     static loader instance;
     scene &get_scene(std::string name);
     scene &get_running_scene();
-    int get_fps() const;
+    int get_fps();
+    float get_factor(std::string name);
+    int get_sampling_number();
 };
 
 #endif // LOADER_HPP

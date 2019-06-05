@@ -46,7 +46,6 @@ std::vector<int> cube::LINES_ORDER = {0, 1, 2, 3, 4, 5, 6, 7, 0, 2, 1, 3, 4, 6, 
 void cube::draw() const
 {
     glm::vec3 pos = get_parent()->get_position();
-    qDebug() << (draw_style == style::QUAD);
     if (draw_style == style::QUAD) {
         glColor3f(.28f, .46f, 1.f); // 染色
         glBegin(GL_QUAD_STRIP); //填充凸多边形
