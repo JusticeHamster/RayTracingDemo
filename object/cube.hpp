@@ -8,6 +8,7 @@ class cube : public shape
 private:
     glm::vec3 axis_x, axis_y, axis_z, extend, center;
     glm::vec3 vertex[8];
+    glm::mat4 T; //世界坐标系*T = cube坐标系
     void init_vertex();
     float plane(glm::vec3 point, glm::vec3 normal, const ray &in) const;
     void copy(std::shared_ptr<cube> new_cube) const;

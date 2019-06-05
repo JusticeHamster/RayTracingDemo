@@ -25,11 +25,11 @@ void tester::test_all()
     // qDebug()<<t << r.point(t).x<<r.point(t).y<<r.point(t).z;
     // // 5.51399 -0.183505 0.816495 1.8165
 
-    cube c(glm::vec3(0.5,0.5,0),
-           glm::vec3(0.5,-0.5,0),
+    cube c(glm::vec3(1,0,0),
+           glm::vec3(0,1,0),
            glm::vec3(0,0,1),
            glm::vec3(2,2,2),
-           glm::vec3(0,0,0));
+           glm::vec3(3,2,1));
     model m({}, glm::vec3(0,0,0),glm::vec3(0,0,0),false,glm::vec3(0,0,0));
     c.set_parent(&m);
     auto t = c.intersect(r);
