@@ -20,6 +20,8 @@ camera::~camera()
 
 model camera::object()
 {
+    if (obj)
+        return *obj;
     QMutexLocker locker(&object_lock);
     if (obj)
         return *obj;

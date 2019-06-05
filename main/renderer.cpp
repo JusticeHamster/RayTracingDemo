@@ -8,6 +8,9 @@
 #include "object/diffuse_distribution.hpp"
 #include "object/mirror_distribution.hpp"
 #include "tools/pinhole_camera.hpp"
+#include "tools/loader.hpp"
+
+loader &ldr = loader::instance;
 
 void renderer::rays_render(scene &scn, std::queue<ray> &rays)
 {
@@ -35,7 +38,7 @@ void renderer::rays_render(scene &scn, std::queue<ray> &rays)
             l->set_t(t);
             intersection i = BRDF(r, optional_reference_shape->get(), r.point(t), scn);
             if (i) {
-                for (const ray &r : i.out->random(sampling_number))
+                for (const ray &r : i.out->random(ldr.get_sampling_number()))
                     rays.push(r);
             } else {
                 r.stop(i.stop_energy);
@@ -61,13 +64,14 @@ void renderer::__render(scene &scn)
         q_rays.push(r);
     rays_render(scn, q_rays);
     //
+
     rendering = false;
     render_lock.unlock();
 }
 
 renderer::renderer()
 {
-    cmr = std::make_unique<pinhole_camera>(2, 2, glm::vec3(-2), glm::vec3(2));
+    cmr = std::make_unique<pinhole_camera>(2, 1, glm::vec3(-2), glm::vec3(2));
 }
 
 void renderer::render(scene &scn)
@@ -92,6 +96,6 @@ intersection renderer::BRDF(ray &in, const shape &s, glm::vec3 point, const scen
         return intersection(true, nullptr, point, scn.power(line(point, norm, true)));
     }
     // 根据配置的表面信息选择ray_distribution
-    std::shared_ptr<ray_distribution> rd(new diffuse_distribution(in, point, norm));
+    std::shared_ptr<ray_distribution> rd(new mirror_distribution(in, point, norm, .0f, .1f, .5f));
     return intersection(false, rd, point, {});
 }

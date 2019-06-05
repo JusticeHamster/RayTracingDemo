@@ -24,6 +24,7 @@ public:
     virtual float intersect(const ray &in) const;
     virtual void hello() const;
     virtual std::shared_ptr<shape> copy() const;
+    bool inside(glm::vec3 point) const;
 };
 
 #endif // SPHERE_HPP

@@ -23,7 +23,6 @@ private:
 
     bool rendering = false;
 public:
-    constexpr static int sampling_number = 10;
     renderer(const renderer &r) = delete;
     renderer(const renderer &&r) = delete;
     renderer();
