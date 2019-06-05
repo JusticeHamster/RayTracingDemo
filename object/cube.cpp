@@ -103,7 +103,7 @@ bool cube::point_in_plane() const{
 
 void cube::copy(std::shared_ptr<cube> new_cube) const
 {
-    ;
+    shape::copy(new_cube);
 }
 
 float cube::intersect(const ray &in) const

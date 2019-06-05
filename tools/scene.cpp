@@ -16,11 +16,13 @@ scene::scene(std::string name): name(name)
     }, glm::vec3(), glm::vec3(), false, glm::vec3()));
 
     // 坐标轴
-    push(model({
-        std::make_shared<line>(glm::vec3(), glm::vec3(-10, 0, 0)),
-        std::make_shared<line>(glm::vec3(), glm::vec3(0, 10, 0)),
-        std::make_shared<line>(glm::vec3(), glm::vec3(0, 0, -10)),
-    }, glm::vec3(), glm::vec3(), false, glm::vec3()));
+    auto x = std::make_shared<line>(glm::vec3(), glm::vec3(-10, 0, 0));
+    auto y = std::make_shared<line>(glm::vec3(), glm::vec3(0, 10, 0));
+    auto z = std::make_shared<line>(glm::vec3(), glm::vec3(0, 0, -10));
+    x->set_blockable(false);
+    y->set_blockable(false);
+    z->set_blockable(false);
+    push(model({ x, y, z }, glm::vec3(), glm::vec3(), false, glm::vec3()));
 }
 
 scene::scene(const scene &scn)

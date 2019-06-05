@@ -15,14 +15,18 @@ renderer::renderer(std::unique_ptr<camera> cmr): cmr(std::move(cmr))
 
 void renderer::rays_render(scene &scn, std::queue<ray> &rays)
 {
+    int count = 0;
     while (!rays.empty()) {
         ray &r = rays.front();
         // work through all the models (no acceleration)
         model::intersect_result result(std::nullopt, -1);
+        qDebug() << count++ << "time:";
         for (const model &m : scn.models) {
             auto ir = m.intersect(r);
             auto [optional_reference_shape, t] = ir;
             if (optional_reference_shape) {
+                m.hello();
+                qDebug() << t;
                 if (!std::get<0>(result) || std::get<1>(result) < t)
                     result = ir;
             }
@@ -40,6 +44,8 @@ void renderer::rays_render(scene &scn, std::queue<ray> &rays)
             } else {
                 r.stop(i.stop_energy);
             }
+        } else {
+            qDebug() << "nothing happened.";
         }
         // draw
         scn.push(model({ l }, glm::vec3(), glm::vec3(), false, glm::vec3()));

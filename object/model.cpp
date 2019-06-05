@@ -106,7 +106,7 @@ model::intersect_result model::intersect(const ray &in) const
     std::optional<float> min;
     for (const auto &s : shapes) {
         float t = s->ray_intersect(in);
-        if (t >= 0 && (!min || t < *min)) {
+        if (t > 0 && (!min || t < *min)) {
             min = t;
             intersect_shape = *s;
         }
@@ -116,7 +116,9 @@ model::intersect_result model::intersect(const ray &in) const
 
 void model::hello() const
 {
-    qDebug() << "I have" << shapes.size() << "shapes:";
+    unsigned long count = shapes.size();
+    const char *s = count <= 1 ? "shape:" : "shapes:";
+    qDebug() << "I have" << count << s;
     for (const auto &s : shapes) {
         s->hello();
     }
