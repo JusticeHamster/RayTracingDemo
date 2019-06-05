@@ -36,6 +36,29 @@ void cube::init_vertex()
     }
 }
 
+void cube::init_T()
+{
+    // 计算转换矩阵
+    glm::vec3 vex[4];
+    vex[0] = extend * (-axis_x - axis_y + axis_z);
+    vex[1] = extend * (-axis_x + axis_y + axis_z);
+    vex[2] = extend * (axis_x - axis_y + axis_z);
+    vex[3] = extend * (axis_x - axis_y - axis_z);
+    for (int i=0;i<4;i++)
+        vex[i] /= 2;
+    float a[16]={ vex[0].x,vex[1].x,vex[2].x,vex[3].x,
+                    vex[0].y,vex[1].y,vex[2].y,vex[3].y,
+                    vex[0].z,vex[1].z,vex[2].z,vex[3].z,
+                    1.f,1.f,1.f,1.f};
+    glm::mat4 A = glm::make_mat4(a);
+    float b[16]={vertex[0].x,vertex[1].x,vertex[2].x,vertex[4].x,
+                 vertex[0].y,vertex[1].y,vertex[2].y,vertex[4].y,
+                 vertex[0].z,vertex[1].z,vertex[2].z,vertex[4].z,
+                 1.f,1.f,1.f,1.f};
+    glm::mat4 B = glm::make_mat4(b);
+    T = glm::inverse(A)*B;
+}
+
 glm::vec3 cube::normal(glm::vec3 point) const
 {
     return point;
@@ -98,55 +121,32 @@ float cube::plane(glm::vec3 point, glm::vec3 normal, const ray &in) const
     return ans<0?-1:ans;
 }
 
-/* 传入四个点（构成一个矩形）和一个点，判断点是否在围成点矩形中。
+/* 传入四个点abcd（构成一个矩形）和一个点x，判断点是否在围成点矩形中。
+    点坐标均为世界坐标系
 */
-bool cube::point_in_plane() const{
-    // 计算转换矩阵
-    glm::vec3 vex[4];
-    vex[0] = extend * (-axis_x - axis_y + axis_z);
-    vex[1] = extend * (-axis_x + axis_y + axis_z);
-    vex[2] = extend * (axis_x - axis_y + axis_z);
-    vex[3] = extend * (axis_x - axis_y - axis_z);
-    for (int i=0;i<4;i++)
-        vex[i] /= 2;
-    float a[16]={ vex[0].x,vex[1].x,vex[2].x,vex[3].x,
-                    vex[0].y,vex[1].y,vex[2].y,vex[3].y,
-                    vex[0].z,vex[1].z,vex[2].z,vex[3].z,
-                    1.f,1.f,1.f,1.f};
-    glm::mat4 A = glm::make_mat4(a);
-    float b[16]={vertex[0].x,vertex[1].x,vertex[2].x,vertex[4].x,
-                 vertex[0].y,vertex[1].y,vertex[2].y,vertex[4].y,
-                 vertex[0].z,vertex[1].z,vertex[2].z,vertex[4].z,
-                 1.f,1.f,1.f,1.f};
-    glm::mat4 B = glm::make_mat4(b);
-    glm::mat4 T = glm::inverse(A)*B;
-    glm::mat4 homo_A = A*T;
-
-
-
-    qDebug()<<"--------世界坐标系下cube点---------";
-    qDebug() << vertex[0].x<<vertex[1].x<<vertex[2].x<<vertex[4].x<<endl<<
-                vertex[0].y<<vertex[1].y<<vertex[2].y<<vertex[4].y<<endl<<
-                vertex[0].z<<vertex[1].z<<vertex[2].z<<vertex[4].z;
-    qDebug()<<"--------cube坐标系cube点---------";
-    qDebug() << A[0][0]<< A[0][1]<< A[0][2]<< A[0][3]<<endl<<
-                A[1][0]<< A[1][1]<< A[1][2]<< A[1][3]<<endl<<
-                A[2][0]<< A[2][1]<<A[2][2]<< A[2][3]<<endl<<
-                A[3][0]<< A[3][1]<< A[3][2]<< A[3][3];
-    qDebug()<<"--------得到的单应矩阵---------";
-    qDebug() << T[0][0]<< T[0][1]<< T[0][2]<< T[0][3]<<endl<<
-                T[1][0]<< T[1][1]<< T[1][2]<< T[1][3]<<endl<<
-                T[2][0]<< T[2][1]<<T[2][2]<< T[2][3]<<endl<<
-                T[3][0]<< T[3][1]<< T[3][2]<< T[3][3];
-    qDebug()<<"--------世界坐标系变换后得到的点---------";
-    qDebug() << homo_A[0][0]<< homo_A[0][1]<< homo_A[0][2]<< homo_A[0][3]<<endl<<
-                homo_A[1][0]<< homo_A[1][1]<< homo_A[1][2]<< homo_A[1][3]<<endl<<
-                homo_A[2][0]<< homo_A[2][1]<<homo_A[2][2]<< homo_A[2][3]<<endl<<
-                homo_A[3][0]<< homo_A[3][1]<< homo_A[3][2]<< homo_A[3][3];
-    glm::vec4 p(-0.707105,-0.707105,1,0);
-    glm::vec4 homo_p = p*T;
-    qDebug()<<homo_p.x<<homo_p.y<<homo_p.z;
-    return true;
+bool cube::point_in_plane(glm::vec3 a,glm::vec3 b,glm::vec3 c,glm::vec3 d,glm::vec3 x) const{
+    glm::vec4 ta(a.x,a.y,a.z,1.0f);
+    glm::vec4 tb(b.x,b.y,b.z,1.0f);
+    glm::vec4 tc(c.x,c.y,c.z,1.0f);
+    glm::vec4 td(d.x,d.y,d.z,1.0f);
+    glm::vec4 tx(x.x,x.y,x.z,1.0f);
+    ta = ta*T;
+    tb = tb*T;
+    tc = tc*T;
+    td = td*T;
+    tx = tx*T;
+    a = glm::vec3(ta);
+    b = glm::vec3(tb);
+    c = glm::vec3(tc);
+    d = glm::vec3(td);
+    x = glm::vec3(tx);
+    glm::vec3 t1 =  glm::normalize(glm::cross(a-x,b-a));
+    glm::vec3 t2 =  glm::normalize(glm::cross(b-x,c-b));
+    glm::vec3 t3 =  glm::normalize(glm::cross(c-x,d-c));
+    glm::vec3 t4 =  glm::normalize(glm::cross(d-x,a-d));
+    if (glm::dot(t1,t2)>0 && glm::dot(t1,t3)>0 && glm::dot(t1,t4)>0)
+        return true;
+    return false;
 }
 
 void cube::copy(std::shared_ptr<cube> new_cube) const
@@ -159,17 +159,17 @@ float cube::intersect(const ray &in) const
 {
     float t[6];
     t[0] = plane(vertex[0],axis_z,in);
-    t[0] = point_in_plane()?t[0]:-1;
+    t[0] = point_in_plane(vertex[0],vertex[1],vertex[3],vertex[2],in.point(t[0]))?t[0]:-1;
     t[1] = plane(vertex[2],axis_x,in);
-    t[1] = point_in_plane()?t[1]:-1;
+    t[1] = point_in_plane(vertex[2],vertex[3],vertex[5],vertex[4],in.point(t[1]))?t[1]:-1;
     t[2] = plane(vertex[4],axis_z,in);
-    t[2] = point_in_plane()?t[2]:-1;
+    t[2] = point_in_plane(vertex[4],vertex[5],vertex[7],vertex[6],in.point(t[2]))?t[2]:-1;
     t[3] = plane(vertex[6],axis_x,in);
-    t[3] = point_in_plane()?t[3]:-1;
+    t[3] = point_in_plane(vertex[0],vertex[1],vertex[7],vertex[6],in.point(t[3]))?t[3]:-1;
     t[4] = plane(vertex[0],axis_y,in);
-    t[4] = point_in_plane()?t[4]:-1;
+    t[4] = point_in_plane(vertex[0],vertex[2],vertex[4],vertex[6],in.point(t[4]))?t[4]:-1;
     t[5] = plane(vertex[1],axis_y,in);
-    t[5] = point_in_plane()?t[5]:-1;
+    t[5] = point_in_plane(vertex[1],vertex[3],vertex[5],vertex[7],in.point(t[5]))?t[5]:-1;
     float ans = -1;
     for (int i=0;i<6;i++){
         if (t[i]<0)
