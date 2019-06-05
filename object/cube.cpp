@@ -62,6 +62,7 @@ void cube::init_T()
 
 glm::vec3 cube::normal(glm::vec3 point) const
 {
+    
     return point;
 }
 
@@ -175,7 +176,7 @@ float cube::intersect(const ray &in) const
     for (int i=0;i<6;i++){
         if (t[i]<0)
             continue;
-        ans = ans==-1?t[i]:glm::min(ans,t[i]);
+        ans = ans<0?t[i]:glm::min(ans,t[i]);
     }
     return ans;
 }
