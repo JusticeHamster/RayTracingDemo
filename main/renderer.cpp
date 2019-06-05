@@ -92,6 +92,9 @@ bool renderer::is_rendering() const
 intersection renderer::BRDF(ray &in, const shape &s, glm::vec3 point, const scene &scn) const
 {
     glm::vec3 norm = s.normal(point);
+    if (s.get_parent()->is_light()) {
+        return intersection(true, nullptr, point, s.get_parent()->get_light());
+    }
     if (in.is_end()) {
         return intersection(true, nullptr, point, scn.power(line(point, norm, true)));
     }
