@@ -12,6 +12,9 @@ private:
     float plane(glm::vec3 point, glm::vec3 normal, const ray &in) const;
     bool point_in_plane() const;
 
+    void copy(std::shared_ptr<cube> new_cube) const;
+
+    static std::vector<int> QUAD_ORDER, LINES_ORDER;
 public:
     cube(glm::vec3 axis_x, glm::vec3 axis_y, glm::vec3 axis_z, glm::vec3 extend, glm::vec3 center);
     virtual ~cube();
