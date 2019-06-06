@@ -10,7 +10,7 @@
 #include "tools/pinhole_camera.hpp"
 #include "tools/loader.hpp"
 
-loader &ldr = loader::instance;
+static loader &ldr = loader::instance;
 
 void renderer::rays_render(scene &scn, std::queue<ray> &rays)
 {
@@ -71,7 +71,7 @@ void renderer::__render(scene &scn)
 
 renderer::renderer()
 {
-    cmr = std::make_unique<pinhole_camera>(2, 1, glm::vec3(-2), glm::vec3(2));
+    cmr = std::make_unique<pinhole_camera>(2, 2, glm::vec3(-2), glm::vec3(2));
 }
 
 void renderer::render(scene &scn)
@@ -99,6 +99,6 @@ intersection renderer::BRDF(ray &in, const shape &s, glm::vec3 point, const scen
         return intersection(true, nullptr, point, scn.power(line(point, norm, true)));
     }
     // 根据配置的表面信息选择ray_distribution
-    std::shared_ptr<ray_distribution> rd(new mirror_distribution(in, point, norm, .1f, .0f, .5f));
+    std::shared_ptr<ray_distribution> rd(new mirror_distribution(in, point, norm, .0f, .1f, .5f));
     return intersection(false, rd, point, {});
 }

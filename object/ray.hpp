@@ -17,11 +17,11 @@ private:
     glm::vec2 image_position;
     float weight;
     unsigned time;
+    bool inside;
 protected:
     void copy(std::shared_ptr<ray> new_ray) const;
 public:
-    const static unsigned max_scattering_time = 3; // 改为从loader读取配置文件
-    ray(glm::vec3 start, glm::vec3 direction, glm::vec3 rgb, std::reference_wrapper<image> img, glm::vec2 image_position, float weight, unsigned time);
+    ray(glm::vec3 start, glm::vec3 direction, glm::vec3 rgb, std::reference_wrapper<image> img, glm::vec2 image_position, float weight, unsigned time, bool inside = false);
     virtual ~ray();
     bool is_end() const;
     glm::vec3 direction() const;
@@ -32,6 +32,7 @@ public:
     virtual void hello() const;
     virtual std::shared_ptr<shape> copy() const;
     void set_weight(float weight);
+    bool is_inside() const;
 };
 
 #endif // RAY_HPP

@@ -47,3 +47,8 @@ int loader::get_sampling_number()
 {
     return sampling_number;
 }
+
+unsigned loader::get_max_scattering_time()
+{
+    return max_scattering_time;
+}

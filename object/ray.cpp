@@ -1,4 +1,7 @@
 #include "ray.hpp"
+#include "tools/loader.hpp"
+
+static loader &ldr = loader::instance;
 
 void ray::copy(std::shared_ptr<ray> new_ray) const
 {
@@ -6,9 +9,9 @@ void ray::copy(std::shared_ptr<ray> new_ray) const
 }
 
 ray::ray(glm::vec3 start, glm::vec3 direction, glm::vec3 rgb, std::reference_wrapper<image> img,
-         glm::vec2 image_position, float weight, unsigned time):
+         glm::vec2 image_position, float weight, unsigned time, bool inside):
     line(start, direction, true), rgb(rgb), img(img),
-    image_position(image_position), weight(weight), time(time)
+    image_position(image_position), weight(weight), time(time), inside(inside)
 {
 
 }
@@ -20,7 +23,7 @@ ray::~ray()
 
 bool ray::is_end() const
 {
-    return time >= max_scattering_time;
+    return time >= ldr.get_max_scattering_time();
 }
 
 glm::vec3 ray::direction() const
@@ -55,7 +58,7 @@ void ray::hello() const
 
 std::shared_ptr<shape> ray::copy() const
 {
-    auto r = std::make_shared<ray>(start_point(), direction(), rgb, img, image_position, weight, time);
+    auto r = std::make_shared<ray>(start_point(), direction(), rgb, img, image_position, weight, time, inside);
     ray::copy(r);
     return std::shared_ptr<shape>(r);
 }
@@ -63,4 +66,9 @@ std::shared_ptr<shape> ray::copy() const
 void ray::set_weight(float weight)
 {
     this->weight = weight;
+}
+
+bool ray::is_inside() const
+{
+    return inside;
 }

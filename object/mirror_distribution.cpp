@@ -22,18 +22,19 @@ mirror_distribution::mirror_distribution(ray &parent, glm::vec3 point, glm::vec3
 // 对镜面反射、折射来说，不需要采样
 std::vector<ray> mirror_distribution::random(int num) const
 {
+    glm::vec3 N = parent.is_inside() ? -norm : norm;
     glm::vec3 L = -parent.direction();
-    float NL = glm::dot(norm, L);
+    float NL = glm::dot(N, L);
     float delta = 1 - eta * eta * (1 - NL * NL);
     // 计算反射
-    auto reflection_ray = ray(point, parent.direction() + 2.f * norm, glm::vec3(), parent.get_img(), parent.get_img_position(), 1, parent.get_time() + 1);
+    auto reflection_ray = ray(point, parent.direction() + 2.f * N, glm::vec3(), parent.get_img(), parent.get_img_position(), 1, parent.get_time() + 1, parent.is_inside());
     if (reflection_rate == 1.f)
         return { reflection_ray };
     if (reflection_rate == 0.f && delta < 0)
         return {};
     // 计算折射
-    glm::vec3 refraction = (eta * NL - glm::sqrt(delta)) * norm - eta * L;
-    auto refraction_ray = ray(point, refraction, glm::vec3(), parent.get_img(), parent.get_img_position(), 1, parent.get_time() + 1);
+    glm::vec3 refraction = (eta * NL - glm::sqrt(delta)) * N - eta * L;
+    auto refraction_ray = ray(point, refraction, glm::vec3(), parent.get_img(), parent.get_img_position(), 1, parent.get_time() + 1, !parent.is_inside());
     if (refraction_rate == 1.f)
         return { refraction_ray };
     reflection_ray.set_weight(reflection_rate);
