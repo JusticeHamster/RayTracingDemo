@@ -18,6 +18,8 @@ private:
     float weight;
     unsigned time;
     bool inside;
+    ray *parent_ray = nullptr;
+    std::vector<ray *> childs;
 protected:
     void copy(std::shared_ptr<ray> new_ray) const;
 public:
@@ -33,6 +35,8 @@ public:
     virtual std::shared_ptr<shape> copy() const;
     void set_weight(float weight);
     bool is_inside() const;
+    void add_child(ray *child);
+    void set_parent(ray *parent);
 };
 
 #endif // RAY_HPP

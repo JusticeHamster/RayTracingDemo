@@ -6,6 +6,20 @@ static loader &ldr = loader::instance;
 void ray::copy(std::shared_ptr<ray> new_ray) const
 {
     line::copy(new_ray);
+    new_ray->parent_ray = parent_ray;
+    new_ray->childs = childs;
+    if (parent_ray != nullptr) {
+        unsigned index = 0;
+        for (ray *child : parent_ray->childs) {
+            if (child == this)
+                break;
+            index++;
+        }
+        if (index < parent_ray->childs.size())
+            parent_ray->childs[index] = new_ray.get();
+    }
+    for (ray *child : new_ray->childs)
+        child->parent_ray = new_ray.get();
 }
 
 ray::ray(glm::vec3 start, glm::vec3 direction, glm::vec3 rgb, std::reference_wrapper<image> img,
@@ -71,4 +85,14 @@ void ray::set_weight(float weight)
 bool ray::is_inside() const
 {
     return inside;
+}
+
+void ray::add_child(ray *child)
+{
+    childs.push_back(child);
+}
+
+void ray::set_parent(ray *parent)
+{
+    parent_ray = parent;
 }
