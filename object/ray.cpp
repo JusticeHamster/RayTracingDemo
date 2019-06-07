@@ -1,5 +1,6 @@
 #include "ray.hpp"
 #include "tools/loader.hpp"
+#include "tools/image.hpp"
 
 static loader &ldr = loader::instance;
 
@@ -23,7 +24,7 @@ void ray::copy(std::shared_ptr<ray> new_ray) const
 }
 
 ray::ray(glm::vec3 start, glm::vec3 direction, glm::vec3 rgb, std::reference_wrapper<image> img,
-         glm::vec2 image_position, float weight, unsigned time, bool inside):
+         glm::uvec2 image_position, float weight, unsigned time, bool inside):
     line(start, direction, true), rgb(rgb), img(img),
     image_position(image_position), weight(weight), time(time), inside(inside)
 {
@@ -52,8 +53,11 @@ unsigned ray::get_time() const
 
 void ray::stop(glm::vec3 stop_energy)
 {
-    rgb = stop_energy;
-    // add rgb to image position according to weight
+    img.get().set(stop_energy, image_position.x, image_position.y);
+    rgb += stop_energy;
+    for (ray *p = parent_ray; p != nullptr; p = p->parent_ray) {
+        p->rgb += stop_energy;
+    }
 }
 
 image &ray::get_img()
@@ -61,7 +65,7 @@ image &ray::get_img()
     return img;
 }
 
-glm::vec2 ray::get_img_position() const
+glm::uvec2 ray::get_img_position() const
 {
     return image_position;
 }
