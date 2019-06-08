@@ -36,6 +36,7 @@ glm::vec3 line::normal(glm::vec3 point) const
 
 void line::draw() const
 {
+    set_rgb(get_rgb());
     glm::vec3 pos(get_parent()->get_position());
     glm::vec3 __start(start + pos);
     glm::vec3 __end(end);
@@ -44,7 +45,6 @@ void line::draw() const
         __end += __start;
         glEnable(GL_LINE_STIPPLE);
         glLineStipple(1, 0x0F0F);
-        // glColor3f(1, 1, 0);
     } else {
         __end += pos;
     }
@@ -54,7 +54,6 @@ void line::draw() const
     glEnd();
     if (is_direction()) {
         glDisable(GL_LINE_STIPPLE);
-        // glColor3f(0, 0, 0);
     }
 }
 

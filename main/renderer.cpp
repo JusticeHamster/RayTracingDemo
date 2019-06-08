@@ -10,13 +10,14 @@
 #include "tools/pinhole_camera.hpp"
 #include "tools/loader.hpp"
 
-loader &ldr = loader::instance;
+static loader &ldr = loader::instance;
 
-void renderer::rays_render(scene &scn, std::queue<ray> &rays)
+void renderer::rays_render(scene &scn, std::list<ray> &rays)
 {
+    auto iray = rays.begin();
     int count = 1;
-    while (!rays.empty()) {
-        ray &r = rays.front();
+    while (iray != rays.end()) {
+        ray &r = *iray;
         // work through all the models (no acceleration)
         model::intersect_result result(std::nullopt, -1);
         qDebug() << "round:" << count++;
@@ -32,14 +33,11 @@ void renderer::rays_render(scene &scn, std::queue<ray> &rays)
         }
         // generate new Rays or stop
         auto [optional_reference_shape, t] = result;
-        auto l = std::make_shared<line>(r);
-        l->set_blockable(false);
         if (optional_reference_shape) {
-            l->set_t(t);
             intersection i = BRDF(r, optional_reference_shape->get(), r.point(t), scn);
             if (i) {
                 for (const ray &r : i.out->random(ldr.get_sampling_number()))
-                    rays.push(r);
+                    rays.push_back(r);
             } else {
                 r.stop(i.stop_energy);
             }
@@ -47,9 +45,13 @@ void renderer::rays_render(scene &scn, std::queue<ray> &rays)
             qDebug() << "nothing happened.";
         }
         // draw
-        scn.push(model({ l }, glm::vec3(), glm::vec3(), false, glm::vec3()));
-        // pop
-        rays.pop();
+        auto sr = std::make_shared<ray>(r);
+        sr->set_blockable(false);
+        if (optional_reference_shape)
+            sr->set_t(t);
+        scn.push(model({ sr }, glm::vec3(), glm::vec3(), false, glm::vec3()));
+        // advance
+        iray++;
     }
 }
 
@@ -59,10 +61,10 @@ void renderer::__render(scene &scn)
     // add camera object
     scn.push(cmr->object());
     auto rays = cmr->ray_generation();
-    std::queue<ray> q_rays;
+    std::list<ray> lrays;
     for (const ray &r : rays)
-        q_rays.push(r);
-    rays_render(scn, q_rays);
+        lrays.push_back(r);
+    rays_render(scn, lrays);
     //
 
     rendering = false;
@@ -71,7 +73,7 @@ void renderer::__render(scene &scn)
 
 renderer::renderer()
 {
-    cmr = std::make_unique<pinhole_camera>(2, 1, glm::vec3(-2), glm::vec3(2));
+    cmr = std::make_unique<pinhole_camera>(2, 2, glm::vec3(-2), glm::vec3(2));
 }
 
 void renderer::render(scene &scn)
@@ -99,6 +101,6 @@ intersection renderer::BRDF(ray &in, const shape &s, glm::vec3 point, const scen
         return intersection(true, nullptr, point, scn.power(line(point, norm, true)));
     }
     // 根据配置的表面信息选择ray_distribution
-    std::shared_ptr<ray_distribution> rd(new mirror_distribution(in, point, norm, .0f, .1f, .5f));
+    std::shared_ptr<ray_distribution> rd(new mirror_distribution(in, point, norm, 1.f, 1.f, .5f));
     return intersection(false, rd, point, {});
 }

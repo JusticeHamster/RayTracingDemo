@@ -16,6 +16,7 @@ private:
     constexpr static int sampling_number = 10;
     constexpr static float PACK_FACTOR = .5f;
     constexpr static float DISTANCE_FACTOR = 2.f;
+    constexpr static unsigned max_scattering_time = 3;
 
     QMutex load_lock;
 public:
@@ -25,6 +26,7 @@ public:
     int get_fps();
     float get_factor(std::string name);
     int get_sampling_number();
+    unsigned get_max_scattering_time();
 };
 
 #endif // LOADER_HPP

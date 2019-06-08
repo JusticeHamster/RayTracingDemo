@@ -116,7 +116,7 @@ model::intersect_result model::intersect(const ray &in) const
 
 void model::hello() const
 {
-    unsigned long count = shapes.size();
+    auto count = static_cast<unsigned>(shapes.size());
     const char *s = count <= 1 ? "shape:" : "shapes:";
     qDebug() << "I have" << count << s;
     for (const auto &s : shapes) {
