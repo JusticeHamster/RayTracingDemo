@@ -31,6 +31,25 @@ ray::ray(glm::vec3 start, glm::vec3 direction, glm::vec3 rgb, std::reference_wra
 
 }
 
+ray::ray(const ray &r): line(r), rgb(r.rgb), img(r.img),
+    image_position(r.image_position), weight(r.weight), time(r.time), inside(r.inside)
+{
+    parent_ray = r.parent_ray;
+    childs = r.childs;
+    if (parent_ray != nullptr) {
+        unsigned index = 0;
+        for (ray *child : parent_ray->childs) {
+            if (child == &r)
+                break;
+            index++;
+        }
+        if (index < parent_ray->childs.size())
+            parent_ray->childs[index] = this;
+    }
+    for (ray *child : childs)
+        child->parent_ray = this;
+}
+
 ray::~ray()
 {
 
@@ -100,4 +119,9 @@ void ray::add_child(ray *child)
 void ray::set_parent(ray *parent)
 {
     parent_ray = parent;
+}
+
+glm::vec3 ray::get_rgb() const
+{
+    return rgb;
 }

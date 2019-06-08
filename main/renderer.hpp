@@ -2,7 +2,7 @@
 #define RENDERER_HPP
 
 #include <QMutex>
-#include <queue>
+#include <list>
 #include <memory>
 
 #include "tools/image.hpp"
@@ -18,7 +18,7 @@ private:
 
     QMutex render_lock;
 
-    void rays_render(scene &scn, std::queue<ray> &rays);
+    void rays_render(scene &scn, std::list<ray> &rays);
     void __render(scene &scn);
 
     bool rendering = false;
