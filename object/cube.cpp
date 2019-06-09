@@ -3,6 +3,7 @@
 #include "model.hpp"
 
 #include "opengl/opengl_header.hpp"
+#include "tools/not_implemented_exception.hpp"
 #include <glm/gtc/type_ptr.hpp>
 
 cube::cube(glm::vec3 axis_x, glm::vec3 axis_y, glm::vec3 axis_z, glm::vec3 extend, glm::vec3 center)
@@ -55,21 +56,19 @@ void cube::init_T()
 
 glm::vec3 cube::normal(glm::vec3 point) const
 {
-    if (point_in_plane(vertex[0], vertex[1], vertex[3], vertex[2], in.point(t[0])))
+    if (point_in_plane(vertex[0], vertex[1], vertex[3], vertex[2], point))
         return axis_z;
-        else if (point_in_plane(vertex[2], vertex[3], vertex[5], vertex[4], in.point(t[1])))
+    else if (point_in_plane(vertex[2], vertex[3], vertex[5], vertex[4], point))
         return axis_x;
-        else if (point_in_plane(vertex[4], vertex[5], vertex[7], vertex[6], in.point(t[2])))
+    else if (point_in_plane(vertex[4], vertex[5], vertex[7], vertex[6], point))
         return axis_z;
-        else if (point_in_plane(vertex[0], vertex[1], vertex[7], vertex[6], in.point(t[3])))
-        return plane(vertex[6], axis_x, in);
-        else if (point_in_plane(vertex[0], vertex[2], vertex[4], vertex[6], in.point(t[4])))
+    else if (point_in_plane(vertex[0], vertex[1], vertex[7], vertex[6], point))
+        return axis_x;
+    else if (point_in_plane(vertex[0], vertex[2], vertex[4], vertex[6], point))
         return axis_y;
-        else if (point_in_plane(vertex[1], vertex[3], vertex[5], vertex[7], in.point(t[5])))
+    else if (point_in_plane(vertex[1], vertex[3], vertex[5], vertex[7], point))
         return axis_y;
-        else 
-        return NULL;
-
+    throw new not_implemented_exception("error side");
 }
 
 std::vector<int> cube::QUAD_ORDER = {0, 2, 6, 4, 1, 3, 7, 5};
