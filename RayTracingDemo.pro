@@ -51,6 +51,7 @@ SOURCES += \
     opengl/openglwidget.cpp \
     tools/camera.cpp \
     tools/image.cpp \
+    tools/not_implemented_exception.cpp \
     tools/pinhole_camera.cpp \
     tools/scene.cpp \
     tools/loader.cpp \
@@ -87,6 +88,7 @@ HEADERS += \
     opengl/openglwidget.h \
     tools/camera.hpp \
     tools/image.hpp \
+    tools/not_implemented_exception.hpp \
     tools/pinhole_camera.hpp \
     tools/scene.hpp \
     tools/loader.hpp \

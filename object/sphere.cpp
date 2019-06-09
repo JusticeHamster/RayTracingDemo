@@ -100,13 +100,20 @@ float sphere::intersect(const ray &in) const
     {
         auto t1 = -b / (2 * a) + glm::sqrt(delt)/ (2 * a);
         auto t2 = -b / (2 * a) - glm::sqrt(delt)/ (2 * a);
-        if (t1*t2<0 || t1*t2==0)
-            return glm::max(t1,t2)>1e-6?glm::max(t1,t2):-1;
-        else if (t1<0 && t2<0)
+        if (t1*t2 <= 0) {
+            auto t = glm::max(t1, t2);
+            if (t < 1e-5f)
+                return -1;
+            return t;
+        }
+        else if (t1 < 0 && t2 < 0)
             return -1;
-        else
-            return glm::min(t1,t2)>1e-6?glm::min(t1,t2):-1;;
-        
+        else {
+            auto t = glm::min(t1, t2);
+            if (t < 1e-5f)
+                return -1;
+            return t;
+        }
     }
 }
 

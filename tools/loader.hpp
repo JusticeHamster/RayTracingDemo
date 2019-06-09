@@ -17,6 +17,8 @@ private:
     constexpr static float PACK_FACTOR = .5f;
     constexpr static float DISTANCE_FACTOR = 2.f;
     constexpr static unsigned max_scattering_time = 3;
+    constexpr static glm::vec3 lower_bound = glm::vec3();
+    constexpr static glm::vec3 upper_bound = glm::vec3(0.75f);
 
     QMutex load_lock;
 public:
@@ -27,6 +29,7 @@ public:
     float get_factor(std::string name);
     int get_sampling_number();
     unsigned get_max_scattering_time();
+    glm::vec3 get_bound(bool upper = true) const;
 };
 
 #endif // LOADER_HPP

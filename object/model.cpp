@@ -3,15 +3,17 @@
 #include "ray.hpp"
 
 model::model(std::vector<std::shared_ptr<shape> > shapes, glm::vec3 position,
-    glm::vec3 direction, bool illuminated, glm::vec3 light):
-    position(position), direction(direction), illuminated(illuminated), light(light)
+    glm::vec3 direction, bool illuminated, glm::vec3 light, distribution dist):
+    position(position), direction(direction), illuminated(illuminated), light(light),
+    distribution_type(dist)
 {
     for (const auto &s : shapes)
         s->set_parent(this);
     this->shapes.swap(shapes);
 }
 
-model::model(const model &m): position(m.position), direction(m.direction), illuminated(m.illuminated), light(m.light)
+model::model(const model &m): position(m.position), direction(m.direction),
+    illuminated(m.illuminated), light(m.light), distribution_type(m.distribution_type)
 {
     for (const auto &s : m.shapes) {
         auto new_shape = s->copy();
@@ -20,7 +22,8 @@ model::model(const model &m): position(m.position), direction(m.direction), illu
     }
 }
 
-model::model(model &&m): position(m.position), direction(m.direction), illuminated(m.illuminated), light(m.light)
+model::model(model &&m): position(m.position), direction(m.direction),
+    illuminated(m.illuminated), light(m.light), distribution_type(m.distribution_type)
 {
     shapes.swap(m.shapes);
     for (const auto &s : shapes)
@@ -33,6 +36,7 @@ model &model::operator=(const model &m)
     direction = m.direction;
     illuminated = m.illuminated;
     light = m.light;
+    distribution_type = m.distribution_type;
     for (const auto &s : shapes) {
         auto new_shape = s->copy();
         new_shape->set_parent(this);
@@ -47,6 +51,7 @@ model &model::operator=(model &&m)
     direction = m.direction;
     illuminated = m.illuminated;
     light = m.light;
+    distribution_type = m.distribution_type;
     shapes.swap(m.shapes);
     for (const auto &s : shapes)
         s->set_parent(this);

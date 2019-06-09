@@ -27,9 +27,10 @@ public:
     using intersect_result = std::tuple<std::optional<std::reference_wrapper<const shape> >, float>;
     enum distribution {
         diffuse, mirror, phone
-    };
+    } distribution_type;
+    glm::vec3 mirror_param = glm::vec3(1., 0., .5);
 
-    model(std::vector<std::shared_ptr<shape> > shapes, glm::vec3 position, glm::vec3 direction, bool illuminated, glm::vec3 light);
+    model(std::vector<std::shared_ptr<shape> > shapes, glm::vec3 position, glm::vec3 direction, bool illuminated, glm::vec3 light, distribution dist = diffuse);
     model(const model &m);
     model(model &&m);
     model &operator=(const model &m);

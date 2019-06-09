@@ -52,3 +52,8 @@ unsigned loader::get_max_scattering_time()
 {
     return max_scattering_time;
 }
+
+glm::vec3 loader::get_bound(bool upper) const
+{
+    return upper ? upper_bound : lower_bound;
+}

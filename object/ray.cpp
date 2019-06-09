@@ -121,7 +121,10 @@ void ray::set_parent(ray *parent)
     parent_ray = parent;
 }
 
+static glm::vec3 bound_diff = ldr.get_bound() - ldr.get_bound(false);
+static glm::vec3 lower_bound = ldr.get_bound(false);
+
 glm::vec3 ray::get_rgb() const
 {
-    return rgb;
+    return rgb * bound_diff + lower_bound;
 }

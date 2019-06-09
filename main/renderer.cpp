@@ -9,6 +9,7 @@
 #include "object/mirror_distribution.hpp"
 #include "tools/pinhole_camera.hpp"
 #include "tools/loader.hpp"
+#include "tools/not_implemented_exception.hpp"
 
 static loader &ldr = loader::instance;
 
@@ -25,13 +26,11 @@ void renderer::rays_render(scene &scn, std::list<ray> &rays)
             auto ir = m.intersect(r);
             auto [optional_reference_shape, t] = ir;
             if (optional_reference_shape) {
-                m.hello();
-                qDebug() << t;
-                if (!std::get<0>(result) || std::get<1>(result) < t)
+                if (!std::get<0>(result) || t < std::get<1>(result))
                     result = ir;
             }
         }
-        // generate new Rays or stop
+        // generate new rays or stop
         auto [optional_reference_shape, t] = result;
         if (optional_reference_shape) {
             intersection i = BRDF(r, optional_reference_shape->get(), r.point(t), scn);
@@ -73,7 +72,7 @@ void renderer::__render(scene &scn)
 
 renderer::renderer()
 {
-    cmr = std::make_unique<pinhole_camera>(2, 2, glm::vec3(-2), glm::vec3(2));
+    cmr = std::make_unique<pinhole_camera>(1, 1, glm::vec3(-2), glm::vec3(2));
 }
 
 void renderer::render(scene &scn)
@@ -100,7 +99,19 @@ intersection renderer::BRDF(ray &in, const shape &s, glm::vec3 point, const scen
     if (in.is_end()) {
         return intersection(true, nullptr, point, scn.power(line(point, norm, true)));
     }
-    // 根据配置的表面信息选择ray_distribution
-    std::shared_ptr<ray_distribution> rd(new mirror_distribution(in, point, norm, 1.f, 1.f, .5f));
+    std::shared_ptr<ray_distribution> rd;
+    switch (s.get_parent()->distribution_type) {
+    case model::diffuse: {
+        rd.reset(new diffuse_distribution(in, point, norm));
+        break;
+    }
+    case model::mirror: {
+        auto param = s.get_parent()->mirror_param;
+        rd.reset(new mirror_distribution(in, point, norm, param.x, param.y, param.z));
+        break;
+    }
+    case model::phone:
+        throw new not_implemented_exception("phone高光暂时没实现");
+    }
     return intersection(false, rd, point, {});
 }

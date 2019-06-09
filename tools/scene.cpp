@@ -12,12 +12,18 @@ scene::scene(std::string name): name(name)
 {
     // 放一个球
     push(model({
-        std::make_shared<sphere>(glm::vec3(), 1, 30, 30),
-    }, glm::vec3(), glm::vec3(), false, glm::vec3()));
+        std::make_shared<sphere>(glm::vec3(), 1, 30, 30)
+    }, glm::vec3(), glm::vec3(), false, glm::vec3(), model::diffuse));
+
     /*
+    // 放一个方块
     push(model({
-        std::make_shared<cube>(glm::vec3(1, 0, 0), glm::vec3(0, 1, 0), glm::vec3(0, 0, 1), glm::vec3(2), glm::vec3()),
-    }, glm::vec3(), glm::vec3(), false, glm::vec3()));
+        std::make_shared<cube>(glm::vec3(1, 1, 0), glm::vec3(-1, 1, 0), glm::vec3(0, 0, 1), glm::vec3(2), glm::vec3()),
+    }, glm::vec3(3), glm::vec3(), false, glm::vec3(), model::diffuse));
+    // 另一个球
+    push(model({
+        std::make_shared<sphere>(glm::vec3(), 1, 30, 30)
+    }, glm::vec3(3), glm::vec3(), false, glm::vec3(), model::mirror));
     */
 
     // 坐标轴

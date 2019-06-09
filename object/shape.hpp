@@ -19,6 +19,7 @@ protected:
     void copy(std::shared_ptr<shape> new_shape) const;
 public:
     constexpr static float PI = glm::pi<float>();
+    constexpr static float PI2 = PI * 2;
     virtual ~shape();
     virtual glm::vec3 normal(glm::vec3 point) const = 0;
     virtual std::shared_ptr<shape> copy() const = 0;
