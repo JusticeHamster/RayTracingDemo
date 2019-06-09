@@ -34,11 +34,11 @@ void renderer::rays_render(scene &scn, std::list<ray> &rays)
         // generate new rays or stop
         auto [optional_reference_shape, t] = result;
         if (optional_reference_shape) {
-            printer::print(r.point(t));
             intersection i = BRDF(r, optional_reference_shape->get(), r.point(t), scn);
             if (i) {
-                for (const ray &r : i.out->random(ldr.get_sampling_number()))
+                for (const ray &r : i.out->random(ldr.get_sampling_number())) {
                     rays.push_back(r);
+                }
             } else {
                 r.stop(i.stop_energy);
             }

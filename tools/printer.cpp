@@ -1,8 +1,18 @@
 #include "printer.hpp"
 
-#include <iostream>
+#include <QDebug>
+#include <sstream>
 
-void printer::print(glm::vec3 v)
+static std::stringstream ss;
+
+std::string printer::format(glm::vec3 v)
 {
-    std::cout << "(" << v.x << ", " << v.y << ", " << v.z << ")";
+    std::stringstream().swap(ss);
+    ss << "(" << v.x << ", " << v.y << ", " << v.z << ")";
+    return ss.str();
+}
+
+void printer::printf(std::string str)
+{
+    qDebug("%s", str.c_str());
 }
