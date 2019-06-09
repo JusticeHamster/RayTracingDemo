@@ -53,6 +53,7 @@ SOURCES += \
     tools/image.cpp \
     tools/not_implemented_exception.cpp \
     tools/pinhole_camera.cpp \
+    tools/printer.cpp \
     tools/scene.cpp \
     tools/loader.cpp \
     main/main.cpp \
@@ -90,6 +91,7 @@ HEADERS += \
     tools/image.hpp \
     tools/not_implemented_exception.hpp \
     tools/pinhole_camera.hpp \
+    tools/printer.hpp \
     tools/scene.hpp \
     tools/loader.hpp \
     main/renderer.hpp \
