@@ -40,7 +40,6 @@ void cube::init_vertex()
 void cube::init_T()
 {
     // 计算转换矩阵
-    glm::vec3 vex[4];
     float a[16] = {-1.f, -1.f, 1.f, 1.f,
                    -1.f, 1.f, -1.f, -1.f,
                    1.f, 1.f, 1.f, -1.f,
@@ -56,8 +55,21 @@ void cube::init_T()
 
 glm::vec3 cube::normal(glm::vec3 point) const
 {
+    if (point_in_plane(vertex[0], vertex[1], vertex[3], vertex[2], in.point(t[0])))
+        return axis_z;
+        else if (point_in_plane(vertex[2], vertex[3], vertex[5], vertex[4], in.point(t[1])))
+        return axis_x;
+        else if (point_in_plane(vertex[4], vertex[5], vertex[7], vertex[6], in.point(t[2])))
+        return axis_z;
+        else if (point_in_plane(vertex[0], vertex[1], vertex[7], vertex[6], in.point(t[3])))
+        return plane(vertex[6], axis_x, in);
+        else if (point_in_plane(vertex[0], vertex[2], vertex[4], vertex[6], in.point(t[4])))
+        return axis_y;
+        else if (point_in_plane(vertex[1], vertex[3], vertex[5], vertex[7], in.point(t[5])))
+        return axis_y;
+        else 
+        return NULL;
 
-    return point;
 }
 
 std::vector<int> cube::QUAD_ORDER = {0, 2, 6, 4, 1, 3, 7, 5};
