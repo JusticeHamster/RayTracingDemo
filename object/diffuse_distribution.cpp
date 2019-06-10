@@ -13,7 +13,7 @@ glm::vec3 diffuse_distribution::random_direction() const
     float x = glm::sin(theta) * glm::cos(phi);
     float y = glm::sin(theta) * glm::sin(phi);
     float z = glm::cos(theta);
-    return orientation * glm::vec4(x, y, z, 0);
+    return glm::vec4(x, y, z, 0) * orientation;
 }
 
 diffuse_distribution::~diffuse_distribution()
@@ -25,7 +25,7 @@ static std::random_device random_device;
 
 diffuse_distribution::diffuse_distribution(ray &parent, glm::vec3 point, glm::vec3 norm): ray_distribution(parent, point, norm), generator(random_device())
 {
-    glm::vec3 origin(0,0,1);
+    glm::vec3 origin(0, 0, 1);
     float angle = glm::dot(glm::normalize(norm), origin);
     glm::vec3 rotate_axis = glm::cross(glm::normalize(norm), origin);
     orientation = glm::rotate(glm::mat4(1.0), glm::acos(angle), rotate_axis);
