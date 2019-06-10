@@ -4,6 +4,7 @@
 #include "glm/gtx/rotate_vector.hpp"
 #include "glm/glm.hpp"
 #include "glm/gtx/vector_angle.hpp"
+#include <QDebug>
 
 glm::vec3 diffuse_distribution::random_direction() const
 {
@@ -25,8 +26,8 @@ static std::random_device random_device;
 diffuse_distribution::diffuse_distribution(ray &parent, glm::vec3 point, glm::vec3 norm): ray_distribution(parent, point, norm), generator(random_device())
 {
     glm::vec3 origin(0,0,1);
-    float angle = glm::angle(glm::normalize(norm), origin);
-    glm::vec3 rotate_axis = glm::cross(norm, origin);
+    float angle = glm::dot(glm::normalize(norm), origin);
+    glm::vec3 rotate_axis = glm::cross(glm::normalize(norm), origin);
     orientation = glm::rotate(glm::mat4(1.0), glm::acos(angle), rotate_axis);
 }
 
