@@ -61,11 +61,11 @@ glm::vec3 cube::normal(glm::vec3 point) const
     else if (point_in_plane(vertex[2], vertex[3], vertex[5], vertex[4], point))
         return axis_x;
     else if (point_in_plane(vertex[4], vertex[5], vertex[7], vertex[6], point))
-        return axis_z;
+        return -axis_z;
     else if (point_in_plane(vertex[0], vertex[1], vertex[7], vertex[6], point))
-        return axis_x;
+        return -axis_x;
     else if (point_in_plane(vertex[0], vertex[2], vertex[4], vertex[6], point))
-        return axis_y;
+        return -axis_y;
     else if (point_in_plane(vertex[1], vertex[3], vertex[5], vertex[7], point))
         return axis_y;
     throw new not_implemented_exception("error side");
