@@ -200,7 +200,26 @@ float cube::intersect(const ray &in) const
 
 void cube::apply(glm::mat4 mat)
 {
-
+    glm::vec3 t[4];
+    t[0] = axis_x*extend;
+    t[1] = axis_y*extend;
+    t[2] = axis_z*extend;
+    t[3] = center;
+    glm::mat4 m(t[0].x,t[1].x,t[2].x,t[3].x,
+                t[0].y,t[1].y,t[2].y,t[3].y,
+                t[0].z,t[1].z,t[2].z,t[3].z,
+                1,1,1,1);
+    m = m*mat;
+    t[0] = glm::vec3(m[0][0],m[1][0],m[2][0]);
+    t[1] = glm::vec3(m[0][1],m[1][1],m[2][1]);
+    t[2] = glm::vec3(m[0][2],m[1][2],m[2][2]);
+    center = glm::vec3(m[0][3],m[1][3],m[2][3]);
+    axis_x = glm::normalize(t[0]);
+    axis_y = glm::normalize(t[1]);
+    axis_z = glm::normalize(t[2]);
+    extend = glm::vec3(t[0].x/axis_x.x,t[1].y/axis_x.y,t[2].z/axis_x.z);
+    init_vertex();
+    init_T();
 }
 
 void cube::hello() const
