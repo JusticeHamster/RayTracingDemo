@@ -23,6 +23,7 @@ cube::~cube()
 
 void cube::init_vertex()
 {
+    glm::vec3 pos = get_parent()->get_position();
     vertex[0] = extend * (-axis_x - axis_y + axis_z);
     vertex[1] = extend * (-axis_x + axis_y + axis_z);
     vertex[2] = extend * (axis_x - axis_y + axis_z);
@@ -35,6 +36,7 @@ void cube::init_vertex()
     {
         vertex[i] /= 2;
         vertex[i] += center;
+        vertex[i] += pos;
     }
 }
 
@@ -76,20 +78,21 @@ std::vector<int> cube::LINES_ORDER = {0, 1, 2, 3, 4, 5, 6, 7, 0, 2, 1, 3, 4, 6, 
 
 void cube::draw() const
 {
-    glm::vec3 pos = get_parent()->get_position();
+    init_vertex();
+    init_T()
     if (draw_style == style::QUAD)
     {
         glColor3f(.28f, .46f, 1.f); // 染色
         glBegin(GL_QUAD_STRIP);     //填充凸多边形
         for (int i = 0; i < 8; i++)
         {
-            glVertex3f(vertex[i].x + pos.x, vertex[i].y + pos.y, vertex[i].z + pos.z);
+            glVertex3f(vertex[i].x, vertex[i].y, vertex[i].z);
         }
         glEnd();
         glBegin(GL_QUAD_STRIP);
         for (unsigned long i = 0; i < QUAD_ORDER.size(); i++)
         {
-            glVertex3f(vertex[QUAD_ORDER[i]].x + pos.x, vertex[QUAD_ORDER[i]].y + pos.y, vertex[QUAD_ORDER[i]].z + pos.z);
+            glVertex3f(vertex[QUAD_ORDER[i]].x, vertex[QUAD_ORDER[i]].y, vertex[QUAD_ORDER[i]].z);
         }
         glEnd();
     }
@@ -97,7 +100,7 @@ void cube::draw() const
     glBegin(GL_LINES);
     for (unsigned long i = 0; i < LINES_ORDER.size(); i++)
     {
-        glVertex3f(vertex[LINES_ORDER[i]].x + pos.x, vertex[LINES_ORDER[i]].y + pos.y, vertex[LINES_ORDER[i]].z + pos.z);
+        glVertex3f(vertex[LINES_ORDER[i]].x, vertex[LINES_ORDER[i]].y, vertex[LINES_ORDER[i]].z);
     }
     glEnd();
 }
