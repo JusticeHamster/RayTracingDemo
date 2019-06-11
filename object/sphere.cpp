@@ -107,6 +107,15 @@ float sphere::intersect(const ray &in) const
 
 void sphere::apply(glm::mat4 mat)
 {
+    glm::vec4 t1(center, 0);
+    glm::vec4 t2 = t1;
+    t2.x += radius;
+    t1 = t1*mat;
+    t2 = t2*mat;
+    center = t1;
+    glm::vec4 t = t2-t1;
+    t *= t;
+    radius = glm::sqrt(t.x + t.y + t.z);
 
 }
 
