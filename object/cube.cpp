@@ -78,8 +78,6 @@ std::vector<int> cube::LINES_ORDER = {0, 1, 2, 3, 4, 5, 6, 7, 0, 2, 1, 3, 4, 6, 
 
 void cube::draw() const
 {
-    init_vertex();
-    init_T()
     if (draw_style == style::QUAD)
     {
         glColor3f(.28f, .46f, 1.f); // 染色
