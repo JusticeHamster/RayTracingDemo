@@ -70,18 +70,6 @@ void sphere::draw() const
     glEnd();
 }
 
-void sphere::rotate()
-{
-}
-
-void sphere::move()
-{
-}
-
-void sphere::scale()
-{
-}
-
 float sphere::intersect(const ray &in) const
 {
     glm::vec3 _center = center + get_parent()->get_position();
@@ -115,6 +103,11 @@ float sphere::intersect(const ray &in) const
             return t;
         }
     }
+}
+
+void sphere::apply(glm::mat4 mat)
+{
+
 }
 
 void sphere::hello() const

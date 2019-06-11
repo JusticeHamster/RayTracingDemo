@@ -1,31 +1,19 @@
 #ifndef TRANSFORMABLE_HPP
 #define TRANSFORMABLE_HPP
 
-class rotatable
-{
-public:
-    virtual ~rotatable();
-    virtual void rotate() = 0;
-};
+#include "glm/glm.hpp"
 
-class movable
+class transformable
 {
+private:
+    bool is_transformable = true;
+protected:
+    virtual void apply_transform(glm::mat4 mat) = 0;
 public:
-    virtual ~movable();
-    virtual void move() = 0;
-};
-
-class scalable
-{
-public:
-    virtual ~scalable();
-    virtual void scale() = 0;
-};
-
-class transformable: public rotatable, public movable, public scalable
-{
-public:
+    void transform(glm::mat4 mat);
     virtual ~transformable();
+    void set_transformable(bool is_transformable);
+    bool is_transform() const;
 };
 
 #endif // TRANSFORMABLE_HPP

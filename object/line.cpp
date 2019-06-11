@@ -57,21 +57,6 @@ void line::draw() const
     }
 }
 
-void line::rotate()
-{
-
-}
-
-void line::move()
-{
-
-}
-
-void line::scale()
-{
-
-}
-
 #include <optional>
 #include <cstdlib>
 
@@ -90,6 +75,11 @@ float line::intersect(const ray &in) const
 {
     // not implemented
     return -1;
+}
+
+void line::apply(glm::mat4 mat)
+{
+
 }
 
 glm::vec3 line::start_point() const

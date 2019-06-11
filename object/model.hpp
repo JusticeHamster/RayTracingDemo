@@ -25,6 +25,7 @@ private:
     glm::vec3 light;
 protected:
     void draw() const;
+    virtual void apply(glm::mat4 mat);
 public:
     using intersect_result = std::tuple<std::optional<std::reference_wrapper<shape> >, float>;
     enum distribution {
@@ -39,9 +40,6 @@ public:
     model &operator=(model &&m);
 
     virtual ~model();
-    void rotate();
-    void move();
-    void scale();
     bool is_light() const;
     glm::vec3 get_light() const;
     glm::vec3 get_position() const;

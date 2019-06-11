@@ -101,18 +101,6 @@ void cube::draw() const
     glEnd();
 }
 
-void cube::rotate()
-{
-}
-
-void cube::move()
-{
-}
-
-void cube::scale()
-{
-}
-
 /* 根据平面上一点以及平面的法向量，得到平面方程，并与射线求交点
 ** point: 平面上的点
 ** normal: 平面的法向量
@@ -208,6 +196,11 @@ float cube::intersect(const ray &in) const
         ans = ans < 0 ? t[i] : glm::min(ans, t[i]);
     }
     return ans;
+}
+
+void cube::apply(glm::mat4 mat)
+{
+
 }
 
 void cube::hello() const

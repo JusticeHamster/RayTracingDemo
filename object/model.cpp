@@ -78,17 +78,7 @@ void model::draw() const
     }
 }
 
-void model::rotate()
-{
-
-}
-
-void model::move()
-{
-
-}
-
-void model::scale()
+void model::apply(glm::mat4 mat)
 {
 
 }

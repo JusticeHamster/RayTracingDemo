@@ -8,6 +8,7 @@ void shape::copy(std::shared_ptr<shape> new_shape) const
 {
     new_shape->set_parent(get_parent());
     new_shape->set_blockable(is_block());
+    new_shape->set_transformable(is_transform());
     new_shape->id = id;
 }
 

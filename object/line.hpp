@@ -13,15 +13,13 @@ private:
 protected:
     void copy(std::shared_ptr<line> new_line) const;
     virtual void draw() const;
+    virtual float intersect(const ray &in) const;
+    virtual void apply(glm::mat4 mat);
 public:
     line(glm::vec3 start, glm::vec3 direction, bool is_ray);
     line(glm::vec3 start, glm::vec3 end);
     virtual ~line();
     virtual glm::vec3 normal(glm::vec3 point) const;
-    virtual void rotate();
-    virtual void move();
-    virtual void scale();
-    virtual float intersect(const ray &in) const;
     glm::vec3 start_point() const;
     glm::vec3 end_point_or_direction() const;
     bool is_direction() const;
