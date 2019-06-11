@@ -14,6 +14,8 @@ private:
     void copy(std::shared_ptr<cube> new_cube) const;
     void init_T();
     static std::vector<int> QUAD_ORDER, LINES_ORDER;
+protected:
+    virtual void draw() const;
 public:
     enum style {
         QUAD, LINES
@@ -22,7 +24,6 @@ public:
     cube(glm::vec3 axis_x, glm::vec3 axis_y, glm::vec3 axis_z, glm::vec3 extend, glm::vec3 center);
     virtual ~cube();
     virtual glm::vec3 normal(glm::vec3 point) const;
-    virtual void draw() const;
     virtual void rotate();
     virtual void move();
     virtual void scale();

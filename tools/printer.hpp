@@ -8,7 +8,7 @@ class printer
 {
 public:
     static std::string format(glm::vec3 v);
-    static void printf(std::string str);
+    static void print(std::string str);
 };
 
 #endif // PRINTER_HPP

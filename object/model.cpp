@@ -13,8 +13,10 @@ model::model(std::vector<std::shared_ptr<shape> > shapes, glm::vec3 position,
 }
 
 model::model(const model &m): position(m.position), direction(m.direction),
-    illuminated(m.illuminated), light(m.light), distribution_type(m.distribution_type)
+    illuminated(m.illuminated), light(m.light), distribution_type(m.distribution_type),
+    mirror_param(m.mirror_param)
 {
+    set_draw(m.is_draw());
     for (const auto &s : m.shapes) {
         auto new_shape = s->copy();
         new_shape->set_parent(this);
@@ -23,8 +25,10 @@ model::model(const model &m): position(m.position), direction(m.direction),
 }
 
 model::model(model &&m): position(m.position), direction(m.direction),
-    illuminated(m.illuminated), light(m.light), distribution_type(m.distribution_type)
+    illuminated(m.illuminated), light(m.light), distribution_type(m.distribution_type),
+    mirror_param(m.mirror_param)
 {
+    set_draw(m.is_draw());
     shapes.swap(m.shapes);
     for (const auto &s : shapes)
         s->set_parent(this);
@@ -37,6 +41,8 @@ model &model::operator=(const model &m)
     illuminated = m.illuminated;
     light = m.light;
     distribution_type = m.distribution_type;
+    mirror_param = m.mirror_param;
+    set_draw(m.is_draw());
     for (const auto &s : shapes) {
         auto new_shape = s->copy();
         new_shape->set_parent(this);
@@ -52,6 +58,8 @@ model &model::operator=(model &&m)
     illuminated = m.illuminated;
     light = m.light;
     distribution_type = m.distribution_type;
+    mirror_param = m.mirror_param;
+    set_draw(m.is_draw());
     shapes.swap(m.shapes);
     for (const auto &s : shapes)
         s->set_parent(this);
@@ -66,7 +74,7 @@ model::~model()
 void model::draw() const
 {
     for (const auto &s : shapes) {
-        s->draw();
+        s->draw_object();
     }
 }
 
@@ -107,7 +115,7 @@ glm::vec3 model::get_direction() const
 
 model::intersect_result model::intersect(const ray &in) const
 {
-    std::optional<std::reference_wrapper<const shape> > intersect_shape;
+    std::optional<std::reference_wrapper<shape> > intersect_shape;
     std::optional<float> min;
     for (const auto &s : shapes) {
         float t = s->ray_intersect(in);

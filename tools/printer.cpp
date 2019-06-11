@@ -12,7 +12,7 @@ std::string printer::format(glm::vec3 v)
     return ss.str();
 }
 
-void printer::printf(std::string str)
+void printer::print(std::string str)
 {
     qDebug("%s", str.c_str());
 }

@@ -13,11 +13,11 @@ private:
     int m, n;
 protected:
     void copy(std::shared_ptr<sphere> new_sphere) const;
+    virtual void draw() const;
 public:
     sphere(glm::vec3 center, float radius, int m, int n);
     virtual ~sphere();
     virtual glm::vec3 normal(glm::vec3 point) const;
-    virtual void draw() const;
     virtual void rotate();
     virtual void move();
     virtual void scale();

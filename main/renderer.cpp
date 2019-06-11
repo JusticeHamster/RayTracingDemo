@@ -17,16 +17,18 @@ static loader &ldr = loader::instance;
 void renderer::rays_render(scene &scn, std::list<ray> &rays)
 {
     auto iray = rays.begin();
-    int count = 1;
+    int count = 0;
     while (iray != rays.end()) {
         ray &r = *iray;
         // work through all the models (no acceleration)
         model::intersect_result result(std::nullopt, -1);
-        qDebug() << "round:" << count++;
+        qDebug() << "round:" << ++count;
         for (const model &m : scn.models) {
             auto ir = m.intersect(r);
             auto [optional_reference_shape, t] = ir;
             if (optional_reference_shape) {
+                if (!r.is_inside() && r.parent_shape == optional_reference_shape->get().get_id())
+                    continue;
                 if (!std::get<0>(result) || t < std::get<1>(result))
                     result = ir;
             }
@@ -36,8 +38,9 @@ void renderer::rays_render(scene &scn, std::list<ray> &rays)
         if (optional_reference_shape) {
             intersection i = BRDF(r, optional_reference_shape->get(), r.point(t), scn);
             if (i) {
-                for (const ray &r : i.out->random(ldr.get_sampling_number())) {
-                    rays.push_back(r);
+                for (ray &_r : i.out->random(ldr.get_sampling_number())) {
+                    _r.parent_shape = optional_reference_shape->get().get_id();
+                    rays.push_back(_r);
                 }
             } else {
                 r.stop(i.stop_energy);

@@ -12,12 +12,12 @@ private:
     glm::vec3 start, end;
 protected:
     void copy(std::shared_ptr<line> new_line) const;
+    virtual void draw() const;
 public:
     line(glm::vec3 start, glm::vec3 direction, bool is_ray);
     line(glm::vec3 start, glm::vec3 end);
     virtual ~line();
     virtual glm::vec3 normal(glm::vec3 point) const;
-    virtual void draw() const;
     virtual void rotate();
     virtual void move();
     virtual void scale();

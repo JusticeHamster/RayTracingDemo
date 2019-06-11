@@ -23,8 +23,10 @@ private:
     glm::vec3 direction;
     bool illuminated;
     glm::vec3 light;
+protected:
+    void draw() const;
 public:
-    using intersect_result = std::tuple<std::optional<std::reference_wrapper<const shape> >, float>;
+    using intersect_result = std::tuple<std::optional<std::reference_wrapper<shape> >, float>;
     enum distribution {
         diffuse, mirror, phone
     } distribution_type;
@@ -37,7 +39,6 @@ public:
     model &operator=(model &&m);
 
     virtual ~model();
-    void draw() const;
     void rotate();
     void move();
     void scale();

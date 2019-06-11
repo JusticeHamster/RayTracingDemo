@@ -5,9 +5,14 @@
 
 class drawable
 {
+protected:
+    bool _draw = true;
+    virtual void draw() const = 0;
 public:
     virtual ~drawable();
-    virtual void draw() const = 0;
+    void draw_object() const;
+    bool is_draw() const;
+    void set_draw(bool _draw);
 };
 
 #endif // DRAWABLE_HPP

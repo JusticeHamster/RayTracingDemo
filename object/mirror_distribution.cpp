@@ -1,6 +1,8 @@
 #include "mirror_distribution.hpp"
 #include "ray.hpp"
 
+#include "tools/printer.hpp"
+
 mirror_distribution::~mirror_distribution()
 {
 

@@ -7,6 +7,7 @@ static loader &ldr = loader::instance;
 void ray::copy(std::shared_ptr<ray> new_ray) const
 {
     line::copy(new_ray);
+    new_ray->parent_shape = parent_shape;
     new_ray->parent_ray = parent_ray;
     new_ray->childs = childs;
     if (parent_ray != nullptr) {
@@ -34,6 +35,7 @@ ray::ray(glm::vec3 start, glm::vec3 direction, glm::vec3 rgb, std::reference_wra
 ray::ray(const ray &r): line(r), rgb(r.rgb), img(r.img),
     image_position(r.image_position), weight(r.weight), time(r.time), inside(r.inside)
 {
+    parent_shape = r.parent_shape;
     parent_ray = r.parent_ray;
     childs = r.childs;
     if (parent_ray != nullptr) {

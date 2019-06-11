@@ -2,10 +2,13 @@
 
 #include "opengl/opengl_header.hpp"
 
+uint64_t shape::ID = 0;
+
 void shape::copy(std::shared_ptr<shape> new_shape) const
 {
     new_shape->set_parent(get_parent());
     new_shape->set_blockable(is_block());
+    new_shape->id = id;
 }
 
 shape::~shape()
@@ -32,4 +35,9 @@ void shape::set_parent(model *parent)
 model *shape::get_parent() const
 {
     return parent;
+}
+
+uint64_t shape::get_id() const
+{
+    return id;
 }

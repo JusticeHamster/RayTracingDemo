@@ -4,15 +4,15 @@
 #include "glm/gtx/rotate_vector.hpp"
 #include "glm/glm.hpp"
 #include "glm/gtx/vector_angle.hpp"
-#include <QDebug>
+#include "tools/printer.hpp"
 
 glm::vec3 diffuse_distribution::random_direction() const
 {
     float u = uniform(generator), v = uniform(generator);
-    float phi = u * shape::PI2, theta = v * shape::PI;
-    float x = glm::sin(theta) * glm::cos(phi);
-    float y = glm::sin(theta) * glm::sin(phi);
-    float z = glm::cos(theta);
+    float phi = (u - .5f) * shape::PI, theta = v * shape::PI2;
+    float x = glm::sin(phi) * glm::cos(theta);
+    float y = glm::sin(phi) * glm::sin(theta);
+    float z = glm::cos(phi);
     return glm::vec4(x, y, z, 0) * orientation;
 }
 
@@ -26,9 +26,9 @@ static std::random_device random_device;
 diffuse_distribution::diffuse_distribution(ray &parent, glm::vec3 point, glm::vec3 norm): ray_distribution(parent, point, norm), generator(random_device())
 {
     glm::vec3 origin(0, 0, 1);
-    float angle = glm::dot(glm::normalize(norm), origin);
-    glm::vec3 rotate_axis = glm::cross(glm::normalize(norm), origin);
-    orientation = glm::rotate(glm::mat4(1.0), glm::acos(angle), rotate_axis);
+    float angle = glm::dot(norm, origin);
+    glm::vec3 rotate_axis = glm::cross(norm, origin);
+    orientation = glm::rotate(glm::mat4(1.), glm::acos(angle), rotate_axis);
 }
 
 std::vector<ray> diffuse_distribution::random(int num) const

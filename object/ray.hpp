@@ -18,11 +18,12 @@ private:
     float weight;
     unsigned time;
     bool inside;
+    ray *parent_ray = nullptr;
     std::vector<ray *> childs;
 protected:
     void copy(std::shared_ptr<ray> new_ray) const;
 public:
-    ray *parent_ray = nullptr;
+    uint64_t parent_shape = 0;
     ray(glm::vec3 start, glm::vec3 direction, glm::vec3 rgb, std::reference_wrapper<image> img, glm::uvec2 image_position, float weight, unsigned time, bool inside = false);
     ray(const ray &r);
     virtual ~ray();
