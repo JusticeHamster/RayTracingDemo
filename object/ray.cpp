@@ -118,7 +118,7 @@ void ray::add_child(ray *child)
     childs.push_back(child);
 }
 
-void ray::set_parent(ray *parent)
+void ray::set_parent_ray(ray *parent)
 {
     parent_ray = parent;
 }

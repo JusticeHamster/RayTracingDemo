@@ -8,7 +8,7 @@ class transformable
 private:
     bool is_transformable = true;
 protected:
-    virtual void apply_transform(glm::mat4 mat) = 0;
+    virtual void apply(glm::mat4 mat) = 0;
 public:
     void transform(glm::mat4 mat);
     virtual ~transformable();

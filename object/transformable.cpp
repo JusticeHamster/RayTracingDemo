@@ -5,7 +5,7 @@ void transformable::transform(glm::mat4 mat)
     if (!is_transform()) {
         return;
     }
-    apply_transform(mat);
+    apply(mat);
 }
 
 transformable::~transformable()

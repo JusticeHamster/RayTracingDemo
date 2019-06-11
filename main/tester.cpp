@@ -32,6 +32,6 @@ void tester::test_all()
            glm::vec3(3,2,1));
     model m({}, glm::vec3(0,0,0),glm::vec3(0,0,0),false,glm::vec3(0,0,0));
     c.set_parent(&m);
-    auto t = c.intersect(r);
+    auto t = c.ray_intersect(r);
     qDebug()<<t << r.point(t).x<<r.point(t).y<<r.point(t).z;
 }

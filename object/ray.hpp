@@ -38,7 +38,7 @@ public:
     void set_weight(float weight);
     bool is_inside() const;
     void add_child(ray *child);
-    void set_parent(ray *parent);
+    void set_parent_ray(ray *parent);
     virtual glm::vec3 get_rgb() const;
 };
 
