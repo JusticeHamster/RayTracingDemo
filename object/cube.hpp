@@ -31,6 +31,7 @@ public:
     virtual float intersect(const ray &in) const;
     virtual void hello() const;
     virtual std::shared_ptr<shape> copy() const;
+    virtual void set_parent(model *parent);
 };
 
 #endif // CUBE_HPP

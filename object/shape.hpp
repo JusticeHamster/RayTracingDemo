@@ -28,7 +28,7 @@ public:
     virtual std::shared_ptr<shape> copy() const = 0;
     virtual glm::vec3 get_rgb() const;
     void set_rgb(glm::vec3 rgb) const;
-    void set_parent(model *parent);
+    virtual void set_parent(model *parent);
     model *get_parent() const;
     uint64_t get_id() const;
 };

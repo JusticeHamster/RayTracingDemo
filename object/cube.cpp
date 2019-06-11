@@ -13,8 +13,6 @@ cube::cube(glm::vec3 axis_x, glm::vec3 axis_y, glm::vec3 axis_z, glm::vec3 exten
     this->axis_z = glm::normalize(axis_z);
     this->extend = extend;
     this->center = center;
-    init_vertex();
-    init_T();
 }
 
 cube::~cube()
@@ -222,4 +220,11 @@ std::shared_ptr<shape> cube::copy() const
     std::shared_ptr<cube> c = std::make_shared<cube>(axis_x, axis_y, axis_z, extend, center);
     cube::copy(c);
     return std::shared_ptr<shape>(c);
+}
+
+void cube::set_parent(model *parent)
+{
+    shape::set_parent(parent);
+    init_vertex();
+    init_T();
 }
