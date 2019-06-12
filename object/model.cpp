@@ -80,7 +80,9 @@ void model::draw() const
 
 void model::apply(glm::mat4 mat)
 {
-
+    for (const auto &s : shapes) {
+        s->transform(mat);
+    }
 }
 
 bool model::is_light() const
