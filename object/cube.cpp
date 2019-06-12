@@ -200,6 +200,7 @@ float cube::intersect(const ray &in) const
 
 void cube::apply(glm::mat4 mat)
 {
+    mat = glm::transpose(mat);
     glm::vec3 t[4];
     t[0] = axis_x*extend;
     t[1] = axis_y*extend;

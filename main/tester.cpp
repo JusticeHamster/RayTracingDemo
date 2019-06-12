@@ -21,11 +21,9 @@ void tester::test_all()
     s.hello();
 
     glm::mat4 trans(1.0f);
-    trans = glm::translate(trans, glm::vec3(1.0f,1.0f,1.0f));
-    trans[0][3]=10;
-    trans[1][3]=2;
-    trans[2][3]=3;
-    qDebug() << trans[0][3]<<trans[1][3]<<trans[2][3]<<trans[3][3];
+//    glm::mat4 trans = glm::translate(t0, glm::vec3(11.0f,12.0f,13.0f));
+    trans = glm::rotate(trans, glm::radians(90.0f), glm::vec3(0.0, 0.0, 1.0));
+//    trans = glm::transpose(trans);
     glm::vec4 t1(center, 1);
     glm::vec4 t2 = t1;
     t2.x += radius;
