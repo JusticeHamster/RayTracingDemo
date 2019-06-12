@@ -107,7 +107,7 @@ float sphere::intersect(const ray &in) const
 
 void sphere::apply(glm::mat4 mat)
 {
-    glm::vec4 t1(center, 0);
+    glm::vec4 t1(center, 1);
     glm::vec4 t2 = t1;
     t2.x += radius;
     t1 = t1*mat;
@@ -122,6 +122,7 @@ void sphere::apply(glm::mat4 mat)
 void sphere::hello() const
 {
     qDebug() << "I'm sphere";
+    qDebug() << center.x << center.y << center.z << radius;
 }
 
 std::shared_ptr<shape> sphere::copy() const
