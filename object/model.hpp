@@ -19,7 +19,7 @@ class model: public drawable, public transformable, public helloable
 {
 private:
     static uint64_t ID;
-    uint64_t id = ++ID;
+    uint64_t id;
     std::vector<std::shared_ptr<shape> > shapes;
     glm::vec3 position;
     glm::vec3 direction;

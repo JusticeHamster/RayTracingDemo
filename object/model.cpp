@@ -5,7 +5,7 @@
 uint64_t model::ID = 0;
 
 model::model(std::vector<std::shared_ptr<shape> > shapes, glm::vec3 position,
-    glm::vec3 direction, bool illuminated, glm::vec3 light, distribution dist):
+    glm::vec3 direction, bool illuminated, glm::vec3 light, distribution dist): id(++ID),
     position(position), direction(direction), illuminated(illuminated), light(light),
     distribution_type(dist)
 {
@@ -14,10 +14,11 @@ model::model(std::vector<std::shared_ptr<shape> > shapes, glm::vec3 position,
     this->shapes.swap(shapes);
 }
 
-model::model(const model &m): position(m.position), direction(m.direction),
+model::model(const model &m): id(m.id), position(m.position), direction(m.direction),
     illuminated(m.illuminated), light(m.light), distribution_type(m.distribution_type),
     mirror_param(m.mirror_param)
 {
+    ID++;
     set_draw(m.is_draw());
     for (const auto &s : m.shapes) {
         auto new_shape = s->copy();
@@ -26,10 +27,11 @@ model::model(const model &m): position(m.position), direction(m.direction),
     }
 }
 
-model::model(model &&m): position(m.position), direction(m.direction),
+model::model(model &&m): id(m.id), position(m.position), direction(m.direction),
     illuminated(m.illuminated), light(m.light), distribution_type(m.distribution_type),
     mirror_param(m.mirror_param)
 {
+    ID++;
     set_draw(m.is_draw());
     shapes.swap(m.shapes);
     for (const auto &s : shapes)
@@ -38,6 +40,8 @@ model::model(model &&m): position(m.position), direction(m.direction),
 
 model &model::operator=(const model &m)
 {
+    ID++;
+    id = m.id;
     position = m.position;
     direction = m.direction;
     illuminated = m.illuminated;
@@ -55,6 +59,8 @@ model &model::operator=(const model &m)
 
 model &model::operator=(model &&m)
 {
+    ID++;
+    id = m.id;
     position = m.position;
     direction = m.direction;
     illuminated = m.illuminated;

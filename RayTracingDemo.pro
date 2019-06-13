@@ -24,7 +24,7 @@ macx {
 }
 
 # OPENGL
-QT   += opengl concurrent
+QT   += opengl concurrent sql
 win32 {
     LIBS += -lOpengl32 -lGlu32
 }
@@ -68,7 +68,9 @@ SOURCES += \
     object/shape.cpp \
     object/transformable.cpp \
     main/tester.cpp \
-    object/helloable.cpp
+    object/helloable.cpp \
+    main/object_list_model.cpp \
+    main/object_list_delegate.cpp
 
 HEADERS += \
     object/blockable.hpp \
@@ -100,7 +102,9 @@ HEADERS += \
     tools/thin_lens_camera.hpp \
     tools/not_running_exception.hpp \
     main/tester.hpp \
-    object/helloable.hpp
+    object/helloable.hpp \
+    main/object_list_model.hpp \
+    main/object_list_delegate.hpp
 
 FORMS += \
     main/mainwindow.ui

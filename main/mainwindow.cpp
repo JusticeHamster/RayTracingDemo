@@ -3,12 +3,14 @@
 
 #include "tools/scene.hpp"
 
+#include "object_list_model.hpp"
+#include "object_list_delegate.hpp"
+
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    QMainWindow(parent)
 {
-    ui->setupUi(this);
-    start_button = findChild<QPushButton *>("start");
+    this->setWindowTitle("path tracing demo");
+    init_widgets();
 }
 
 MainWindow::~MainWindow()
@@ -19,4 +21,14 @@ MainWindow::~MainWindow()
 void MainWindow::on_start_clicked()
 {
     r.render(ldr.get_scene("base"));
+}
+
+void MainWindow::init_widgets()
+{
+    ui = new Ui::MainWindow;
+    ui->setupUi(this);
+    model = new object_list_model(this);
+    delegate = new object_list_delegate(model, this);
+    ui->objectList->setModel(model);
+    ui->objectList->setItemDelegate(delegate);
 }
