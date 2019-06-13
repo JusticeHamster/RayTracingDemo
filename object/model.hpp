@@ -18,6 +18,8 @@ class shape;
 class model: public drawable, public transformable, public helloable
 {
 private:
+    static uint64_t ID;
+    uint64_t id = ++ID;
     std::vector<std::shared_ptr<shape> > shapes;
     glm::vec3 position;
     glm::vec3 direction;
@@ -46,6 +48,7 @@ public:
     glm::vec3 get_direction() const;
     intersect_result intersect(const ray &in) const;
     void hello() const;
+    uint64_t get_id() const;
 };
 
 #endif // MODEL_HPP

@@ -2,6 +2,8 @@
 #include "shape.hpp"
 #include "ray.hpp"
 
+uint64_t model::ID = 0;
+
 model::model(std::vector<std::shared_ptr<shape> > shapes, glm::vec3 position,
     glm::vec3 direction, bool illuminated, glm::vec3 light, distribution dist):
     position(position), direction(direction), illuminated(illuminated), light(light),
@@ -127,4 +129,9 @@ void model::hello() const
     for (const auto &s : shapes) {
         s->hello();
     }
+}
+
+uint64_t model::get_id() const
+{
+    return id;
 }

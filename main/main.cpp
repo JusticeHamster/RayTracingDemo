@@ -13,6 +13,7 @@ int main(int argc, char *argv[])
     } else {
         QApplication a(argc, argv);
         MainWindow w;
+        w.setWindowTitle("path tracing demo");
         w.show();
 
         return a.exec();
