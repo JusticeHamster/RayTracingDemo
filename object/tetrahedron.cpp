@@ -99,3 +99,13 @@ std::shared_ptr<shape> tetrahedron::copy() const
     tetrahedron::copy(t);
     return std::shared_ptr<shape>(t);
 }
+
+buffer tetrahedron::serialize() const
+{
+    return {};
+}
+
+void tetrahedron::deserialize(buffer buf)
+{
+
+}

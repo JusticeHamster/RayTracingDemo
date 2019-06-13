@@ -3,6 +3,7 @@
 
 #include <QDebug>
 #include <QSize>
+#include <QDir>
 
 #include "tools/loader.hpp"
 
@@ -10,7 +11,7 @@ static loader &ldr = loader::instance;
 
 void object_list_model::load_data()
 {
-
+    scene &scn = ldr.get_running_scene();
 }
 
 void object_list_model::save_data()
@@ -20,22 +21,12 @@ void object_list_model::save_data()
 
 object_list_model::object_list_model(QObject *parent): QAbstractListModel(parent)
 {
-    if (QSqlDatabase::contains("objectList")) {
-        database = QSqlDatabase::database("objectList");
-    } else {
-        database = QSqlDatabase::addDatabase("QSQLITE", "objectList");
-    }
-    database.setDatabaseName("objectList.db");
-    if (!database.open()) {
-        qDebug() << "failed to connect database objectList" << database.lastError();
-    }
     load_data();
 }
 
 object_list_model::~object_list_model()
 {
     save_data();
-    database.close();
 }
 
 int object_list_model::rowCount(const QModelIndex &parent) const

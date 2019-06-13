@@ -30,6 +30,9 @@ public:
     virtual void hello() const;
     virtual std::shared_ptr<shape> copy() const;
     virtual void set_parent(model *parent);
+
+    virtual buffer serialize() const;
+    virtual void deserialize(buffer buf);
 };
 
 #endif // CUBE_HPP

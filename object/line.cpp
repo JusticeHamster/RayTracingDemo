@@ -120,3 +120,13 @@ std::shared_ptr<shape> line::copy() const
     line::copy(l);
     return std::shared_ptr<shape>(l);
 }
+
+buffer line::serialize() const
+{
+    return {};
+}
+
+void line::deserialize(buffer buf)
+{
+
+}

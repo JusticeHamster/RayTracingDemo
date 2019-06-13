@@ -42,3 +42,13 @@ uint64_t shape::get_id() const
 {
     return id;
 }
+
+buffer shape::serialize() const
+{
+
+}
+
+void shape::deserialize(buffer buf)
+{
+
+}

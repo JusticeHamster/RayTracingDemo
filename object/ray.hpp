@@ -40,6 +40,9 @@ public:
     void add_child(ray *child);
     void set_parent_ray(ray *parent);
     virtual glm::vec3 get_rgb() const;
+
+    virtual buffer serialize() const;
+    virtual void deserialize(buffer buf);
 };
 
 #endif // RAY_HPP

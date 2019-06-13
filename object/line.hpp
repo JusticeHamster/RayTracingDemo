@@ -27,6 +27,9 @@ public:
     void set_t(float t);
     virtual void hello() const;
     virtual std::shared_ptr<shape> copy() const;
+
+    virtual buffer serialize() const;
+    virtual void deserialize(buffer buf);
 };
 
 #endif // LINE_HPP

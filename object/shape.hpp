@@ -7,11 +7,13 @@
 #include "helloable.hpp"
 #include "glm/gtc/constants.hpp"
 
+#include "tools/serializable.hpp"
+
 #include <memory>
 
 class model;
 
-class shape: public transformable, public blockable, public drawable, public helloable
+class shape: public transformable, public blockable, public drawable, public helloable, public serializable
 {
 private:
     static uint64_t ID;
@@ -31,6 +33,9 @@ public:
     virtual void set_parent(model *parent);
     model *get_parent() const;
     uint64_t get_id() const;
+
+    virtual buffer serialize() const;
+    virtual void deserialize(buffer buf);
 };
 
 #endif // SHAPE_HPP

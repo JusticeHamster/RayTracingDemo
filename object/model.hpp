@@ -13,9 +13,11 @@
 #include "transformable.hpp"
 #include "helloable.hpp"
 
+#include "tools/serializable.hpp"
+
 class shape;
 
-class model: public drawable, public transformable, public helloable
+class model: public drawable, public transformable, public helloable, public serializable
 {
 private:
     static uint64_t ID;
@@ -49,6 +51,9 @@ public:
     intersect_result intersect(const ray &in) const;
     void hello() const;
     uint64_t get_id() const;
+
+    buffer serialize() const;
+    void deserialize(buffer buf);
 };
 
 #endif // MODEL_HPP

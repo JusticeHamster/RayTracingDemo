@@ -241,3 +241,13 @@ void cube::set_parent(model *parent)
     init_vertex();
     init_T();
 }
+
+buffer cube::serialize() const
+{
+    return {};
+}
+
+void cube::deserialize(buffer buf)
+{
+
+}

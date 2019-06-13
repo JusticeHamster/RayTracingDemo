@@ -130,3 +130,13 @@ glm::vec3 ray::get_rgb() const
 {
     return rgb * bound_diff + lower_bound;
 }
+
+buffer ray::serialize() const
+{
+    return {};
+}
+
+void ray::deserialize(buffer buf)
+{
+
+}

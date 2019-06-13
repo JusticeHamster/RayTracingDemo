@@ -23,6 +23,9 @@ public:
     virtual void hello() const;
     virtual std::shared_ptr<shape> copy() const;
     bool inside(glm::vec3 point) const;
+
+    virtual buffer serialize() const;
+    virtual void deserialize(buffer buf);
 };
 
 #endif // SPHERE_HPP

@@ -10,9 +10,11 @@
 #include "object/model.hpp"
 #include "object/helloable.hpp"
 
+#include "serializable.hpp"
+
 class line;
 
-class scene: public helloable
+class scene: public helloable, public serializable
 {
 private:
     std::string name;
@@ -22,6 +24,7 @@ private:
     mutable QMutex lock;
     friend class renderer;
 public:
+    scene(buffer buf);
     scene(std::string name);
     scene(const scene &scn);
     scene(scene &&scn);
@@ -34,6 +37,9 @@ public:
     void push(model m);
     void pop(int index);
     int object_count() const;
+
+    virtual buffer serialize() const;
+    virtual void deserialize(buffer buf);
 };
 
 #endif // SCENE_HPP

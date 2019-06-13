@@ -24,7 +24,7 @@ macx {
 }
 
 # OPENGL
-QT   += opengl concurrent sql
+QT   += opengl concurrent
 win32 {
     LIBS += -lOpengl32 -lGlu32
 }
@@ -70,7 +70,8 @@ SOURCES += \
     main/tester.cpp \
     object/helloable.cpp \
     main/object_list_model.cpp \
-    main/object_list_delegate.cpp
+    main/object_list_delegate.cpp \
+    tools/serializable.cpp
 
 HEADERS += \
     object/blockable.hpp \
@@ -104,7 +105,8 @@ HEADERS += \
     main/tester.hpp \
     object/helloable.hpp \
     main/object_list_model.hpp \
-    main/object_list_delegate.hpp
+    main/object_list_delegate.hpp \
+    tools/serializable.hpp
 
 FORMS += \
     main/mainwindow.ui

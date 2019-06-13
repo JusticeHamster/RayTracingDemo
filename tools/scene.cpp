@@ -8,6 +8,11 @@
 
 #include <QDebug>
 
+scene::scene(buffer buf)
+{
+    deserialize(buf);
+}
+
 scene::scene(std::string name): name(name)
 {
     // 放一个球
@@ -110,4 +115,14 @@ void scene::pop(int index)
 int scene::object_count() const
 {
     return static_cast<int>(models.size());
+}
+
+buffer scene::serialize() const
+{
+    return {};
+}
+
+void scene::deserialize(buffer buf)
+{
+
 }
