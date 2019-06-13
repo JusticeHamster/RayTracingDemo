@@ -24,7 +24,6 @@ private:
     mutable QMutex lock;
     friend class renderer;
 public:
-    scene(buffer buf);
     scene(std::string name);
     scene(const scene &scn);
     scene(scene &&scn);

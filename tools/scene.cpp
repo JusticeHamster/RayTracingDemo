@@ -8,11 +8,6 @@
 
 #include <QDebug>
 
-scene::scene(buffer buf)
-{
-    deserialize(buf);
-}
-
 scene::scene(std::string name): name(name)
 {
     // 放一个球
