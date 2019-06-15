@@ -128,7 +128,12 @@ static glm::vec3 lower_bound = ldr.get_bound(false);
 
 glm::vec3 ray::get_rgb() const
 {
-    return rgb * bound_diff + lower_bound;
+    float t = rgb.x + rgb.y + rgb.z;
+    glm::vec3 c1(137.0f/255, 207.0f/255, 240.0f/255);
+    glm::vec3 c2(25.0f/255, 25.0f/255, 112.0f/255);
+    t /= 3.0f;
+    return c1 + t*(c2-c1);
+
 }
 
 buffer ray::serialize() const
