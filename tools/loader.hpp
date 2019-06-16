@@ -13,7 +13,7 @@ private:
     loader();
     std::optional<scene> scn;
     constexpr static int FPS = 60;
-    constexpr static int sampling_number = 10;
+    constexpr static int sampling_number = 5;
     constexpr static float PACK_FACTOR = .5f;
     constexpr static float DISTANCE_FACTOR = 2.f;
     constexpr static unsigned max_scattering_time = 3;

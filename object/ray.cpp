@@ -2,6 +2,8 @@
 #include "tools/loader.hpp"
 #include "tools/image.hpp"
 
+#include "tools/printer.hpp"
+
 static loader &ldr = loader::instance;
 
 void ray::copy(std::shared_ptr<ray> new_ray) const
@@ -134,7 +136,6 @@ glm::vec3 ray::get_rgb() const
     glm::vec3 c2(25.0f/255, 25.0f/255, 112.0f/255);
     t /= 3.0f;
     return c1 + t*(c2-c1);
-
 }
 
 buffer ray::_serialize() const

@@ -38,7 +38,10 @@ std::vector<ray> diffuse_distribution::random(int num) const
     std::vector<ray> rays;
     float weight = 1.f / num;
     for (int i = 0; i < num; i++) {
-        rays.push_back(ray(point, random_direction(), glm::vec3(), parent.get_img(), parent.get_img_position(), weight, parent.get_time() + 1, parent.is_inside()));
+        auto r = ray(point, random_direction(), glm::vec3(), parent.get_img(), parent.get_img_position(), weight, parent.get_time() + 1, parent.is_inside());
+        r.set_parent_ray(&parent);
+        parent.add_child(&r);
+        rays.push_back(r);
     }
     return rays;
 }
