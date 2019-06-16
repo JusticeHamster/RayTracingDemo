@@ -142,7 +142,7 @@ uint64_t model::get_id() const
     return id;
 }
 
-buffer model::serialize() const
+buffer model::_serialize() const
 {
     return {};
 }

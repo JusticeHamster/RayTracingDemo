@@ -18,6 +18,8 @@ protected:
     virtual void draw() const;
     virtual float intersect(const ray &in) const;
     virtual void apply(glm::mat4 mat);
+
+    virtual buffer _serialize() const;
 public:
     enum style {
         QUAD, LINES
@@ -31,7 +33,6 @@ public:
     virtual std::shared_ptr<shape> copy() const;
     virtual void set_parent(model *parent);
 
-    virtual buffer serialize() const;
     virtual void deserialize(buffer buf);
 };
 

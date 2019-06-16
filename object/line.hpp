@@ -15,6 +15,8 @@ protected:
     virtual void draw() const;
     virtual float intersect(const ray &in) const;
     virtual void apply(glm::mat4 mat);
+
+    virtual buffer _serialize() const;
 public:
     line(glm::vec3 start, glm::vec3 direction, bool is_ray);
     line(glm::vec3 start, glm::vec3 end);
@@ -28,7 +30,6 @@ public:
     virtual void hello() const;
     virtual std::shared_ptr<shape> copy() const;
 
-    virtual buffer serialize() const;
     virtual void deserialize(buffer buf);
 };
 

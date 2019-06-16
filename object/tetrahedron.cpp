@@ -100,7 +100,7 @@ std::shared_ptr<shape> tetrahedron::copy() const
     return std::shared_ptr<shape>(t);
 }
 
-buffer tetrahedron::serialize() const
+buffer tetrahedron::_serialize() const
 {
     return {};
 }

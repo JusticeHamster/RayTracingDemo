@@ -121,7 +121,7 @@ std::shared_ptr<shape> line::copy() const
     return std::shared_ptr<shape>(l);
 }
 
-buffer line::serialize() const
+buffer line::_serialize() const
 {
     return {};
 }

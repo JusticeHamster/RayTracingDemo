@@ -21,6 +21,8 @@ private:
     model *parent = nullptr;
 protected:
     void copy(std::shared_ptr<shape> new_shape) const;
+
+    virtual buffer _serialize() const;
 public:
     constexpr static float PI = glm::pi<float>();
     constexpr static float PI2 = PI * 2;
@@ -34,7 +36,6 @@ public:
     model *get_parent() const;
     uint64_t get_id() const;
 
-    virtual buffer serialize() const;
     virtual void deserialize(buffer buf);
 };
 

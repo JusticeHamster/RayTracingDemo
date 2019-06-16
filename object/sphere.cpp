@@ -138,7 +138,7 @@ bool sphere::inside(glm::vec3 point) const
     return radius * radius >= glm::distance2(point, center + get_parent()->get_position());
 }
 
-buffer sphere::serialize() const
+buffer sphere::_serialize() const
 {
     return {};
 }

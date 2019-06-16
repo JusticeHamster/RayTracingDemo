@@ -74,7 +74,8 @@ unsigned ray::get_time() const
 
 void ray::stop(glm::vec3 stop_energy)
 {
-    img.get().set(stop_energy, image_position.x, image_position.y);
+    stop_energy *= weight;
+    img.get().add(stop_energy, image_position.x, image_position.y);
     rgb += stop_energy;
     for (ray *p = parent_ray; p != nullptr; p = p->parent_ray) {
         p->rgb += stop_energy;
@@ -136,7 +137,7 @@ glm::vec3 ray::get_rgb() const
 
 }
 
-buffer ray::serialize() const
+buffer ray::_serialize() const
 {
     return {};
 }

@@ -16,6 +16,8 @@ protected:
     virtual void draw() const;
     virtual float intersect(const ray &in) const;
     virtual void apply(glm::mat4 mat);
+
+    virtual buffer _serialize() const;
 public:
     sphere(glm::vec3 center, float radius, int m, int n);
     virtual ~sphere();
@@ -24,7 +26,6 @@ public:
     virtual std::shared_ptr<shape> copy() const;
     bool inside(glm::vec3 point) const;
 
-    virtual buffer serialize() const;
     virtual void deserialize(buffer buf);
 };
 

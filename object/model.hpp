@@ -29,7 +29,9 @@ private:
     glm::vec3 light;
 protected:
     void draw() const;
-    virtual void apply(glm::mat4 mat);
+    void apply(glm::mat4 mat);
+
+    buffer _serialize() const;
 public:
     using intersect_result = std::tuple<std::optional<std::reference_wrapper<shape> >, float>;
     enum distribution {
@@ -52,7 +54,6 @@ public:
     void hello() const;
     uint64_t get_id() const;
 
-    buffer serialize() const;
     void deserialize(buffer buf);
 };
 

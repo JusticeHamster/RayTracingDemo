@@ -45,11 +45,13 @@ void object_list_model::save_data()
 {
     scene &scn = ldr.get_running_scene();
     auto buf = scn.serialize();
-    if (buf.size() != 0) {
-        std::ofstream save_file("object_list.data", std::ios::binary);
-        save_file.write(reinterpret_cast<const char *>(&buf[0]), static_cast<long long>(buf.size()));
-        save_file.close();
+    if (buf.size() == 0) {
+        qDebug("serialize_size == 0");
+        return;
     }
+    std::ofstream save_file("object_list.data", std::ios::binary);
+    save_file.write(reinterpret_cast<const char *>(&buf[0]), static_cast<long long>(buf.size()));
+    save_file.close();
 }
 
 object_list_model::object_list_model(QObject *parent): QAbstractListModel(parent)

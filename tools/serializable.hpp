@@ -7,9 +7,12 @@ using buffer = std::vector<unsigned char>;
 
 class serializable
 {
+protected:
+    virtual buffer _serialize() const = 0;
 public:
+    bool need_serialize = true;
     virtual ~serializable();
-    virtual buffer serialize() const = 0;
+    buffer serialize() const;
     virtual void deserialize(buffer buf) = 0;
 };
 

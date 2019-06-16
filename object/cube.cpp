@@ -242,7 +242,7 @@ void cube::set_parent(model *parent)
     init_T();
 }
 
-buffer cube::serialize() const
+buffer cube::_serialize() const
 {
     return {};
 }

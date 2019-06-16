@@ -13,7 +13,7 @@ public:
     ~image();
     unsigned get_width() const;
     unsigned get_height() const;
-    void set(glm::vec3 rgb, unsigned x, unsigned y);
+    void add(glm::vec3 rgb, unsigned x, unsigned y);
     glm::vec3 get(unsigned x, unsigned y);
 };
 

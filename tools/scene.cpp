@@ -13,7 +13,7 @@ scene::scene(std::string name): name(name)
     // 放一个球
     auto m = model({
         std::make_shared<sphere>(glm::vec3(), 1, 30, 30)
-    }, glm::vec3(), glm::vec3(), false, glm::vec3(), model::mirror);
+    }, glm::vec3(), glm::vec3(), true, glm::vec3(1), model::mirror);
     m.mirror_param = glm::vec3(0., 1., 1.33);
     //m.set_draw(false);
     push(m);
@@ -27,7 +27,7 @@ scene::scene(std::string name): name(name)
     // 另一个球
     push(model({
         std::make_shared<sphere>(glm::vec3(), 1, 30, 30)
-    }, glm::vec3(3), glm::vec3(), false, glm::vec3(), model::diffuse));
+    }, glm::vec3(3), glm::vec3(), true, glm::vec3(1), model::diffuse));
 
     // 坐标轴
     auto x = std::make_shared<line>(glm::vec3(), glm::vec3(-10, 0, 0));
@@ -112,7 +112,7 @@ int scene::object_count() const
     return static_cast<int>(models.size());
 }
 
-buffer scene::serialize() const
+buffer scene::_serialize() const
 {
     return {};
 }

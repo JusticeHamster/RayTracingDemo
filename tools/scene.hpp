@@ -23,6 +23,8 @@ private:
 
     mutable QMutex lock;
     friend class renderer;
+protected:
+    virtual buffer _serialize() const;
 public:
     scene(std::string name);
     scene(const scene &scn);
@@ -37,7 +39,6 @@ public:
     void pop(int index);
     int object_count() const;
 
-    virtual buffer serialize() const;
     virtual void deserialize(buffer buf);
 };
 
