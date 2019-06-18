@@ -33,9 +33,6 @@ void MainWindow::on_start_clicked()
 
 void MainWindow::mouseMoveEvent(QMouseEvent *event)
 {
-    if (event->button() != Qt::LeftButton)
-        return;
-
     if (last_pos.isNull()) {
         last_pos = event->pos();
         return;
@@ -65,9 +62,6 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
 
 void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 {
-    if (event->button() != Qt::LeftButton)
-        return;
-
     last_pos = QPoint();
 }
 
