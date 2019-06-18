@@ -10,6 +10,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 
 #include <QMouseEvent>
+#include <QWheelEvent>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -32,6 +33,9 @@ void MainWindow::on_start_clicked()
 
 void MainWindow::mouseMoveEvent(QMouseEvent *event)
 {
+    if (event->button() != Qt::LeftButton)
+        return;
+
     if (last_pos.isNull()) {
         last_pos = event->pos();
         return;
@@ -61,7 +65,22 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
 
 void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 {
+    if (event->button() != Qt::LeftButton)
+        return;
+
     last_pos = QPoint();
+}
+
+void MainWindow::wheelEvent(QWheelEvent *event)
+{
+    float delta_r = -ldr.get_factor("wheel_speed") * event->delta();
+    auto gl = ui->openGL;
+    if (gl->look_at_r + delta_r > 0)
+        gl->look_at_r += delta_r;
+    gl->look_at_pos = glm::normalize(gl->look_at_pos) * gl->look_at_r;
+
+    auto size = gl->size();
+    gl->resizeGL(size.width(), size.height());
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)

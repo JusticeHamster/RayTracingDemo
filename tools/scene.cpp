@@ -13,7 +13,7 @@ scene::scene(std::string name): name(name)
     // 放一个球
     auto m = model({
         std::make_shared<sphere>(glm::vec3(), 1, 30, 30)
-    }, glm::vec3(), glm::vec3(), false, glm::vec3(), model::mirror);
+    }, glm::vec3(0, -.3, 0), glm::vec3(), false, glm::vec3(), model::mirror);
     m.mirror_param = glm::vec3(0., 1., 1.33);
     //m.set_draw(false);
     push(m);

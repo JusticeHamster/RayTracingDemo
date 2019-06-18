@@ -14,6 +14,7 @@ class OpenGLWidget : public QGLWidget {
 public:
     float look_at_r;
     glm::vec3 up = {0, 1, 0};
+    glm::vec3 target = {0, 0, 0};
     glm::vec3 look_at_pos = {-3, 2, -10};
 
     explicit OpenGLWidget(QWidget *parent = nullptr);
