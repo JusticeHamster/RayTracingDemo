@@ -18,14 +18,20 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+private slots:
+    void on_start_clicked();
+
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-private slots:
-    void on_start_clicked();
+protected:
+    void mouseMoveEvent(QMouseEvent *event);
+    void resizeEvent(QResizeEvent* event);
 
 private:
+    QPoint last_pos;
+
     void init_widgets();
 
     Ui::MainWindow *ui;

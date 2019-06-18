@@ -12,6 +12,13 @@ std::string printer::format(glm::vec3 v)
     return ss.str();
 }
 
+std::string printer::format(glm::ivec2 v)
+{
+    std::stringstream().swap(ss);
+    ss << "(" << v.x << ", " << v.y << ")";
+    return ss.str();
+}
+
 void printer::print(std::string str)
 {
     qDebug("%s", str.c_str());

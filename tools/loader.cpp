@@ -40,6 +40,8 @@ float loader::get_factor(std::string name)
         return PACK_FACTOR;
     else if (name == "distance")
         return DISTANCE_FACTOR;
+    else if (name == "speed")
+        return ROTATE_SPEED;
     return 0;
 }
 

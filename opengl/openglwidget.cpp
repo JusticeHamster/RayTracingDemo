@@ -6,6 +6,8 @@ OpenGLWidget::OpenGLWidget(QWidget *parent) : QGLWidget(parent), ldr(loader::ins
     connect(timer.get(), SIGNAL(timeout()), this, SLOT(timer_update()));
     timer->start(1000 / ldr.get_fps());
 
+    look_at_r = look_at_pos.length();
+
     ldr.get_scene("base").hello();
 }
 
@@ -31,7 +33,10 @@ void OpenGLWidget::resizeGL(int w, int h) {
     glLoadIdentity();
     // 视角的角度（眼睛睁开大小），窗口横纵比例，近处截面，远处截面
     gluPerspective(45.0, static_cast<double>(w) / h, 0.1, 100);
-    gluLookAt(-3, 2, -10, 0, 0, 0, 0, 1, 0);
+    double x = static_cast<double>(look_at_pos.x);
+    double y = static_cast<double>(look_at_pos.y);
+    double z = static_cast<double>(look_at_pos.z);
+    gluLookAt(x, y, z, 0, 0, 0, 0, 1, 0);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
