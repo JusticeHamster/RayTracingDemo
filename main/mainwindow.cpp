@@ -14,6 +14,8 @@
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
+    up = glm::vec3(0, 1, 0);
+    left = glm::vec3(1, 0, 0);
     this->setWindowTitle("path tracing demo");
     init_widgets();
 }
@@ -35,20 +37,31 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
         return;
     }
     auto gl = ui->openGL;
-
     QPoint diff = event->pos() - last_pos;
-    glm::vec3 v = {diff.x(), diff.y(), 0};
-    float angle = 2 * ldr.get_factor("speed") * glm::asin(v.length() / (2 * gl->look_at_r));
-    v = glm::normalize(glm::cross(-gl->look_at_pos, v));
+    float speed = ldr.get_factor("speed");
+    int x = diff.x(), y = diff.y();
     glm::mat4 r(1.f);
-    qDebug() << angle;
-    printer::print(printer::format(v));
-    gl->look_at_pos = glm::vec4(gl->look_at_pos, 1) * glm::rotate(r, angle, v);
 
-    auto size = ui->openGL->size();
-    ui->openGL->resizeGL(size.width(), size.height());
+    if (x != 0)
+        r = r * glm::rotate(r, speed * x, up);
+
+    if (y != 0)
+        r = r * glm::rotate(r, -speed * y, left);
+
+    up = glm::vec4(up, 0) * r;
+    left = glm::vec4(left, 0) * r;
+    gl->up = up;
+    gl->look_at_pos = glm::vec4(gl->look_at_pos, 1) * r;
+
+    auto size = gl->size();
+    gl->resizeGL(size.width(), size.height());
 
     last_pos = event->pos();
+}
+
+void MainWindow::mouseReleaseEvent(QMouseEvent *event)
+{
+    last_pos = QPoint();
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)

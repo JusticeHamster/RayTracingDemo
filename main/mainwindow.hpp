@@ -27,9 +27,11 @@ public:
 
 protected:
     void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
     void resizeEvent(QResizeEvent* event);
 
 private:
+    glm::vec3 up, left;
     QPoint last_pos;
 
     void init_widgets();

@@ -36,7 +36,10 @@ void OpenGLWidget::resizeGL(int w, int h) {
     double x = static_cast<double>(look_at_pos.x);
     double y = static_cast<double>(look_at_pos.y);
     double z = static_cast<double>(look_at_pos.z);
-    gluLookAt(x, y, z, 0, 0, 0, 0, 1, 0);
+    double ux = static_cast<double>(up.x);
+    double uy = static_cast<double>(up.y);
+    double uz = static_cast<double>(up.z);
+    gluLookAt(x, y, z, 0, 0, 0, ux, uy, uz);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
