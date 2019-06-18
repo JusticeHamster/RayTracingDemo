@@ -36,6 +36,7 @@ void sphere::draw() const
     float angle_z = 0.0;
     float angle_xy = 0.0;
     glBegin(GL_QUADS);
+    glColor3f(178.f/255, 34.f/255, 34.f/255);
     for (int i = 0; i < m; i++)
     {
         angle_z = i * step_z;
@@ -60,8 +61,7 @@ void sphere::draw() const
             y[3] = radius * glm::sin(angle_z) * glm::sin(angle_xy + step_xy);
             z[3] = radius * glm::cos(angle_z);
             for (int k = 0; k < 4; k++)
-            {
-                glColor3f(glm::sin(angle_z), glm::cos(angle_z), glm::tan(angle_z));
+            {           
                 glVertex3f(_center.x + x[k], _center.y + y[k], _center.z + z[k]);
             }
         }
