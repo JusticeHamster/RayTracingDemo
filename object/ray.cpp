@@ -80,10 +80,9 @@ void ray::stop(glm::vec3 stop_energy)
     rgb += stop_energy;
     float w = weight;
     img.get().add(stop_energy * w, image_position.x, image_position.y);
-    for (ray *p = parent_ray; p != nullptr; p = p->parent_ray)
-    {
-        p->rgb += stop_energy * w / p->weight;
-        w = p->weight;
+    for (ray *p = parent_ray; p != nullptr; p = p->parent_ray) {
+        w /= p->weight;
+        p->rgb += stop_energy * w;
     }
 }
 
