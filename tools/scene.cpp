@@ -15,17 +15,25 @@ scene::scene(std::string name): name(name)
         std::make_shared<sphere>(glm::vec3(), 1, 30, 30)
     }, glm::vec3(0, -.3, 0), glm::vec3(), false, glm::vec3(), model::mirror);
     m.mirror_param = glm::vec3(0., 1., 1.33);
-    //m.set_draw(false);
+    // m.set_draw(false);
     push(m);
 
     // 放一个方块
     push(model({
         std::make_shared<cube>(glm::vec3(1, 1, 0), glm::vec3(-1, 1, 0), glm::vec3(0, 0, 1), glm::vec3(1), glm::vec3()),
     }, glm::vec3(1, 2, 1), glm::vec3(), true, glm::vec3(1), model::diffuse));
+
     // 另一个球
     push(model({
-        std::make_shared<sphere>(glm::vec3(), 1, 30, 30)
+        std::make_shared<sphere>(glm::vec3(), 1.5, 30, 30)
     }, glm::vec3(3), glm::vec3(), false, glm::vec3(), model::diffuse));
+
+    // 另一个方块
+    m = model({
+        std::make_shared<cube>(glm::vec3(1, 1, 0), glm::vec3(-1, 1, 0), glm::vec3(0, 0, 1), glm::vec3(3), glm::vec3()),
+    }, glm::vec3(3, -1, -2), glm::vec3(), false, glm::vec3(), model::phone);
+    m.mirror_param = glm::vec3(1., 0., 1.33);
+    push(m);
 
     // 坐标轴
     auto x = std::make_shared<line>(glm::vec3(), glm::vec3(-10, 0, 0));

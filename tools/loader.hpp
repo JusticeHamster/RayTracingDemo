@@ -14,12 +14,12 @@ private:
     std::optional<scene> scn;
     constexpr static int FPS = 60;
     constexpr static int sampling_number = 5;
+    constexpr static unsigned max_scattering_time = 4;
     constexpr static float PACK_FACTOR = .5f;
     constexpr static float DISTANCE_FACTOR = 2.f;
     constexpr static float ROTATE_SPEED = .01f;
     constexpr static float WHEEL_SPEED = .01f;
     constexpr static float PHONE_ANGLE = 15.f;
-    constexpr static unsigned max_scattering_time = 3;
     constexpr static glm::vec3 lower_bound = glm::vec3();
     constexpr static glm::vec3 upper_bound = glm::vec3(0.75f);
 
