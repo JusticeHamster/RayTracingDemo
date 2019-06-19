@@ -45,6 +45,7 @@ void line::draw() const
         __end += __start;
         glEnable(GL_LINE_STIPPLE);
         glLineStipple(1, 0x0F0F);
+        glLineWidth(3);
     } else {
         __end += pos;
     }
@@ -54,6 +55,7 @@ void line::draw() const
     glEnd();
     if (is_direction()) {
         glDisable(GL_LINE_STIPPLE);
+        glLineWidth(1);
     }
 }
 
