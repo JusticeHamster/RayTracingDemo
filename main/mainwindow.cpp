@@ -57,8 +57,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
     gl->up = up;
     gl->look_at_pos = glm::vec4(gl->look_at_pos, 1) * r;
 
-    auto size = gl->size();
-    gl->resizeGL(size.width(), size.height());
+    update_opengl();
 
     last_pos = event->pos();
 }
@@ -76,15 +75,14 @@ void MainWindow::wheelEvent(QWheelEvent *event)
         gl->look_at_r += delta_r;
     gl->look_at_pos = glm::normalize(gl->look_at_pos) * gl->look_at_r;
 
-    auto size = gl->size();
-    gl->resizeGL(size.width(), size.height());
+    update_opengl();
 }
 
 void MainWindow::resizeEvent(QResizeEvent *event)
 {
     QMainWindow::resizeEvent(event);
-    auto size = ui->openGL->size();
-    ui->openGL->resizeGL(size.width(), size.height());
+
+    update_opengl();
 }
 
 void MainWindow::init_widgets()
@@ -101,8 +99,8 @@ void MainWindow::init_widgets()
     ui->objectList->setItemDelegate(delegate);
     ui->openGL->setMouseTracking(true);
     ui->openGL->model = model;
-    auto size = ui->openGL->size();
-    ui->openGL->resizeGL(size.width(), size.height());
+
+    update_opengl();
 }
 
 buffer MainWindow::serialize() const
@@ -129,7 +127,18 @@ void MainWindow::deserialize(buffer &buf)
     gl->up = up;
     gl->look_at_r = glm::length(gl->look_at_pos);
 
+    update_opengl();
+}
+
+void MainWindow::update_opengl()
+{
+    auto gl = ui->openGL;
+
     auto size = gl->size();
+#ifdef __APPLE__
+    // macos retina
+    size = size * 2;
+#endif
     gl->resizeGL(size.width(), size.height());
 }
 

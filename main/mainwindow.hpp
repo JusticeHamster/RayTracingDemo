@@ -48,6 +48,7 @@ private:
 
     buffer serialize() const;
     void deserialize(buffer &buf);
+    void update_opengl();
 };
 
 #endif // MAINWINDOW_H
