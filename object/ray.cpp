@@ -134,8 +134,6 @@ static glm::vec3 lower_bound = ldr.get_bound(false);
 
 glm::vec3 ray::get_rgb() const
 {
-    if (get_parent()->is_light())
-        return glm::vec3(148.0f / 255, 0.0f / 255, 211.0f / 255);
     float t = rgb.x + rgb.y + rgb.z;
     glm::vec3 c1(137.0f / 255, 207.0f / 255, 240.0f / 255);
     glm::vec3 c2(35.0f / 255, 45.0f / 255, 150.0f / 255);

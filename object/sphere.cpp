@@ -41,7 +41,10 @@ void sphere::draw() const
     float angle_z = 0.0;
     float angle_xy = 0.0;
     glBegin(GL_QUADS);
-    glColor3f(178.f/255, 34.f/255, 34.f/255);
+    if (get_parent()->is_light())
+        glColor3f(1.f, .85f, .73f);
+    else
+        glColor3f(178.f/255, 34.f/255, 34.f/255);
     for (int i = 0; i < m; i++)
     {
         angle_z = i * step_z;

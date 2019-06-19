@@ -83,7 +83,10 @@ void cube::draw() const
 {
     if (draw_style == style::QUAD)
     {
-        glColor3f(.28f, .46f, 1.f); // 染色
+        if (get_parent()->is_light())
+            glColor3f(1.f, .85f, .73f);
+        else
+            glColor3f(.28f, .46f, 1.f);
         glBegin(GL_QUAD_STRIP);     //填充凸多边形
         for (int i = 0; i < 8; i++)
         {
@@ -97,13 +100,15 @@ void cube::draw() const
         }
         glEnd();
     }
-    glColor3f(0, 0, 0);
-    glBegin(GL_LINES);
-    for (unsigned long i = 0; i < LINES_ORDER.size(); i++)
-    {
-        glVertex3f(vertex[LINES_ORDER[i]].x, vertex[LINES_ORDER[i]].y, vertex[LINES_ORDER[i]].z);
+    if (!get_parent()->is_light()) {
+        glColor3f(0, 0, 0);
+        glBegin(GL_LINES);
+        for (unsigned long i = 0; i < LINES_ORDER.size(); i++)
+        {
+            glVertex3f(vertex[LINES_ORDER[i]].x, vertex[LINES_ORDER[i]].y, vertex[LINES_ORDER[i]].z);
+        }
+        glEnd();
     }
-    glEnd();
 }
 
 /* 根据平面上一点以及平面的法向量，得到平面方程，并与射线求交点
