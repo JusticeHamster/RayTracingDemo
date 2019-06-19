@@ -71,7 +71,8 @@ SOURCES += \
     object/helloable.cpp \
     main/object_list_model.cpp \
     main/object_list_delegate.cpp \
-    tools/serializable.cpp
+    tools/serializable.cpp \
+    object/phone_distribution.cpp
 
 HEADERS += \
     object/blockable.hpp \
@@ -106,7 +107,8 @@ HEADERS += \
     object/helloable.hpp \
     main/object_list_model.hpp \
     main/object_list_delegate.hpp \
-    tools/serializable.hpp
+    tools/serializable.hpp \
+    object/phone_distribution.hpp
 
 FORMS += \
     main/mainwindow.ui

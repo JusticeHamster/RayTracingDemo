@@ -8,6 +8,7 @@
 #include "object/intersection.hpp"
 #include "object/diffuse_distribution.hpp"
 #include "object/mirror_distribution.hpp"
+#include "object/phone_distribution.hpp"
 #include "tools/pinhole_camera.hpp"
 #include "tools/loader.hpp"
 #include "tools/not_implemented_exception.hpp"
@@ -119,7 +120,7 @@ intersection renderer::BRDF(ray &in, const shape &s, glm::vec3 point, const scen
         break;
     }
     case model::phone:
-        throw new not_implemented_exception("phone高光暂时没实现");
+        rd.reset(new phone_distribution(in, point, norm, ldr.get_factor("angle") * shape::PI / 180.f));
     }
     return intersection(false, rd, point, {});
 }

@@ -44,6 +44,8 @@ float loader::get_factor(std::string name)
         return ROTATE_SPEED;
     else if (name == "wheel_speed")
         return WHEEL_SPEED;
+    else if (name == "angle")
+        return PHONE_ANGLE;
     return 0;
 }
 

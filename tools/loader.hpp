@@ -18,6 +18,7 @@ private:
     constexpr static float DISTANCE_FACTOR = 2.f;
     constexpr static float ROTATE_SPEED = .01f;
     constexpr static float WHEEL_SPEED = .01f;
+    constexpr static float PHONE_ANGLE = 15.f;
     constexpr static unsigned max_scattering_time = 3;
     constexpr static glm::vec3 lower_bound = glm::vec3();
     constexpr static glm::vec3 upper_bound = glm::vec3(0.75f);
