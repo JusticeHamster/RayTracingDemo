@@ -1,7 +1,6 @@
 #include "ray.hpp"
 #include "tools/loader.hpp"
 #include "tools/image.hpp"
-
 #include "tools/printer.hpp"
 
 static loader &ldr = loader::instance;
@@ -131,6 +130,8 @@ static glm::vec3 lower_bound = ldr.get_bound(false);
 
 glm::vec3 ray::get_rgb() const
 {
+    qDebug()<<"ray rbg:";
+    printer::print(printer::format(rgb));
     float t = rgb.x + rgb.y + rgb.z;
 //    glm::vec3 c1(137.0f/255, 207.0f/255, 240.0f/255);
     glm::vec3 c1(0.0f/255, 0.0f/255, 255.0f/255);
