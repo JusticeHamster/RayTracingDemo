@@ -75,11 +75,12 @@ unsigned ray::get_time() const
 
 void ray::stop(glm::vec3 stop_energy)
 {
-    stop_energy *= weight;
-    img.get().add(stop_energy, image_position.x, image_position.y);
     rgb += stop_energy;
+    float w = weight;
+    img.get().add(stop_energy * w, image_position.x, image_position.y);
     for (ray *p = parent_ray; p != nullptr; p = p->parent_ray) {
-        p->rgb += stop_energy;
+        p->rgb += stop_energy * w / p->weight;
+        w = p->weight;
     }
 }
 
