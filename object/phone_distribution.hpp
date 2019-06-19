@@ -13,7 +13,7 @@ private:
     mutable std::normal_distribution<float> normal;
     glm::vec3 random_direction(glm::vec3 main, float limit) const;
     float angle_bound;
-    inline glm::vec2 generate(float limit) const;
+    inline glm::vec2 generate(float r) const;
 public:
     virtual ~phone_distribution();
     phone_distribution(ray &parent, glm::vec3 point, glm::vec3 norm, float angle_bound);
