@@ -30,7 +30,7 @@ ray::ray(glm::vec3 start, glm::vec3 direction, glm::vec3 rgb, std::reference_wra
     line(start, direction, true), rgb(rgb), img(img),
     image_position(image_position), weight(weight), time(time), inside(inside)
 {
-
+    need_serialize = false;
 }
 
 ray::ray(const ray &r): line(r), rgb(r.rgb), img(r.img),
@@ -141,12 +141,7 @@ glm::vec3 ray::get_rgb() const
     return c1 + t*(c2-c1);
 }
 
-buffer ray::_serialize() const
+uint64_t ray::type_id() const
 {
-    return {};
-}
-
-void ray::deserialize(buffer buf)
-{
-
+    return 2;
 }

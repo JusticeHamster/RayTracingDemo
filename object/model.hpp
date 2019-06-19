@@ -42,6 +42,8 @@ public:
     model(std::vector<std::shared_ptr<shape> > shapes, glm::vec3 position, glm::vec3 direction, bool illuminated, glm::vec3 light, distribution dist = diffuse);
     model(const model &m);
     model(model &&m);
+    model();
+    model(buffer &buf);
     model &operator=(const model &m);
     model &operator=(model &&m);
 
@@ -54,7 +56,7 @@ public:
     void hello() const;
     uint64_t get_id() const;
 
-    void deserialize(buffer buf);
+    void deserialize(buffer &buf);
 };
 
 #endif // MODEL_HPP

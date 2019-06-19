@@ -14,6 +14,11 @@ tetrahedron::tetrahedron()
 
 }
 
+tetrahedron::tetrahedron(buffer &buf)
+{
+    deserialize(buf);
+}
+
 tetrahedron::~tetrahedron()
 {
 
@@ -100,12 +105,17 @@ std::shared_ptr<shape> tetrahedron::copy() const
     return std::shared_ptr<shape>(t);
 }
 
+uint64_t tetrahedron::type_id() const
+{
+    return 4;
+}
+
 buffer tetrahedron::_serialize() const
 {
     return {};
 }
 
-void tetrahedron::deserialize(buffer buf)
+void tetrahedron::deserialize(buffer &buf)
 {
 
 }

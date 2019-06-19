@@ -39,7 +39,7 @@ public:
     void pop(int index);
     int object_count() const;
 
-    virtual void deserialize(buffer buf);
+    virtual void deserialize(buffer &buf);
 };
 
 #endif // SCENE_HPP

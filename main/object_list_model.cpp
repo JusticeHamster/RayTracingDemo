@@ -61,7 +61,7 @@ object_list_model::object_list_model(QObject *parent): QAbstractListModel(parent
 
 object_list_model::~object_list_model()
 {
-    save_data();
+
 }
 
 int object_list_model::rowCount(const QModelIndex &parent) const

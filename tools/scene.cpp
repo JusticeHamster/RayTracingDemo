@@ -112,10 +112,38 @@ int scene::object_count() const
 
 buffer scene::_serialize() const
 {
-    return {};
+    buffer b;
+    buffer t = serializable::serialize(name);
+    b.insert(b.end(), t.begin(), t.end());
+    for (const auto &m : models) {
+        t = m.serialize();
+        b.insert(b.end(), t.begin(), t.end());
+    }
+    int size = static_cast<int>(models.size());
+    t = serializable::serialize(reinterpret_cast<const buffer_value_type *>(&size), sizeof(int));
+    b.insert(b.end(), t.begin(), t.end());
+    for (const auto &l : lights) {
+        t = l.serialize();
+        b.insert(b.end(), t.begin(), t.end());
+    }
+    size = static_cast<int>(lights.size());
+    t = serializable::serialize(reinterpret_cast<const buffer_value_type *>(&size), sizeof(int));
+    b.insert(b.end(), t.begin(), t.end());
+    return b;
 }
 
-void scene::deserialize(buffer buf)
+void scene::deserialize(buffer &buf)
 {
-
+    int size;
+    serializable::deserialize(buf, reinterpret_cast<buffer_value_type *>(&size), sizeof(int));
+    lights.resize(static_cast<uint64_t>(size));
+    for (auto it = lights.rbegin(); it != lights.rend(); ++it) {
+        it->deserialize(buf);
+    }
+    serializable::deserialize(buf, reinterpret_cast<buffer_value_type *>(&size), sizeof(int));
+    models.resize(static_cast<uint64_t>(size));
+    for (auto it = models.rbegin(); it != models.rend(); ++it) {
+        it->deserialize(buf);
+    }
+    serializable::deserialize(buf, name);
 }

@@ -24,6 +24,8 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete model;
+    delete delegate;
 }
 
 void MainWindow::on_start_clicked()
@@ -95,4 +97,14 @@ void MainWindow::init_widgets()
     ui->openGL->setMouseTracking(true);
     auto size = ui->openGL->size();
     ui->openGL->resizeGL(size.width(), size.height());
+}
+
+void MainWindow::on_save_button_clicked()
+{
+    model->save_data();
+}
+
+void MainWindow::on_load_button_clicked()
+{
+    model->load_data();
 }
