@@ -144,9 +144,9 @@ glm::vec3 ray::get_rgb() const
     glm::vec3 c5(255.0f / 255, 215.0f / 255, 0.0f / 255);
     glm::vec3 c6(205.0f / 255, 149.0f / 255, 12.0f / 255);
     t /= 3.0f;
-    if (t < 0.33)
+    if (t < 0.33f)
         return c3 + t * (c4 - c3);
-    else if (t > 0.66)
+    else if (t > 0.66f)
         return c5 + t * (c6 - c5);
     else
         return c1 + t * (c2 - c1);
