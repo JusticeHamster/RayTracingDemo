@@ -170,7 +170,7 @@ buffer model::_serialize() const
         if (t.size() == 0) {
             continue;
         }
-        size += t.size();
+        size++;
         b.insert(b.end(), t.begin(), t.end());
         auto tid = shape->type_id();
         t = serializable::serialize(reinterpret_cast<const buffer_value_type *>(&tid), sizeof(uint64_t));

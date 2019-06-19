@@ -124,7 +124,7 @@ buffer scene::_serialize() const
         if (m.object_count() == 0) {
             continue;
         }
-        size += t.size();
+        size++;
         b.insert(b.end(), t.begin(), t.end());
     }
     t = serializable::serialize(reinterpret_cast<const buffer_value_type *>(&size), sizeof(int));
@@ -135,7 +135,7 @@ buffer scene::_serialize() const
         if (l.object_count() == 0) {
             continue;
         }
-        size += t.size();
+        size++;
         b.insert(b.end(), t.begin(), t.end());
     }
     t = serializable::serialize(reinterpret_cast<const buffer_value_type *>(&size), sizeof(int));
