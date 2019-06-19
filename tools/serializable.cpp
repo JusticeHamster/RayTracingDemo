@@ -13,7 +13,7 @@ buffer serializable::serialize() const
     return _serialize();
 }
 
-buffer serializable::serialize(const buffer_value_type *value, int length) const
+buffer serializable::serialize(const buffer_value_type *value, int length)
 {
     buffer b;
     auto p = value;
@@ -23,7 +23,7 @@ buffer serializable::serialize(const buffer_value_type *value, int length) const
     return b;
 }
 
-buffer serializable::serialize(const glm::vec3 &v) const
+buffer serializable::serialize(const glm::vec3 &v)
 {
     buffer b;
     for (int i = 0; i < 3; ++i) {
@@ -33,7 +33,7 @@ buffer serializable::serialize(const glm::vec3 &v) const
     return b;
 }
 
-buffer serializable::serialize(const glm::mat4 &m) const
+buffer serializable::serialize(const glm::mat4 &m)
 {
     buffer b;
     for (int i = 0; i < 4; ++i) {
@@ -45,7 +45,7 @@ buffer serializable::serialize(const glm::mat4 &m) const
     return b;
 }
 
-buffer serializable::serialize(const std::string &s) const
+buffer serializable::serialize(const std::string &s)
 {
     buffer b;
     int size = static_cast<int>(s.size());
@@ -57,7 +57,7 @@ buffer serializable::serialize(const std::string &s) const
     return b;
 }
 
-void serializable::deserialize(buffer &buf, buffer_value_type *value, int length) const
+void serializable::deserialize(buffer &buf, buffer_value_type *value, int length)
 {
     auto p = value + length - 1;
     for (int i = 0; i < length; ++i) {
@@ -66,14 +66,14 @@ void serializable::deserialize(buffer &buf, buffer_value_type *value, int length
     }
 }
 
-void serializable::deserialize(buffer &buf, glm::vec3 &v) const
+void serializable::deserialize(buffer &buf, glm::vec3 &v)
 {
     for (int i = 2; i >= 0; --i) {
         deserialize(buf, reinterpret_cast<buffer_value_type *>(&v[i]), sizeof(float));
     }
 }
 
-void serializable::deserialize(buffer &buf, glm::mat4 &m) const
+void serializable::deserialize(buffer &buf, glm::mat4 &m)
 {
     for (int i = 3; i >= 0; --i) {
         for (int j = 3; j >= 0; --j) {
@@ -82,7 +82,7 @@ void serializable::deserialize(buffer &buf, glm::mat4 &m) const
     }
 }
 
-void serializable::deserialize(buffer &buf, std::string &s) const
+void serializable::deserialize(buffer &buf, std::string &s)
 {
     int size;
     deserialize(buf, reinterpret_cast<buffer_value_type *>(&size), sizeof(int));

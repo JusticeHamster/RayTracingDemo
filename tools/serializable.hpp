@@ -19,14 +19,14 @@ public:
     buffer serialize() const;
     virtual void deserialize(buffer &buf) = 0;
 
-    buffer serialize(const buffer_value_type *value, int length) const;
-    buffer serialize(const glm::vec3 &v) const;
-    buffer serialize(const glm::mat4 &m) const;
-    buffer serialize(const std::string &s) const;
-    void deserialize(buffer &buf, buffer_value_type *value, int length) const;
-    void deserialize(buffer &buf, glm::vec3 &v) const;
-    void deserialize(buffer &buf, glm::mat4 &m) const;
-    void deserialize(buffer &buf, std::string &s) const;
+    static buffer serialize(const buffer_value_type *value, int length);
+    static buffer serialize(const glm::vec3 &v);
+    static buffer serialize(const glm::mat4 &m);
+    static buffer serialize(const std::string &s);
+    static void deserialize(buffer &buf, buffer_value_type *value, int length);
+    static void deserialize(buffer &buf, glm::vec3 &v);
+    static void deserialize(buffer &buf, glm::mat4 &m);
+    static void deserialize(buffer &buf, std::string &s);
 };
 
 #endif // SERIALIZABLE_HPP

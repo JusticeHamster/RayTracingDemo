@@ -44,6 +44,9 @@ void object_list_model::load_data()
     save_file.read(reinterpret_cast<char *>(&buf[0]), fsize);
     save_file.close();
     qDebug() << "load:" << buf.size() << "bytes.";
+    if (parent && deserialize) {
+        deserialize(parent->get(), buf);
+    }
     scn.deserialize(buf);
     qDebug("loaded.");
     loading = false;
@@ -54,10 +57,11 @@ void object_list_model::save_data()
     QMutexLocker locker(&load_lock);
     scene &scn = ldr.get_running_scene();
     auto buf = scn.serialize();
-    qDebug() << "serialization:" << buf.size() << "bytes.";
-    if (buf.size() == 0) {
-        return;
+    if (parent && serialize) {
+        buffer t = serialize(parent->get());
+        buf.insert(buf.end(), t.begin(), t.end());
     }
+    qDebug() << "serialization:" << buf.size() << "bytes.";
     std::ofstream save_file("object_list.data", std::ios::binary | std::ios::out | std::ios::trunc);
     save_file.write(reinterpret_cast<const char *>(&buf[0]), static_cast<long long>(buf.size()));
     save_file.close();
@@ -71,7 +75,7 @@ bool object_list_model::loaded() const
 
 object_list_model::object_list_model(QObject *parent): QAbstractListModel(parent)
 {
-    load_data();
+
 }
 
 object_list_model::~object_list_model()

@@ -3,6 +3,9 @@
 
 #include <QAbstractListModel>
 #include <QMutex>
+#include <functional>
+
+#include "mainwindow.hpp"
 
 class object_list_model : public QAbstractListModel
 {
@@ -12,6 +15,10 @@ private:
 
     QMutex load_lock;
 public:
+    std::optional<std::reference_wrapper<MainWindow> > parent;
+    std::function<buffer(MainWindow &)> serialize;
+    std::function<void(MainWindow &, buffer &)> deserialize;
+
     explicit object_list_model(QObject *parent = nullptr);
     ~object_list_model();
 

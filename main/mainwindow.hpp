@@ -20,9 +20,7 @@ class MainWindow : public QMainWindow
 
 private slots:
     void on_start_clicked();
-
     void on_save_button_clicked();
-
     void on_load_button_clicked();
 
 public:
@@ -47,6 +45,9 @@ private:
 
     object_list_model *model;
     object_list_delegate *delegate;
+
+    buffer serialize() const;
+    void deserialize(buffer &buf);
 };
 
 #endif // MAINWINDOW_H

@@ -3,6 +3,7 @@
 
 #include "tools/scene.hpp"
 #include "tools/printer.hpp"
+#include "tools/serializable.hpp"
 
 #include "object_list_model.hpp"
 #include "object_list_delegate.hpp"
@@ -92,12 +93,44 @@ void MainWindow::init_widgets()
     ui->setupUi(this);
     model = new object_list_model(this);
     delegate = new object_list_delegate(model, this);
+    model->parent = *this;
+    model->serialize = &MainWindow::serialize;
+    model->deserialize = &MainWindow::deserialize;
+    model->load_data();
     ui->objectList->setModel(model);
     ui->objectList->setItemDelegate(delegate);
     ui->openGL->setMouseTracking(true);
     ui->openGL->model = model;
     auto size = ui->openGL->size();
     ui->openGL->resizeGL(size.width(), size.height());
+}
+
+buffer MainWindow::serialize() const
+{
+    auto gl = ui->openGL;
+    buffer b;
+
+    buffer t = serializable::serialize(up);
+    b.insert(b.end(), t.begin(), t.end());
+    t = serializable::serialize(left);
+    b.insert(b.end(), t.begin(), t.end());
+    t = serializable::serialize(gl->look_at_pos);
+    b.insert(b.end(), t.begin(), t.end());
+    return b;
+}
+
+void MainWindow::deserialize(buffer &buf)
+{
+    auto gl = ui->openGL;
+
+    serializable::deserialize(buf, gl->look_at_pos);
+    serializable::deserialize(buf, left);
+    serializable::deserialize(buf, up);
+    gl->up = up;
+    gl->look_at_r = glm::length(gl->look_at_pos);
+
+    auto size = gl->size();
+    gl->resizeGL(size.width(), size.height());
 }
 
 void MainWindow::on_save_button_clicked()
