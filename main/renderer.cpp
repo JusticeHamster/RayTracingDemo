@@ -51,9 +51,12 @@ void renderer::rays_render(scene &scn, std::list<ray> &rays)
         // draw
         auto sr = std::make_shared<ray>(r);
         sr->set_blockable(false);
+        sr->need_serialize = false;
         if (optional_reference_shape)
             sr->set_t(t);
-        scn.push(model({ sr }, glm::vec3(), glm::vec3(), false, glm::vec3()));
+        auto m = model({ sr }, glm::vec3(), glm::vec3(), false, glm::vec3());
+        m.need_serialize = false;
+        scn.push(m);
         // advance
         iray++;
     }

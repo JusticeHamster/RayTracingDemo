@@ -121,7 +121,7 @@ buffer scene::_serialize() const
     int size = 0;
     for (const auto &m : models) {
         t = m.serialize();
-        if (m.object_count() == 0) {
+        if (t.size() == 0 || m.object_count() == 0) {
             continue;
         }
         size++;
@@ -147,11 +147,13 @@ void scene::deserialize(buffer &buf)
 {
     int size;
     serializable::deserialize(buf, reinterpret_cast<buffer_value_type *>(&size), sizeof(int));
+    lights.clear();
     lights.resize(static_cast<uint64_t>(size));
     for (auto it = lights.rbegin(); it != lights.rend(); ++it) {
         it->deserialize(buf);
     }
     serializable::deserialize(buf, reinterpret_cast<buffer_value_type *>(&size), sizeof(int));
+    models.clear();
     models.resize(static_cast<uint64_t>(size));
     for (auto it = models.rbegin(); it != models.rend(); ++it) {
         it->deserialize(buf);

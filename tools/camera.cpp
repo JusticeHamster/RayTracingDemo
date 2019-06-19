@@ -31,6 +31,8 @@ model camera::object()
     );
     camera_object->draw_style = cube::LINES;
     camera_object->set_blockable(false);
+    camera_object->need_serialize = false;
     obj = model({ camera_object }, position, direction, false, glm::vec3());
+    obj->need_serialize = false;
     return *obj;
 }

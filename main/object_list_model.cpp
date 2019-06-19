@@ -42,6 +42,7 @@ void object_list_model::load_data()
     std::ifstream save_file("object_list.data", std::ios::binary);
     buffer buf(static_cast<uint64_t>(fsize));
     save_file.read(reinterpret_cast<char *>(&buf[0]), fsize);
+    save_file.close();
     qDebug() << "load:" << buf.size() << "bytes.";
     scn.deserialize(buf);
     qDebug("loaded.");
@@ -57,7 +58,7 @@ void object_list_model::save_data()
     if (buf.size() == 0) {
         return;
     }
-    std::ofstream save_file("object_list.data", std::ios::binary);
+    std::ofstream save_file("object_list.data", std::ios::binary | std::ios::out | std::ios::trunc);
     save_file.write(reinterpret_cast<const char *>(&buf[0]), static_cast<long long>(buf.size()));
     save_file.close();
     qDebug("saved.");

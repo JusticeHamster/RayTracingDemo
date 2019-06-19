@@ -20,6 +20,8 @@ model::model(const model &m): id(m.id), position(m.position), direction(m.direct
 {
     ID++;
     set_draw(m.is_draw());
+    set_transformable(m.is_transform());
+    need_serialize = m.need_serialize;
     for (const auto &s : m.shapes) {
         auto new_shape = s->copy();
         new_shape->set_parent(this);
@@ -33,6 +35,8 @@ model::model(model &&m): id(m.id), position(m.position), direction(m.direction),
 {
     ID++;
     set_draw(m.is_draw());
+    set_transformable(m.is_transform());
+    need_serialize = m.need_serialize;
     shapes.swap(m.shapes);
     for (const auto &s : shapes)
         s->set_parent(this);
@@ -59,6 +63,8 @@ model &model::operator=(const model &m)
     distribution_type = m.distribution_type;
     mirror_param = m.mirror_param;
     set_draw(m.is_draw());
+    set_transformable(m.is_transform());
+    need_serialize = m.need_serialize;
     for (const auto &s : shapes) {
         auto new_shape = s->copy();
         new_shape->set_parent(this);
@@ -78,6 +84,8 @@ model &model::operator=(model &&m)
     distribution_type = m.distribution_type;
     mirror_param = m.mirror_param;
     set_draw(m.is_draw());
+    set_transformable(m.is_transform());
+    need_serialize = m.need_serialize;
     shapes.swap(m.shapes);
     for (const auto &s : shapes)
         s->set_parent(this);
@@ -213,31 +221,34 @@ void model::deserialize(buffer &buf)
     serializable::deserialize(buf, position);
     int size;
     serializable::deserialize(buf, reinterpret_cast<buffer_value_type *>(&size), sizeof(int));
-    shapes.resize(static_cast<uint64_t>(size));
-    for (auto it = shapes.rbegin(); it != shapes.rend(); it++) {
-        ID++;
-        uint64_t tid;
-        serializable::deserialize(buf, reinterpret_cast<buffer_value_type *>(&tid), sizeof(uint64_t));
-        std::shared_ptr<shape> s;
-        switch(tid) {
-        case 0:
-            s = std::make_shared<cube>(buf);
-            break;
-        case 1:
-            s = std::make_shared<line>(buf);
-            break;
-        case 3:
-            s = std::make_shared<sphere>(buf);
-            break;
-        case 4:
-            s = std::make_shared<tetrahedron>(buf);
-            break;
-        default:
-            break;
-        }
-        if (s) {
-            s->set_parent(this);
-            *it = s;
+    if (size != 0) {
+        shapes.clear();
+        shapes.resize(static_cast<uint64_t>(size));
+        for (auto it = shapes.rbegin(); it != shapes.rend(); it++) {
+            ID++;
+            uint64_t tid;
+            serializable::deserialize(buf, reinterpret_cast<buffer_value_type *>(&tid), sizeof(uint64_t));
+            std::shared_ptr<shape> s;
+            switch(tid) {
+            case 0:
+                s = std::make_shared<cube>(buf);
+                break;
+            case 1:
+                s = std::make_shared<line>(buf);
+                break;
+            case 3:
+                s = std::make_shared<sphere>(buf);
+                break;
+            case 4:
+                s = std::make_shared<tetrahedron>(buf);
+                break;
+            default:
+                break;
+            }
+            if (s) {
+                s->set_parent(this);
+                *it = s;
+            }
         }
     }
     serializable::deserialize(buf, reinterpret_cast<buffer_value_type *>(&id), sizeof(uint64_t));
