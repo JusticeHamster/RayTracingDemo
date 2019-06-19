@@ -6,7 +6,7 @@ OpenGLWidget::OpenGLWidget(QWidget *parent) : QGLWidget(parent), ldr(loader::ins
     connect(timer.get(), SIGNAL(timeout()), this, SLOT(timer_update()));
     timer->start(1000 / ldr.get_fps());
 
-    look_at_r = look_at_pos.length();
+    look_at_r = glm::length(look_at_pos);
 
     ldr.get_scene("base").hello();
 }

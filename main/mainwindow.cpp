@@ -43,11 +43,11 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
     int x = diff.x(), y = diff.y();
     glm::mat4 r(1.f);
 
-    if (x != 0)
+    if (glm::abs(x) > glm::abs(y)) {
         r = r * glm::rotate(r, speed * x, up);
-
-    if (y != 0)
+    } else {
         r = r * glm::rotate(r, -speed * y, left);
+    }
 
     up = glm::vec4(up, 0) * r;
     left = glm::vec4(left, 0) * r;
