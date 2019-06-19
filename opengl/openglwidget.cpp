@@ -1,6 +1,8 @@
 #include "openglwidget.h"
 #include "opengl_header.hpp"
 
+#include "main/object_list_model.hpp"
+
 OpenGLWidget::OpenGLWidget(QWidget *parent) : QGLWidget(parent), ldr(loader::instance) {
     timer = std::make_unique<QTimer>(this);
     connect(timer.get(), SIGNAL(timeout()), this, SLOT(timer_update()));
@@ -54,7 +56,10 @@ void OpenGLWidget::paintGL() {
     glLoadIdentity(); // 恢复初始坐标系
 
     glMatrixMode(GL_MODELVIEW); // 设置投影矩阵
-    ldr.get_running_scene().draw();
+
+    if (model != nullptr && model->loaded()) {
+        ldr.get_running_scene().draw();
+    }
 }
 
 void OpenGLWidget::timer_update()

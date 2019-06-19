@@ -10,6 +10,9 @@
 
 scene::scene(std::string name): name(name)
 {
+    if (name != "test")
+        return;
+
     // 放一个球
     auto m = model({
         std::make_shared<sphere>(glm::vec3(), 1, 30, 30)
@@ -115,18 +118,26 @@ buffer scene::_serialize() const
     buffer b;
     buffer t = serializable::serialize(name);
     b.insert(b.end(), t.begin(), t.end());
+    int size = 0;
     for (const auto &m : models) {
         t = m.serialize();
+        if (m.object_count() == 0) {
+            continue;
+        }
+        size += t.size();
         b.insert(b.end(), t.begin(), t.end());
     }
-    int size = static_cast<int>(models.size());
     t = serializable::serialize(reinterpret_cast<const buffer_value_type *>(&size), sizeof(int));
     b.insert(b.end(), t.begin(), t.end());
+    size = 0;
     for (const auto &l : lights) {
         t = l.serialize();
+        if (l.object_count() == 0) {
+            continue;
+        }
+        size += t.size();
         b.insert(b.end(), t.begin(), t.end());
     }
-    size = static_cast<int>(lights.size());
     t = serializable::serialize(reinterpret_cast<const buffer_value_type *>(&size), sizeof(int));
     b.insert(b.end(), t.begin(), t.end());
     return b;

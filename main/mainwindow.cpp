@@ -95,6 +95,7 @@ void MainWindow::init_widgets()
     ui->objectList->setModel(model);
     ui->objectList->setItemDelegate(delegate);
     ui->openGL->setMouseTracking(true);
+    ui->openGL->model = model;
     auto size = ui->openGL->size();
     ui->openGL->resizeGL(size.width(), size.height());
 }

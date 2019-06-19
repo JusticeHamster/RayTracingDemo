@@ -9,9 +9,13 @@
 
 #include "tools/loader.hpp"
 
+class object_list_model;
+
 class OpenGLWidget : public QGLWidget {
     Q_OBJECT
 public:
+    object_list_model *model = nullptr;
+
     float look_at_r;
     glm::vec3 up = {0, 1, 0};
     glm::vec3 target = {0, 0, 0};

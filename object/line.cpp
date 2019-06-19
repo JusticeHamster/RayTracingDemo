@@ -135,7 +135,7 @@ uint64_t line::type_id() const
 
 buffer line::_serialize() const
 {
-    buffer b = shape::serialize();
+    buffer b = shape::_serialize();
     b.push_back(is_ray);
     buffer t = serializable::serialize(reinterpret_cast<const buffer_value_type *>(&this->t), sizeof(float));
     b.insert(b.end(), t.begin(), t.end());

@@ -152,6 +152,11 @@ uint64_t model::get_id() const
     return id;
 }
 
+int model::object_count() const
+{
+    return static_cast<int>(shapes.size());
+}
+
 buffer model::_serialize() const
 {
     buffer b;
@@ -159,14 +164,18 @@ buffer model::_serialize() const
     b.push_back(is_transform());
     buffer t = serializable::serialize(reinterpret_cast<const buffer_value_type *>(&id), sizeof(uint64_t));
     b.insert(b.end(), t.begin(), t.end());
+    int size = 0;
     for (auto shape : shapes) {
         t = shape->serialize();
+        if (t.size() == 0) {
+            continue;
+        }
+        size += t.size();
         b.insert(b.end(), t.begin(), t.end());
         auto tid = shape->type_id();
         t = serializable::serialize(reinterpret_cast<const buffer_value_type *>(&tid), sizeof(uint64_t));
         b.insert(b.end(), t.begin(), t.end());
     }
-    int size = static_cast<int>(shapes.size());
     t = serializable::serialize(reinterpret_cast<const buffer_value_type *>(&size), sizeof(int));
     b.insert(b.end(), t.begin(), t.end());
     t = serializable::serialize(position);
@@ -209,21 +218,26 @@ void model::deserialize(buffer &buf)
         ID++;
         uint64_t tid;
         serializable::deserialize(buf, reinterpret_cast<buffer_value_type *>(&tid), sizeof(uint64_t));
+        std::shared_ptr<shape> s;
         switch(tid) {
         case 0:
-            *it = std::make_shared<cube>(buf);
+            s = std::make_shared<cube>(buf);
             break;
         case 1:
-            *it = std::make_shared<line>(buf);
+            s = std::make_shared<line>(buf);
             break;
         case 3:
-            *it = std::make_shared<sphere>(buf);
+            s = std::make_shared<sphere>(buf);
             break;
         case 4:
-            *it = std::make_shared<tetrahedron>(buf);
+            s = std::make_shared<tetrahedron>(buf);
             break;
         default:
             break;
+        }
+        if (s) {
+            s->set_parent(this);
+            *it = s;
         }
     }
     serializable::deserialize(buf, reinterpret_cast<buffer_value_type *>(&id), sizeof(uint64_t));

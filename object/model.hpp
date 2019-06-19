@@ -55,6 +55,7 @@ public:
     intersect_result intersect(const ray &in) const;
     void hello() const;
     uint64_t get_id() const;
+    int object_count() const;
 
     void deserialize(buffer &buf);
 };

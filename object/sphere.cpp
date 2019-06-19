@@ -150,7 +150,7 @@ uint64_t sphere::type_id() const
 
 buffer sphere::_serialize() const
 {
-    buffer b = shape::serialize();
+    buffer b = shape::_serialize();
     buffer t = serializable::serialize(center);
     b.insert(b.end(), t.begin(), t.end());
     t = serializable::serialize(reinterpret_cast<const buffer_value_type *>(&radius), sizeof(float));
