@@ -10,6 +10,9 @@
 
 scene::scene(std::string name): name(name)
 {
+    if (name != "test")
+        return;
+
     // 放一个球
     auto m = model({
         std::make_shared<sphere>(glm::vec3(), 1, 30, 30)
@@ -112,10 +115,46 @@ int scene::object_count() const
 
 buffer scene::_serialize() const
 {
-    return {};
+    buffer b;
+    buffer t = serializable::serialize(name);
+    b.insert(b.end(), t.begin(), t.end());
+    int size = 0;
+    for (const auto &m : models) {
+        t = m.serialize();
+        if (m.object_count() == 0) {
+            continue;
+        }
+        size++;
+        b.insert(b.end(), t.begin(), t.end());
+    }
+    t = serializable::serialize(reinterpret_cast<const buffer_value_type *>(&size), sizeof(int));
+    b.insert(b.end(), t.begin(), t.end());
+    size = 0;
+    for (const auto &l : lights) {
+        t = l.serialize();
+        if (l.object_count() == 0) {
+            continue;
+        }
+        size++;
+        b.insert(b.end(), t.begin(), t.end());
+    }
+    t = serializable::serialize(reinterpret_cast<const buffer_value_type *>(&size), sizeof(int));
+    b.insert(b.end(), t.begin(), t.end());
+    return b;
 }
 
-void scene::deserialize(buffer buf)
+void scene::deserialize(buffer &buf)
 {
-
+    int size;
+    serializable::deserialize(buf, reinterpret_cast<buffer_value_type *>(&size), sizeof(int));
+    lights.resize(static_cast<uint64_t>(size));
+    for (auto it = lights.rbegin(); it != lights.rend(); ++it) {
+        it->deserialize(buf);
+    }
+    serializable::deserialize(buf, reinterpret_cast<buffer_value_type *>(&size), sizeof(int));
+    models.resize(static_cast<uint64_t>(size));
+    for (auto it = models.rbegin(); it != models.rend(); ++it) {
+        it->deserialize(buf);
+    }
+    serializable::deserialize(buf, name);
 }

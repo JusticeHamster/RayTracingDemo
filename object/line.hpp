@@ -17,9 +17,12 @@ protected:
     virtual void apply(glm::mat4 mat);
 
     virtual buffer _serialize() const;
+
+    line();
 public:
     line(glm::vec3 start, glm::vec3 direction, bool is_ray);
     line(glm::vec3 start, glm::vec3 end);
+    line(buffer &buf);
     virtual ~line();
     virtual glm::vec3 normal(glm::vec3 point) const;
     glm::vec3 start_point() const;
@@ -30,7 +33,8 @@ public:
     virtual void hello() const;
     virtual std::shared_ptr<shape> copy() const;
 
-    virtual void deserialize(buffer buf);
+    virtual uint64_t type_id() const;
+    virtual void deserialize(buffer &buf);
 };
 
 #endif // LINE_HPP

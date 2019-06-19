@@ -4,7 +4,7 @@
 
 #include "opengl/opengl_header.hpp"
 #include "tools/not_implemented_exception.hpp"
-#include <glm/gtc/type_ptr.hpp>
+#include "glm/gtc/type_ptr.hpp"
 
 cube::cube(glm::vec3 axis_x, glm::vec3 axis_y, glm::vec3 axis_z, glm::vec3 extend, glm::vec3 center)
 {
@@ -13,6 +13,11 @@ cube::cube(glm::vec3 axis_x, glm::vec3 axis_y, glm::vec3 axis_z, glm::vec3 exten
     this->axis_z = glm::normalize(axis_z);
     this->extend = extend;
     this->center = center;
+}
+
+cube::cube(buffer &buf)
+{
+    deserialize(buf);
 }
 
 cube::~cube()
@@ -242,12 +247,46 @@ void cube::set_parent(model *parent)
     init_T();
 }
 
-buffer cube::_serialize() const
+uint64_t cube::type_id() const
 {
-    return {};
+    return 0;
 }
 
-void cube::deserialize(buffer buf)
+buffer cube::_serialize() const
 {
+    buffer b = shape::_serialize();
+    buffer t = serializable::serialize(axis_x);
+    b.insert(b.end(), t.begin(), t.end());
+    t = serializable::serialize(axis_y);
+    b.insert(b.end(), t.begin(), t.end());
+    t = serializable::serialize(axis_z);
+    b.insert(b.end(), t.begin(), t.end());
+    t = serializable::serialize(extend);
+    b.insert(b.end(), t.begin(), t.end());
+    t = serializable::serialize(center);
+    b.insert(b.end(), t.begin(), t.end());
+    for (int i = 0; i < 8; i++) {
+        t = serializable::serialize(vertex[i]);
+        b.insert(b.end(), t.begin(), t.end());
+    }
+    t = serializable::serialize(T);
+    b.insert(b.end(), t.begin(), t.end());
+    b.push_back(static_cast<buffer_value_type>(draw_style));
+    return b;
+}
 
+void cube::deserialize(buffer &buf)
+{
+    draw_style = buf.back() == 0 ? QUAD : LINES;
+    buf.pop_back();
+    serializable::deserialize(buf, T);
+    for (int i = 7; i >= 0; i--) {
+        serializable::deserialize(buf, vertex[i]);
+    }
+    serializable::deserialize(buf, center);
+    serializable::deserialize(buf, extend);
+    serializable::deserialize(buf, axis_z);
+    serializable::deserialize(buf, axis_y);
+    serializable::deserialize(buf, axis_x);
+    shape::deserialize(buf);
 }

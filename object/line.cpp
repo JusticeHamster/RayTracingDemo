@@ -24,6 +24,11 @@ line::line(glm::vec3 start, glm::vec3 end): line(start, end, false)
 
 }
 
+line::line(buffer &buf)
+{
+    deserialize(buf);
+}
+
 line::~line()
 {
 
@@ -123,12 +128,35 @@ std::shared_ptr<shape> line::copy() const
     return std::shared_ptr<shape>(l);
 }
 
-buffer line::_serialize() const
+uint64_t line::type_id() const
 {
-    return {};
+    return 1;
 }
 
-void line::deserialize(buffer buf)
+buffer line::_serialize() const
+{
+    buffer b = shape::_serialize();
+    b.push_back(is_ray);
+    buffer t = serializable::serialize(reinterpret_cast<const buffer_value_type *>(&this->t), sizeof(float));
+    b.insert(b.end(), t.begin(), t.end());
+    t = serializable::serialize(start);
+    b.insert(b.end(), t.begin(), t.end());
+    t = serializable::serialize(end);
+    b.insert(b.end(), t.begin(), t.end());
+    return b;
+}
+
+line::line()
 {
 
+}
+
+void line::deserialize(buffer &buf)
+{
+    serializable::deserialize(buf, end);
+    serializable::deserialize(buf, start);
+    serializable::deserialize(buf, reinterpret_cast<buffer_value_type *>(&this->t), sizeof(float));
+    is_ray = buf.back();
+    buf.pop_back();
+    shape::deserialize(buf);
 }

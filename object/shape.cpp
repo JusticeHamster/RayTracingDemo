@@ -46,10 +46,23 @@ uint64_t shape::get_id() const
 
 buffer shape::_serialize() const
 {
-
+    buffer b;
+    b.push_back(is_transform());
+    b.push_back(is_block());
+    b.push_back(is_draw());
+    buffer t = serializable::serialize(reinterpret_cast<const buffer_value_type *>(&id), sizeof(uint64_t));
+    b.insert(b.end(), t.begin(), t.end());
+    return b;
 }
 
-void shape::deserialize(buffer buf)
+void shape::deserialize(buffer &buf)
 {
-
+    ID++;
+    serializable::deserialize(buf, reinterpret_cast<buffer_value_type *>(&id), sizeof(uint64_t));
+    set_draw(buf.back());
+    buf.pop_back();
+    set_blockable(buf.back());
+    buf.pop_back();
+    set_transformable(buf.back());
+    buf.pop_back();
 }

@@ -14,12 +14,14 @@ protected:
     virtual buffer _serialize() const;
 public:
     tetrahedron();
+    tetrahedron(buffer &buf);
     virtual ~tetrahedron();
     virtual glm::vec3 normal(glm::vec3 point) const;
     virtual void hello() const;
     virtual std::shared_ptr<shape> copy() const;
 
-    virtual void deserialize(buffer buf);
+    virtual uint64_t type_id() const;
+    virtual void deserialize(buffer &buf);
 };
 
 #endif // TETRAHEDRON_HPP

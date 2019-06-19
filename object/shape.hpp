@@ -36,7 +36,8 @@ public:
     model *get_parent() const;
     uint64_t get_id() const;
 
-    virtual void deserialize(buffer buf);
+    virtual uint64_t type_id() const = 0;
+    virtual void deserialize(buffer &buf);
 };
 
 #endif // SHAPE_HPP

@@ -38,6 +38,16 @@ model::model(model &&m): id(m.id), position(m.position), direction(m.direction),
         s->set_parent(this);
 }
 
+model::model()
+{
+
+}
+
+model::model(buffer &buf)
+{
+    deserialize(buf);
+}
+
 model &model::operator=(const model &m)
 {
     ID++;
@@ -142,12 +152,97 @@ uint64_t model::get_id() const
     return id;
 }
 
-buffer model::_serialize() const
+int model::object_count() const
 {
-    return {};
+    return static_cast<int>(shapes.size());
 }
 
-void model::deserialize(buffer buf)
+buffer model::_serialize() const
 {
+    buffer b;
+    b.push_back(is_draw());
+    b.push_back(is_transform());
+    buffer t = serializable::serialize(reinterpret_cast<const buffer_value_type *>(&id), sizeof(uint64_t));
+    b.insert(b.end(), t.begin(), t.end());
+    int size = 0;
+    for (auto shape : shapes) {
+        t = shape->serialize();
+        if (t.size() == 0) {
+            continue;
+        }
+        size++;
+        b.insert(b.end(), t.begin(), t.end());
+        auto tid = shape->type_id();
+        t = serializable::serialize(reinterpret_cast<const buffer_value_type *>(&tid), sizeof(uint64_t));
+        b.insert(b.end(), t.begin(), t.end());
+    }
+    t = serializable::serialize(reinterpret_cast<const buffer_value_type *>(&size), sizeof(int));
+    b.insert(b.end(), t.begin(), t.end());
+    t = serializable::serialize(position);
+    b.insert(b.end(), t.begin(), t.end());
+    t = serializable::serialize(direction);
+    b.insert(b.end(), t.begin(), t.end());
+    b.push_back(illuminated);
+    t = serializable::serialize(light);
+    b.insert(b.end(), t.begin(), t.end());
+    b.push_back(static_cast<buffer_value_type>(distribution_type));
+    t = serializable::serialize(mirror_param);
+    b.insert(b.end(), t.begin(), t.end());
+    return b;
+}
 
+#include "cube.hpp"
+#include "line.hpp"
+#include "ray.hpp"
+#include "sphere.hpp"
+#include "tetrahedron.hpp"
+
+void model::deserialize(buffer &buf)
+{
+    serializable::deserialize(buf, mirror_param);
+    switch(buf.back()) {
+    case 0: distribution_type = diffuse; break;
+    case 1: distribution_type = mirror; break;
+    case 2: distribution_type = phone; break;
+    }
+    buf.pop_back();
+    serializable::deserialize(buf, light);
+    illuminated = buf.back();
+    buf.pop_back();
+    serializable::deserialize(buf, direction);
+    serializable::deserialize(buf, position);
+    int size;
+    serializable::deserialize(buf, reinterpret_cast<buffer_value_type *>(&size), sizeof(int));
+    shapes.resize(static_cast<uint64_t>(size));
+    for (auto it = shapes.rbegin(); it != shapes.rend(); it++) {
+        ID++;
+        uint64_t tid;
+        serializable::deserialize(buf, reinterpret_cast<buffer_value_type *>(&tid), sizeof(uint64_t));
+        std::shared_ptr<shape> s;
+        switch(tid) {
+        case 0:
+            s = std::make_shared<cube>(buf);
+            break;
+        case 1:
+            s = std::make_shared<line>(buf);
+            break;
+        case 3:
+            s = std::make_shared<sphere>(buf);
+            break;
+        case 4:
+            s = std::make_shared<tetrahedron>(buf);
+            break;
+        default:
+            break;
+        }
+        if (s) {
+            s->set_parent(this);
+            *it = s;
+        }
+    }
+    serializable::deserialize(buf, reinterpret_cast<buffer_value_type *>(&id), sizeof(uint64_t));
+    set_transformable(buf.back());
+    buf.pop_back();
+    set_draw(buf.back());
+    buf.pop_back();
 }

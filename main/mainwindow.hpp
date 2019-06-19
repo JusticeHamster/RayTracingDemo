@@ -21,6 +21,10 @@ class MainWindow : public QMainWindow
 private slots:
     void on_start_clicked();
 
+    void on_save_button_clicked();
+
+    void on_load_button_clicked();
+
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();

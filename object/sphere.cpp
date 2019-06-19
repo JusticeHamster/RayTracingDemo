@@ -17,6 +17,11 @@ sphere::sphere(glm::vec3 center, float radius, int m, int n) : center(center), r
 {
 }
 
+sphere::sphere(buffer &buf)
+{
+    deserialize(buf);
+}
+
 sphere::~sphere()
 {
 }
@@ -138,12 +143,30 @@ bool sphere::inside(glm::vec3 point) const
     return radius * radius >= glm::distance2(point, center + get_parent()->get_position());
 }
 
-buffer sphere::_serialize() const
+uint64_t sphere::type_id() const
 {
-    return {};
+    return 3;
 }
 
-void sphere::deserialize(buffer buf)
+buffer sphere::_serialize() const
 {
+    buffer b = shape::_serialize();
+    buffer t = serializable::serialize(center);
+    b.insert(b.end(), t.begin(), t.end());
+    t = serializable::serialize(reinterpret_cast<const buffer_value_type *>(&radius), sizeof(float));
+    b.insert(b.end(), t.begin(), t.end());
+    t = serializable::serialize(reinterpret_cast<const buffer_value_type *>(&m), sizeof(int));
+    b.insert(b.end(), t.begin(), t.end());
+    t = serializable::serialize(reinterpret_cast<const buffer_value_type *>(&n), sizeof(int));
+    b.insert(b.end(), t.begin(), t.end());
+    return b;
+}
 
+void sphere::deserialize(buffer &buf)
+{
+    serializable::deserialize(buf, reinterpret_cast<buffer_value_type *>(&n), sizeof(int));
+    serializable::deserialize(buf, reinterpret_cast<buffer_value_type *>(&m), sizeof(int));
+    serializable::deserialize(buf, reinterpret_cast<buffer_value_type *>(&radius), sizeof(float));
+    serializable::deserialize(buf, center);
+    shape::deserialize(buf);
 }

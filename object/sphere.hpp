@@ -20,13 +20,15 @@ protected:
     virtual buffer _serialize() const;
 public:
     sphere(glm::vec3 center, float radius, int m, int n);
+    sphere(buffer &buf);
     virtual ~sphere();
     virtual glm::vec3 normal(glm::vec3 point) const;
     virtual void hello() const;
     virtual std::shared_ptr<shape> copy() const;
     bool inside(glm::vec3 point) const;
 
-    virtual void deserialize(buffer buf);
+    virtual uint64_t type_id() const;
+    virtual void deserialize(buffer &buf);
 };
 
 #endif // SPHERE_HPP
