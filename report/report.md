@@ -184,3 +184,5 @@
 > 未解决的问题给出可能的解决方案
 
 ## 参考资料
+
+[https://zh.wikipedia.org/wiki/%E4%B8%89%E7%BB%B4%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2](https://zh.wikipedia.org/wiki/三维计算机图形)
