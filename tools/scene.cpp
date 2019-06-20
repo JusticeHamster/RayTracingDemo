@@ -13,8 +13,8 @@ scene::scene(std::string name): name(name)
     // 放一个球
     auto m = model({
         std::make_shared<sphere>(glm::vec3(), 1, 30, 30)
-    }, glm::vec3(0, -.3, 0), glm::vec3(), false, glm::vec3(), model::mirror);
-    m.mirror_param = glm::vec3(0., 1., 1.33);
+    }, glm::vec3(.5, -.5, 0), glm::vec3(), false, glm::vec3(), model::mirror);
+    m.mirror_param = glm::vec3(1., 0., 1.33);
     m.set_name("ball_1");
     // m.set_draw(false);
     push(m);
@@ -22,7 +22,7 @@ scene::scene(std::string name): name(name)
     // 放一个方块
     m = model({
         std::make_shared<cube>(glm::vec3(1, 1, 0), glm::vec3(-1, 1, 0), glm::vec3(0, 0, 1), glm::vec3(1), glm::vec3()),
-    }, glm::vec3(1, 2, 1), glm::vec3(), true, glm::vec3(1), model::diffuse);
+    }, glm::vec3(-.5, -2, -1.2), glm::vec3(), true, glm::vec3(1), model::diffuse);
     m.set_name("cube_1");
     push(m);
 
@@ -35,8 +35,8 @@ scene::scene(std::string name): name(name)
 
     // 另一个方块
     m = model({
-        std::make_shared<cube>(glm::vec3(1, 1, 0), glm::vec3(-1, 1, 0), glm::vec3(0, 0, 1), glm::vec3(3), glm::vec3()),
-    }, glm::vec3(3, -1, -2), glm::vec3(), false, glm::vec3(), model::phone);
+        std::make_shared<cube>(glm::vec3(1, 1, 0), glm::vec3(-1, 1, 0), glm::vec3(0, 0, 1), glm::vec3(2), glm::vec3()),
+    }, glm::vec3(-3, 2, 0), glm::vec3(), false, glm::vec3(), model::phone);
     m.mirror_param = glm::vec3(1., 0., 1.33);
     m.set_name("cube_2");
     push(m);
