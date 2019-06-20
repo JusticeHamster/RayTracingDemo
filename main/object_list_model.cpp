@@ -92,7 +92,10 @@ int object_list_model::rowCount(const QModelIndex &parent) const
 
 QVariant object_list_model::data(const QModelIndex &index, int role) const
 {
-    const model &m = ldr.get_running_scene().get_model(index.row());
+    scene &scn = ldr.get_running_scene();
+    if (scn.object_count() <= index.row())
+        return {};
+    const model &m = scn.get_model(index.row());
     switch(role) {
     case Qt::UserRole:
         return m.get_id();
@@ -101,7 +104,7 @@ QVariant object_list_model::data(const QModelIndex &index, int role) const
     case Qt::SizeHintRole:
         return QSize(0, 100);
     }
-    return QVariant();
+    return {};
 }
 
 void object_list_model::set_selected(model &m)
