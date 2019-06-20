@@ -233,7 +233,7 @@ void cube::apply(glm::mat4 mat)
     axis_x = glm::normalize(t[0]);
     axis_y = glm::normalize(t[1]);
     axis_z = glm::normalize(t[2]);
-    extend = glm::vec3(t[0].x/axis_x.x,t[1].y/axis_x.y,t[2].z/axis_x.z);
+//    extend = glm::vec3(t[0].x/axis_x.x,t[1].y/axis_x.y,t[2].z/axis_x.z);
     init_vertex();
     init_T();
 }
