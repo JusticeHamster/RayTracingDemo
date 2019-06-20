@@ -27,6 +27,7 @@ private:
     glm::vec3 direction;
     bool illuminated;
     glm::vec3 light;
+    std::string name = "[]";
 protected:
     void draw() const;
     void apply(glm::mat4 mat);
@@ -56,6 +57,9 @@ public:
     void hello() const;
     uint64_t get_id() const;
     int object_count() const;
+    std::string get_name() const;
+    void set_name(std::string name);
+    std::shared_ptr<shape> get_shape(int index = 0) const;
 
     void deserialize(buffer &buf);
 };

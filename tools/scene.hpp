@@ -38,6 +38,9 @@ public:
     void push(model m);
     void pop(int index);
     int object_count() const;
+    model &get_model(int index);
+    const model &get_model(int index) const;
+    void remove_model(model *m);
 
     virtual void deserialize(buffer &buf);
 };

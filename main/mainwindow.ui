@@ -15,7 +15,17 @@
   </property>
   <widget class="QWidget" name="format">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="0" colspan="2">
+    <item row="1" column="0">
+     <widget class="QListView" name="objectList">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+        <horstretch>1</horstretch>
+        <verstretch>1</verstretch>
+       </sizepolicy>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0" colspan="4">
      <widget class="OpenGLWidget" name="openGL" native="true">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -28,18 +38,8 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
-     <widget class="QListView" name="objectList">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>1</horstretch>
-        <verstretch>1</verstretch>
-       </sizepolicy>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="1">
-     <layout class="QVBoxLayout" name="controlPad">
+    <item row="1" column="3">
+     <layout class="QVBoxLayout" name="controlPad1">
       <property name="spacing">
        <number>5</number>
       </property>
@@ -47,13 +47,13 @@
        <number>5</number>
       </property>
       <property name="topMargin">
-       <number>0</number>
+       <number>5</number>
       </property>
       <property name="rightMargin">
        <number>5</number>
       </property>
       <property name="bottomMargin">
-       <number>0</number>
+       <number>5</number>
       </property>
       <item>
        <widget class="QPushButton" name="save_button">
@@ -70,27 +70,58 @@
        </widget>
       </item>
       <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-      <item>
        <widget class="QLabel" name="rayNumText">
         <property name="text">
-         <string>光线个数</string>
+         <string>光线横纵数量</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QSpinBox" name="rayNum"/>
+       <widget class="QSpinBox" name="rayRow">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="rayCol">
+        <property name="minimum">
+         <number>1</number>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="start">
+        <property name="text">
+         <string>仿真</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="1" column="1">
+     <layout class="QVBoxLayout" name="controlPad2">
+      <property name="spacing">
+       <number>5</number>
+      </property>
+      <property name="leftMargin">
+       <number>5</number>
+      </property>
+      <property name="topMargin">
+       <number>5</number>
+      </property>
+      <property name="rightMargin">
+       <number>5</number>
+      </property>
+      <property name="bottomMargin">
+       <number>5</number>
+      </property>
+      <item>
+       <widget class="QPushButton" name="deleteButton">
+        <property name="text">
+         <string>删除</string>
+        </property>
+       </widget>
       </item>
       <item>
        <widget class="QLabel" name="rotateText">
@@ -109,16 +140,12 @@
         </property>
        </widget>
       </item>
-      <item>
-       <widget class="QPushButton" name="start">
-        <property name="text">
-         <string>仿真</string>
-        </property>
-       </widget>
-      </item>
      </layout>
     </item>
    </layout>
+   <zorder>openGL</zorder>
+   <zorder>objectList</zorder>
+   <zorder>verticalLayoutWidget</zorder>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

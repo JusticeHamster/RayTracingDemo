@@ -15,24 +15,30 @@ scene::scene(std::string name): name(name)
         std::make_shared<sphere>(glm::vec3(), 1, 30, 30)
     }, glm::vec3(0, -.3, 0), glm::vec3(), false, glm::vec3(), model::mirror);
     m.mirror_param = glm::vec3(0., 1., 1.33);
+    m.set_name("ball_1");
     // m.set_draw(false);
     push(m);
 
     // 放一个方块
-    push(model({
+    m = model({
         std::make_shared<cube>(glm::vec3(1, 1, 0), glm::vec3(-1, 1, 0), glm::vec3(0, 0, 1), glm::vec3(1), glm::vec3()),
-    }, glm::vec3(1, 2, 1), glm::vec3(), true, glm::vec3(1), model::diffuse));
+    }, glm::vec3(1, 2, 1), glm::vec3(), true, glm::vec3(1), model::diffuse);
+    m.set_name("cube_1");
+    push(m);
 
     // 另一个球
-    push(model({
+    m = model({
         std::make_shared<sphere>(glm::vec3(), 1.5, 30, 30)
-    }, glm::vec3(3), glm::vec3(), false, glm::vec3(), model::diffuse));
+    }, glm::vec3(3), glm::vec3(), false, glm::vec3(), model::diffuse);
+    m.set_name("ball_2");
+    push(m);
 
     // 另一个方块
     m = model({
         std::make_shared<cube>(glm::vec3(1, 1, 0), glm::vec3(-1, 1, 0), glm::vec3(0, 0, 1), glm::vec3(3), glm::vec3()),
     }, glm::vec3(3, -1, -2), glm::vec3(), false, glm::vec3(), model::phone);
     m.mirror_param = glm::vec3(1., 0., 1.33);
+    m.set_name("cube_2");
     push(m);
 
     // 坐标轴
@@ -42,7 +48,9 @@ scene::scene(std::string name): name(name)
     x->set_blockable(false);
     y->set_blockable(false);
     z->set_blockable(false);
-    push(model({ x, y, z }, glm::vec3(), glm::vec3(), false, glm::vec3()));
+    m = model({ x, y, z }, glm::vec3(), glm::vec3(), false, glm::vec3());
+    m.set_name("axis");
+    push(m);
 }
 
 scene::scene(const scene &scn)
@@ -118,8 +126,31 @@ int scene::object_count() const
     return static_cast<int>(models.size());
 }
 
+model &scene::get_model(int index)
+{
+    return models.at(static_cast<uint64_t>(index));
+}
+
+const model &scene::get_model(int index) const
+{
+    return models.at(static_cast<uint64_t>(index));
+}
+
+void scene::remove_model(model *m)
+{
+    QMutexLocker locker(&lock);
+    auto it = models.begin();
+    for (const auto &model : models) {
+        if (m == &model)
+            break;
+        it++;
+    }
+    models.erase(it);
+}
+
 buffer scene::_serialize() const
 {
+    QMutexLocker locker(&lock);
     buffer b;
     buffer t = serializable::serialize(name);
     b.insert(b.end(), t.begin(), t.end());
@@ -150,6 +181,7 @@ buffer scene::_serialize() const
 
 void scene::deserialize(buffer &buf)
 {
+    QMutexLocker locker(&lock);
     int size;
     serializable::deserialize(buf, reinterpret_cast<buffer_value_type *>(&size), sizeof(int));
     lights.clear();

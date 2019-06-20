@@ -19,6 +19,7 @@ model::model(const model &m): id(m.id), position(m.position), direction(m.direct
     mirror_param(m.mirror_param)
 {
     ID++;
+    set_name(m.get_name());
     set_draw(m.is_draw());
     set_transformable(m.is_transform());
     need_serialize = m.need_serialize;
@@ -34,6 +35,7 @@ model::model(model &&m): id(m.id), position(m.position), direction(m.direction),
     mirror_param(m.mirror_param)
 {
     ID++;
+    set_name(m.get_name());
     set_draw(m.is_draw());
     set_transformable(m.is_transform());
     need_serialize = m.need_serialize;
@@ -60,6 +62,7 @@ model &model::operator=(const model &m)
     direction = m.direction;
     illuminated = m.illuminated;
     light = m.light;
+    set_name(m.get_name());
     distribution_type = m.distribution_type;
     mirror_param = m.mirror_param;
     set_draw(m.is_draw());
@@ -81,6 +84,7 @@ model &model::operator=(model &&m)
     direction = m.direction;
     illuminated = m.illuminated;
     light = m.light;
+    set_name(m.get_name());
     distribution_type = m.distribution_type;
     mirror_param = m.mirror_param;
     set_draw(m.is_draw());
@@ -165,6 +169,21 @@ int model::object_count() const
     return static_cast<int>(shapes.size());
 }
 
+std::string model::get_name() const
+{
+    return name;
+}
+
+void model::set_name(std::string name)
+{
+    this->name = name;
+}
+
+std::shared_ptr<shape> model::get_shape(int index) const
+{
+    return shapes.at(static_cast<uint64_t>(index));
+}
+
 buffer model::_serialize() const
 {
     buffer b;
@@ -193,6 +212,8 @@ buffer model::_serialize() const
     b.push_back(illuminated);
     t = serializable::serialize(light);
     b.insert(b.end(), t.begin(), t.end());
+    t = serializable::serialize(name);
+    b.insert(b.end(), t.begin(), t.end());
     b.push_back(static_cast<buffer_value_type>(distribution_type));
     t = serializable::serialize(mirror_param);
     b.insert(b.end(), t.begin(), t.end());
@@ -214,6 +235,7 @@ void model::deserialize(buffer &buf)
     case 2: distribution_type = phone; break;
     }
     buf.pop_back();
+    serializable::deserialize(buf, name);
     serializable::deserialize(buf, light);
     illuminated = buf.back();
     buf.pop_back();

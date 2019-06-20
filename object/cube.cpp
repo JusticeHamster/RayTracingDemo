@@ -177,6 +177,11 @@ bool cube::point_in_plane(glm::vec3 a, glm::vec3 b, glm::vec3 c, glm::vec3 d, gl
         return false;
 }
 
+glm::vec3 cube::get_extend() const
+{
+    return extend;
+}
+
 void cube::copy(std::shared_ptr<cube> new_cube) const
 {
     shape::copy(new_cube);

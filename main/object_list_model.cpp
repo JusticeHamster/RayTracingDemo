@@ -11,6 +11,8 @@
 #include <QMutexLocker>
 
 #include "tools/loader.hpp"
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 
 static loader &ldr = loader::instance;
 
@@ -85,18 +87,38 @@ object_list_model::~object_list_model()
 
 int object_list_model::rowCount(const QModelIndex &parent) const
 {
-    return 1;
+    return ldr.get_running_scene().object_count();
 }
 
 QVariant object_list_model::data(const QModelIndex &index, int role) const
 {
+    const model &m = ldr.get_running_scene().get_model(index.row());
     switch(role) {
     case Qt::UserRole:
-        return QVariant();
+        return m.get_id();
     case Qt::DisplayRole:
-        return QVariant();
+        return m.get_name().c_str();
     case Qt::SizeHintRole:
         return QSize(0, 100);
     }
     return QVariant();
+}
+
+void object_list_model::set_selected(model &m)
+{
+    selected = &m;
+}
+
+void object_list_model::rotate(float angle)
+{
+    if (selected == nullptr)
+        return;
+
+    glm::mat4 r(1.f);
+    selected->transform(glm::rotate(r, angle * shape::PI / 180.f, glm::vec3(0, 1, 0)));
+}
+
+void object_list_model::remove_selected()
+{
+    ldr.get_running_scene().remove_model(selected);
 }

@@ -23,6 +23,10 @@ private slots:
     void on_save_button_clicked();
     void on_load_button_clicked();
 
+    void on_rotate_clicked();
+
+    void on_deleteButton_clicked();
+
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
@@ -49,6 +53,7 @@ private:
     buffer serialize() const;
     void deserialize(buffer &buf);
     void update_opengl();
+    void set_selected();
 };
 
 #endif // MAINWINDOW_H

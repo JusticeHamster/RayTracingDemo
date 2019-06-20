@@ -26,6 +26,7 @@ public:
     virtual void hello() const;
     virtual std::shared_ptr<shape> copy() const;
     bool inside(glm::vec3 point) const;
+    glm::vec3 get_center() const;
 
     virtual uint64_t type_id() const;
     virtual void deserialize(buffer &buf);

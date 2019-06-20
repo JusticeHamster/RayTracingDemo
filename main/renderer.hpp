@@ -22,6 +22,8 @@ private:
     void __render(scene &scn);
 
     bool rendering = false;
+
+    glm::uvec2 wh;
 public:
     renderer(const renderer &r) = delete;
     renderer(const renderer &&r) = delete;
@@ -29,6 +31,8 @@ public:
     void render(scene &scn);
     bool is_rendering() const;
     intersection BRDF(ray &in, const shape &s, glm::vec3 point, const scene &scn) const;
+
+    void set_light_width_height(glm::uvec2 wh);
 };
 
 #endif // RENDERER_HPP

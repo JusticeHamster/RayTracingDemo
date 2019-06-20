@@ -81,7 +81,7 @@ void renderer::__render(scene &scn)
 
 renderer::renderer()
 {
-    cmr = std::make_unique<pinhole_camera>(1, 1, glm::vec3(-2), glm::vec3(2));
+
 }
 
 void renderer::render(scene &scn)
@@ -91,6 +91,7 @@ void renderer::render(scene &scn)
         qDebug() << "rendering...";
         return;
     }
+    cmr = std::make_unique<pinhole_camera>(wh.x, wh.y, glm::vec3(-2), glm::vec3(2));
     QtConcurrent::run(this, &renderer::__render, std::ref(scn));
 }
 
@@ -123,4 +124,9 @@ intersection renderer::BRDF(ray &in, const shape &s, glm::vec3 point, const scen
         rd.reset(new phone_distribution(in, point, norm, ldr.get_factor("angle") * shape::PI / 180.f));
     }
     return intersection(false, rd, point, {});
+}
+
+void renderer::set_light_width_height(glm::uvec2 wh)
+{
+    this->wh = wh;
 }

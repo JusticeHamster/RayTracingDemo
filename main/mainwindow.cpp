@@ -7,11 +7,13 @@
 
 #include "object_list_model.hpp"
 #include "object_list_delegate.hpp"
+#include "object_list_frame.hpp"
 
 #include "glm/gtc/matrix_transform.hpp"
 
 #include <QMouseEvent>
 #include <QWheelEvent>
+#include <QModelIndex>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent)
@@ -31,6 +33,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_start_clicked()
 {
+    r.set_light_width_height({ui->rayRow->value(), ui->rayCol->value()});
     r.render(ldr.get_scene("base"));
 }
 
@@ -142,6 +145,15 @@ void MainWindow::update_opengl()
     gl->resizeGL(size.width(), size.height());
 }
 
+void MainWindow::set_selected()
+{
+    auto in = ui->objectList->currentIndex();
+    scene &scn = ldr.get_running_scene();
+    if (scn.object_count() == 0)
+        return;
+    model->set_selected(scn.get_model(in.row()));
+}
+
 void MainWindow::on_save_button_clicked()
 {
     model->save_data();
@@ -150,4 +162,17 @@ void MainWindow::on_save_button_clicked()
 void MainWindow::on_load_button_clicked()
 {
     model->load_data();
+}
+
+void MainWindow::on_rotate_clicked()
+{
+    set_selected();
+    model->rotate(static_cast<float>(ui->rotateAngle->value()));
+}
+
+void MainWindow::on_deleteButton_clicked()
+{
+    set_selected();
+    model->remove_selected();
+    set_selected();
 }

@@ -146,6 +146,11 @@ bool sphere::inside(glm::vec3 point) const
     return radius * radius >= glm::distance2(point, center + get_parent()->get_position());
 }
 
+glm::vec3 sphere::get_center() const
+{
+    return center;
+}
+
 uint64_t sphere::type_id() const
 {
     return 3;
