@@ -18,7 +18,10 @@ void object_list_delegate::paint(QPainter *painter, const QStyleOptionViewItem &
         QStyledItemDelegate::paint(painter, option, index);
         return;
     }
-    model &selected = ldr.get_running_scene().get_model(index.row());
+    scene &scn = ldr.get_running_scene();
+    if (scn.object_count() <= index.row())
+        return;
+    model &selected = scn.get_model(index.row());
     frame->set_name(selected.get_name());
     frame->set_pos(selected.get_position());
     if (selected.object_count() == 1) {

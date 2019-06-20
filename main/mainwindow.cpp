@@ -20,7 +20,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     up = glm::vec3(0, 1, 0);
     left = glm::vec3(1, 0, 0);
-    this->setWindowTitle("path tracing demo");
     init_widgets();
 }
 
@@ -92,6 +91,7 @@ void MainWindow::init_widgets()
 {
     ui = new Ui::MainWindow;
     ui->setupUi(this);
+    this->setWindowTitle("path tracing demo");
     model = new object_list_model(this);
     delegate = new object_list_delegate(model, this);
     model->parent = *this;
@@ -149,7 +149,7 @@ void MainWindow::set_selected()
 {
     auto in = ui->objectList->currentIndex();
     scene &scn = ldr.get_running_scene();
-    if (scn.object_count() == 0)
+    if (scn.object_count() <= in.row())
         return;
     model->set_selected(scn.get_model(in.row()));
 }
