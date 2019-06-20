@@ -48,7 +48,7 @@
 
 #### 球（Shpere）
 
-![sphere](/Users/wzy/Documents/RayTracingDemo/report/sphere.png)
+![sphere](sphere.png)
 
 | 变量名           | 意义                                                         |
 | ---------------- | ------------------------------------------------------------ |
@@ -69,7 +69,7 @@
 
 #### 立方体（Cube）
 
-![cube](/Users/wzy/Documents/RayTracingDemo/report/cube.png)
+![cube](cube.png)
 
 | 变量名                           | 意义                                              |
 | -------------------------------- | ------------------------------------------------- |
@@ -95,7 +95,7 @@
 
 #### 光线（Ray）
 
-![ray](/Users/wzy/Documents/RayTracingDemo/report/ray.png)
+![ray](ray.png)
 
 | 变量名                    | 意义                                                         |
 | ------------------------- | ------------------------------------------------------------ |
@@ -117,9 +117,11 @@
 
 #### 小孔成像
 
-![hole](/Users/wzy/Documents/RayTracingDemo/report/hole.bmp)
 
-小孔成像模型是相机成像采用最多的模型。在此模型下，物体的空间坐标和图像坐标之间是线性的关系，因而对相机参数的求解就归结到求解线性方程组上。四个坐标系的关系图如下图所示，其中 M 为三维空间点，m 为 M 在图像平面投影成的像点。
+
+![hole](hole.bmp)
+
+小孔成像模型是相机成像采用最多的模型。在此模型下，物体的空间坐标和图像坐标之间是线性的关系，因而对相机参数的求解就归结到求解线性方程组上。四个坐标系的关系图如下图所示，其中 M 为三维空间点，m 为 M 在图像平面投影成的像点。![hole2](hole2.png)
 
 #### 薄透镜
 
@@ -131,7 +133,9 @@
 
 #### 光线投射
 
-<!--插图-->
+![raycasting](raycasting.jpg)
+
+光线投射（Ray Casting），作为光线追踪算法中的第一步，其理念起源于1968年，由Arthur Appel在一篇名为《 Some techniques for shading machine rendering of solids》的文章中提出。其具体思路是从每一个像素射出一条射线，然后找到最接近的物体挡住射线的路径，而视平面上每个像素的颜色取决于从可见光表面产生的亮度。
 
 #### 光线跟踪
 
@@ -160,9 +164,20 @@
 
 ### 光照算法
 
-> 算法流程图/伪代码
 
-<!--主要就是renderer的render函数的流程-->
+
+```python
+rays = camera.rays() # 从相机模型中获取生成光线列表
+for ray in rays:
+    intersection = ray.intersect(models) # 跟场景中的物体相交，找到交点以及表面信息（如法向量、散射类型、参数）
+    if intersection.stop():
+        ray.update() # 如果光线没有与任何物体相交，或者散射次数达到设定上限，就会停止生成次生光线，并更新光线能量
+    else:
+        new = BRDF(intersection) # 根据表面信息，生成次生光线，可能会需要采样一定数量的光线（比如漫反射、phone高光反射）
+        rays.append(new) # 这些光线之后也要进行相关操作
+```
+
+我们设计的系统原生支持蒙特卡洛积分方法，所有的光线都带有权值。在求交的时候，不同的类别会导致光线不同的行为。每个类别都会根据一个入射光light，一个法向量norm，包括入射点in_point，甚至出射点out_point，生成数量不等的（根据采样数量设置）次生光线。
 
 ## 系统实现
 
@@ -179,31 +194,136 @@
 
 渲染主要流程。
 
-<!--实现和考虑之类的-->
+渲染主要流程。
+首先，在设计上，我们的程序是双线程的，OpenGL以及qt的UI所在的线程为主要线程，其主要负责绘制。
+
+而renderer是另一个任务的线程，它不是平时所说的"渲染"，而是负责管理光线、图形交互的主类。
+
+所以它就是整个路径追踪算法的主要逻辑实现类。
+
+该线程理论上不允许同时运行多个光线渲染任务，所以它有一个互斥锁，它限制任何的重复调用。
+
+该类理论上不需要复制、转移构造，所以上述两个构造函数声明为delete。
+
+而实现逻辑的主要函数在render(scene &scn)与BRDF中。
+
+##### render(scene &scn)
+
+除了上述光照算法伪代码外，这里多写一些细节：
+
+```c++
+shared_ptr<camera> cmr(?); // 动态的处理不同的相机类型，只考虑他们的接口
+vector<ray> rays = cmr->generate(); // 接口为生成一组光线的方法
+vector<ray>::iterator it = rays.begin();
+while ( it != rays.end() ) {
+    ray r = *it++; // 每次处理第一根光线，而生成的光线放在最后，并且会保持光线之间的父子关系，已经处理过的光线也不会删除，保证更新能量的时候能正确贡献每一根光线的能量
+   intersection i = min( r.intersect(models) ); // 还是计算相交的信息
+    if (i.stop()) {
+        ray.stop(); // 更新光线本身的能量，以及其所有父代的能量
+    }
+    else {
+        rays.append( BRDF(intersection) ); // 依旧是加入所有次生光线
+    }
+}
+```
+
+##### BRDF(intersection i)
+
+这个方法着重处理不同的分布所产生次生光线的不同。
+
+```c++
+if (s.is_light())
+    return s.power(); // 光源直接返回该光源的能量
+shared_ptr<ray_distribution> rd; // 而不同的分布由一个静态工厂选择
+switch(s.distribution_type) {
+case phone: rd = phone_distribution(...); break;
+case mirror: rd = mirror_distribution(...); break;
+case diffuse: rd = diffuse_distribution(...); break;
+}
+return rd->intersection();
+```
 
 #### camera
 
-相机光线生成
+相机光线生成类似上述次生光线生成，都是根据不同的信息产生不同的序列。
 
-<!--两种camera和实现，以及控制光线生成的接口-->
+小孔相机：
+
+```c++
+vec3 start = position + direction * factor; // 从前方的一个平面开始，生成一系列等间距光线
+for (int i = 0; i < width; i++) {
+    for (int j = 0; j < height; j++) {
+        p = position(start, i, j); // 计算位置和方向
+        ...
+    }
+}
+```
+
+薄透镜：未实现
 
 #### ray_distribution
 
-次生光线生成。
+次生光线生成，有几种不同形式，总之都需要实现一个接口
 
-<!--
-多种方式，有镜面反射/折射，有phone高光反射，有漫反射。
-由统一的接口完成。
--->
+```c++
+vector<ray> random(int num) const;
+```
+
+##### mirror_distribution
+
+有两个参数，决定反射与折射的比例（reflection_rate，refraction_rate；标准化后的），还有一个是折射率$\eta$。
+
+反射只需要计算：
+$$
+\vec{d} + 2\vec{n}
+$$
+返回一根这个方向的，权值为reflection_rate的光线即可。
+
+折射多了一点参数，但总之还是一个公式：
+$$
+\left(\eta\vec{n}\vec{l} - \sqrt{1 - \eta^2(1 - \frac{\vec{n}^2}{\vec{l}^2})}\right)\vec{n} - \eta\vec{l}
+$$
+最终返回一根这个方向的，权值为refraction_rate的光线即可。
+
+镜面反射和折射不受采样数目num的影响，必然生成两根光线（只要权值不为0）。
+
+##### diffuse_distribution
+
+这个分布比较特殊，它是一个比较随机的分布（如果不考虑光源的分布的话）。
+
+只需要产生一个随机方向，将其约束到半球（正向），然后旋转到法向方向即可。
+
+我采用的是uniform_distribution(mt19937)生成均方分布。
+
+##### phone_distribution
+
+phone高光类似diffuse_distribution，也是需要采样的分布，最大的区别是，phone高光有一个镜面反射方向的采样光线，以及服从一定分布的随机采样。
+
+在这里我采用的是高斯分布生成二维的高斯采样：
+
+```c++
+normal_distribution(mt19937);
+```
+
+如果出现超过约束范围的值，就重新计算。（限定最多3次），但因为高斯分布$2\sigma$能保证95%的命中率，所以重复三次还在外部的概率极低（0.0125%）。如果还在范围外，我就会把它约束到边界（normalize() * limit）。
 
 #### serilization
 
 序列化。
 
-<!--
-怎么将关键信息序列化和反序列化，保存所有信息且易扩展、空间占用小。
-缺点是更新会破坏结构。
--->
+考虑过几种实现方法：
+
+1. 数据库
+2. json文件
+3. 序列化
+
+其中数据库不擅长多态类型的（shape）数据，比较常用于需要经常查询的情况，所以没有考虑使用。
+
+json文件方便、可配置、可读性高、可扩展性高，但是动态类型实现相对比较复杂。
+
+直接对内存进行序列化，是一种实现高效、运行速度快、空间占用低的方式。不会有多余的处理，并且非常稳定（每一个内存都会被copy）。但比起json，它没有可读性，并且及其容易受到模型的变化影响，每次更新模型内容都需要重新保存。
+
+最终我选择了使用序列化来保存整个模型。
 
 ## 效果演示
 
@@ -211,15 +331,20 @@
 
 <!--
 展示：
+
 1. 镜面折射之后漫反射，其中一部分碰到光源
-1. 镜面反射后phone高光反射，碰到光源
--->
+2. 镜面反射后phone高光反射，碰到光源
+   -->
+
+## 实现内容与分工
+
+<!--我们实现了什么东西，我们每个人都在做什么东西-->
 
 ## 总结与展望
 
 > 碰到的问题与解决方案
 >
-> 未解决的问题给出可能的解决方案
+> 未解决的问题给出可能的解决
 
 ## 参考资料
 
