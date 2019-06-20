@@ -1,6 +1,6 @@
 # 图形绘制技术Project (Option 1)
 
-*151220129 吴政亿*
+*151220129* 吴政亿
 
 *151220114* 王宇鑫
 
@@ -40,7 +40,7 @@
 
 ### 模块分解图
 
-![img](/Users/wzy/Documents/RayTracingDemo/img.jpg)
+![img](class_diagram.jpg)
 
 ### 光照算法
 
